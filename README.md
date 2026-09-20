@@ -1,7 +1,8 @@
 # OpenJevPro
 
 > **Production-Grade Open Alternative to TypeSafe Jev**  
-> Transform modern open-weight LLMs (Qwen3, DeepSeek-V4.1, Gemma 4, gpt-oss) into high-throughput, typed probabilistic decision services (System 1 Decisions).
+> Transform modern open-weight LLMs (Qwen3, DeepSeek-V4.1, Gemma 4, gpt-oss) into high-throughput, typed probabilistic decision services (System 1 Decisions).  
+> 🌐 **Official Website**: [https://openjev.pro](https://openjev.pro)
 
 ---
 
