@@ -13,7 +13,7 @@ class OpenJevClient:
         self,
         base_url: str = "http://localhost:8000/v1",
         api_key: str = "EMPTY",
-        model: str = "Qwen/Qwen2.5-7B-Instruct",
+        model: str = "Qwen/Qwen3-4B-Instruct",
         temperature_scaling: float = 1.25,
         abstain_threshold: float = 0.45,
     ):

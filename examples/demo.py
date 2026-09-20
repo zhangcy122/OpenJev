@@ -12,7 +12,7 @@ def main():
     print("OpenJev Demo: Routing Workflow")
     client = OpenJevClient(
         base_url="http://localhost:8000/v1",
-        model="Qwen/Qwen2.5-7B-Instruct",
+        model="Qwen/Qwen3-4B-Instruct",
         temperature_scaling=1.35,
         abstain_threshold=0.40
     )

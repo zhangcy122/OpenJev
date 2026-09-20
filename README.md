@@ -1,7 +1,7 @@
 # OpenJev
 
 > **Open-Source Alternative to TypeSafe Jev**  
-> Transform open-source LLMs (Qwen 2.5, DeepSeek, Llama 3) into high-throughput, typed probabilistic decision services (System 1 Decisions).
+> Transform modern open-weight LLMs (Qwen3, DeepSeek-V3.2, Gemma 4, gpt-oss) into high-throughput, typed probabilistic decision services (System 1 Decisions).
 
 ---
 
@@ -39,6 +39,26 @@ Calibrated Typed Decision: { value, probabilities, confidence, abstained }
 | **`Score`** | Ordinal evaluation across predefined severity/rank tiers | Probability mass across tiers + expected score |
 
 All primitives incorporate first-class **Abstention & Fallback Options** (`UNKNOWN`, `OUT_OF_SCOPE`, `HUMAN_REVIEW`) to eliminate artificial probability spikes caused by closed candidate sets.
+
+---
+
+## 🤖 Recommended Base Models (2025–2026 Tiers)
+
+For constrained decision tasks (classification, intent detection, workflow routing, guardrails), **bigger is not always better**. OpenJev follows a tiered deployment strategy prioritizing non-thinking mode, compact active parameter sizes, and low latency:
+
+| Tier | Model | Architecture & Active Params | Context | Recommended Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **Tier 1: Edge & Ultra-Fast Gate (<50ms)** | **Qwen3-1.7B / 4B** | Dense (1.7B / 4B) • `/no_think` switch | 32K | Default lightweight router, binary gates, high-QPS routing |
+| | **Gemma 4 E2B / E4B** | Dense (2.3B / 4.5B effective) | 128K | Edge & local multimodal (vision + text) classification |
+| | **FunctionGemma (270M)** | Compact Dedicated | 32K | Ultra-light tool and function selection |
+| **Tier 2: Production Workflow Routing (50–120ms)** | **Qwen3-30B-A3B** | MoE (30B total, 3B active / token) | 128K | **Golden Standard**: 3B inference cost with 30B representation capacity |
+| | **Gemma 4 26B-A4B** | MoE (25.2B total, 3.8B active) | 256K | Server-grade fast decision router, native function calling |
+| | **gpt-oss-20b** | MoE (21B total, 3.6B active) • MXFP4 | 128K | Single-GPU server deployment, Apache 2.0 open license |
+| | **Mistral Small 3.2 / 4** | 24B Dense / 119B MoE (6B active) | 128K–256K | General enterprise workflow classification and agent routing |
+| **Tier 3: Complex Arbitration & Fallback** | **DeepSeek-V3.2** | MoE (671B total, 37B active) • DSA | 128K | Hard-sample fallback, multi-step tool plan arbitration |
+| | **Qwen3-Coder-30B-A3B** | MoE (30B total, 3B active) | 256K | Repo-level action routing, MCP tool selection |
+
+> **Best Practice**: Run Tier 1/2 models with reasoning/thinking disabled (`/no_think`) for routine requests to achieve sub-100ms TTFT. Only escalate to Tier 3 (e.g. DeepSeek-V3.2) when `confidence < threshold` or when an explicit `HUMAN_REVIEW` / `UNKNOWN` signal is triggered.
 
 ---
 
@@ -81,16 +101,18 @@ class TicketRoute(StrEnum):
     SECURITY = "security"
     ESCALATE = "human_review"
 
+# Initialized with a fast Tier 1/2 model (e.g., Qwen3-4B or Qwen3-30B-A3B)
 client = OpenJevClient(
-    base_url="http://localhost:8000/v1",  # vLLM or OpenAI-compatible API
-    model="Qwen/Qwen2.5-7B-Instruct",
-    temperature_scaling=1.35
+    base_url="http://localhost:8000/v1",  # vLLM / SGLang endpoint
+    model="Qwen/Qwen3-4B-Instruct",
+    temperature_scaling=1.30,
+    abstain_threshold=0.45
 )
 
 decision: ChoiceDecision = client.decide_choice(
-    state={"ticket_text": "I noticed an unauthorized login attempt from an unknown IP."},
+    state={"ticket_text": "I noticed an unauthorized login attempt from an unknown IP address."},
     candidates=TicketRoute,
-    criteria="Classify the incoming support ticket into the correct handling team."
+    criteria="Classify the incoming support ticket into the correct handling department."
 )
 
 print(f"Action: {decision.value}")
@@ -103,9 +125,9 @@ print(f"Abstained: {decision.abstained}")
 
 ## 📊 Economics & Performance
 
-* **1-Token Decoding**: By constraining generation to single-token choice identifiers or evaluating logprobs directly, generation token costs drop to near zero.
-* **Prompt Caching Friendly**: System instructions, schema definitions, and rules stay static in the prefill cache.
-* **Latency**: End-to-end response time typically ranges between **50ms ~ 150ms** when deployed on local vLLM instances.
+* **1-Token Decoding**: By constraining generation to single-token choice identifiers or evaluating candidate logits directly, generation token costs drop to near zero.
+* **Prompt Caching Friendly**: System instructions, schema definitions, and candidate options stay static in the prefill cache.
+* **Latency**: End-to-end response time typically ranges between **40ms ~ 120ms** when deployed on local vLLM instances with modern MoE/Dense models.
 
 ---
 
