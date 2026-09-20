@@ -82,6 +82,7 @@ class OpenJevProClient:
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
             "format": "json",
+            "think": False,
             "stream": False,
         }
 
@@ -89,7 +90,16 @@ class OpenJevProClient:
         resp.raise_for_status()
         data = resp.json()
 
-        content = data["message"]["content"]
+        content = data["message"]["content"].strip()
+        if "```" in content:
+            parts = content.split("```")
+            for p in parts:
+                p_clean = p.strip()
+                if p_clean.startswith("json"):
+                    p_clean = p_clean[4:].strip()
+                if p_clean.startswith("{") and p_clean.endswith("}"):
+                    content = p_clean
+                    break
         parsed = json.loads(content)
         raw_scores = parsed.get("scores", {})
 
