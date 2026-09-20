@@ -129,6 +129,7 @@ class DirectStructuredEngine(BaseDecisionEngine):
                 "model": self.model,
                 "messages": [{"role": "user", "content": prompt}],
                 "format": "json",
+                "think": False,
                 "stream": False,
             },
             timeout=25
@@ -136,7 +137,17 @@ class DirectStructuredEngine(BaseDecisionEngine):
         latency_ms = (time.time() - t0) * 1000
         resp.raise_for_status()
         data = resp.json()
-        parsed = json.loads(data["message"]["content"])
+        content = data["message"]["content"].strip()
+        if "```" in content:
+            parts = content.split("```")
+            for p in parts:
+                p_clean = p.strip()
+                if p_clean.startswith("json"):
+                    p_clean = p_clean[4:].strip()
+                if p_clean.startswith("{") and p_clean.endswith("}"):
+                    content = p_clean
+                    break
+        parsed = json.loads(content)
         return {
             "choice": parsed.get("choice") or parsed.get("intent", "").strip(),
             "confidence": float(parsed.get("confidence", 0.5)),
