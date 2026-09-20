@@ -15,16 +15,16 @@
         extend: {
           colors: {
             brand: {
-              50: '#f5f3ff',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
-              900: '#4c1d95',
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
             },
             dark: {
-              bg: '#0a0a0f',
-              card: '#12121c',
-              border: '#232336'
+              bg: '#080c14',
+              card: '#0f172a',
+              border: '#1e293b'
             }
           },
           fontFamily: {
@@ -36,31 +36,31 @@
   </script>
   <style>
     .glow-bg {
-      background: radial-gradient(circle at 50% -20%, rgba(139, 92, 246, 0.25), transparent 70%);
+      background: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.22), transparent 70%);
     }
     .glass-card {
-      background: rgba(18, 18, 28, 0.75);
+      background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.12);
     }
   </style>
 </head>
-<body class="bg-dark-bg text-gray-100 min-h-screen font-sans antialiased selection:bg-brand-500 selection:text-white glow-bg">
+<body class="bg-dark-bg text-gray-100 min-h-screen font-sans antialiased selection:bg-brand-600 selection:text-white glow-bg">
 
   <!-- Navigation -->
   <nav class="sticky top-0 z-50 glass-card border-b border-dark-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <span class="text-2xl">⚡</span>
-        <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-purple-400 to-indigo-300 bg-clip-text text-transparent">OpenJevPro</span>
-        <span class="text-xs px-2 py-0.5 rounded-full font-mono bg-purple-900/60 text-purple-300 border border-purple-500/30">v0.1.0</span>
+        <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-200 bg-clip-text text-transparent">OpenJevPro</span>
+        <span class="text-xs px-2 py-0.5 rounded-full font-mono bg-blue-950/60 text-blue-300 border border-blue-500/30">v0.1.0</span>
       </div>
       <div class="hidden md:flex items-center space-x-8 text-sm text-gray-300 font-medium">
-        <a href="#features" class="hover:text-purple-400 transition">Features</a>
-        <a href="#playground" class="hover:text-purple-400 transition">Playground</a>
-        <a href="#models" class="hover:text-purple-400 transition">Model Tiers</a>
-        <a href="#quickstart" class="hover:text-purple-400 transition">Quickstart</a>
-        <a href="#commercial" class="hover:text-purple-400 transition">Commercial</a>
+        <a href="#features" class="hover:text-blue-400 transition">Features</a>
+        <a href="#playground" class="hover:text-blue-400 transition">Playground</a>
+        <a href="#models" class="hover:text-blue-400 transition">Model Tiers</a>
+        <a href="#quickstart" class="hover:text-blue-400 transition">Quickstart</a>
+        <a href="#commercial" class="hover:text-blue-400 transition">Commercial</a>
       </div>
       <div class="flex items-center space-x-4">
         <a href="https://github.com/zhangcy122/OpenJevPro" target="_blank" rel="noopener noreferrer" 
@@ -74,23 +74,23 @@
 
   <!-- Hero Section -->
   <section class="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-semibold bg-purple-950/70 border border-purple-500/40 text-purple-300 mb-8">
+    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-950/70 border border-blue-500/40 text-blue-300 mb-8">
       <span>🚀 Open-Source Alternative to TypeSafe Jev</span>
       <span class="text-gray-500">•</span>
-      <span class="text-indigo-400">System 1 AI Decision Engine</span>
+      <span class="text-cyan-400">System 1 AI Decision Engine</span>
     </div>
     <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
-      Type-Safe, Calibrated AI Decisions at <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-300 bg-clip-text text-transparent">Ultra-Low Latency</span>
+      Type-Safe, Calibrated AI Decisions at <span class="bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-300 bg-clip-text text-transparent">Ultra-Low Latency</span>
     </h1>
     <p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
-      Turn open-weight LLMs into non-autoregressive decision primitives (<code class="text-purple-300 font-mono text-sm bg-purple-950/60 px-1.5 py-0.5 rounded">Choice&lt;T&gt;</code>, <code class="text-purple-300 font-mono text-sm bg-purple-950/60 px-1.5 py-0.5 rounded">Noul</code>, <code class="text-purple-300 font-mono text-sm bg-purple-950/60 px-1.5 py-0.5 rounded">Score</code>). 
+      Turn open-weight LLMs into non-autoregressive decision primitives (<code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Choice&lt;T&gt;</code>, <code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Noul</code>, <code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Score</code>). 
       Guaranteed schema adherence with mathematically calibrated posterior confidence for workflow routing and Agent guardrails.
     </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="https://github.com/zhangcy122/OpenJevPro" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-900/30 transition transform hover:-translate-y-0.5">
+      <a href="https://github.com/zhangcy122/OpenJevPro" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg shadow-blue-900/30 transition transform hover:-translate-y-0.5">
         Explore GitHub Repository
       </a>
-      <a href="#playground" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold glass-card text-gray-200 hover:text-white hover:border-purple-500/50 transition">
+      <a href="#playground" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold glass-card text-gray-200 hover:text-white hover:border-blue-500/50 transition">
         Try Live Interactive Demo
       </a>
     </div>
@@ -98,19 +98,19 @@
     <!-- Quick Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
       <div class="glass-card p-4 rounded-xl text-center">
-        <div class="text-2xl font-bold text-purple-400 font-mono">40-120ms</div>
+        <div class="text-2xl font-bold text-blue-400 font-mono">40-120ms</div>
         <div class="text-xs text-gray-400 mt-1">End-to-End Latency</div>
       </div>
       <div class="glass-card p-4 rounded-xl text-center">
-        <div class="text-2xl font-bold text-purple-400 font-mono">1-Token</div>
+        <div class="text-2xl font-bold text-cyan-400 font-mono">1-Token</div>
         <div class="text-xs text-gray-400 mt-1">Near-Zero Output Cost</div>
       </div>
       <div class="glass-card p-4 rounded-xl text-center">
-        <div class="text-2xl font-bold text-purple-400 font-mono">100%</div>
+        <div class="text-2xl font-bold text-sky-400 font-mono">100%</div>
         <div class="text-xs text-gray-400 mt-1">Type Safety via Grammar</div>
       </div>
       <div class="glass-card p-4 rounded-xl text-center">
-        <div class="text-2xl font-bold text-purple-400 font-mono">ECE &lt; 0.04</div>
+        <div class="text-2xl font-bold text-blue-400 font-mono">ECE &lt; 0.04</div>
         <div class="text-xs text-gray-400 mt-1">Calibrated Confidence</div>
       </div>
     </div>
@@ -129,19 +129,19 @@
         <div class="space-y-4">
           <div>
             <label class="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Input Context / Ticket State</label>
-            <textarea id="demo-input" rows="4" class="w-full bg-black/40 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 focus:outline-none focus:border-purple-500 font-mono">User reports: "Unauthorized access detected from IP 198.51.100.44 attempting brute-force root login."</textarea>
+            <textarea id="demo-input" rows="4" class="w-full bg-black/40 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 focus:outline-none focus:border-blue-500 font-mono">User reports: "Unauthorized access detected from IP 198.51.100.44 attempting brute-force root login."</textarea>
           </div>
           <div>
             <label class="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Target Enum Schema</label>
-            <select id="demo-schema" class="w-full bg-black/40 border border-gray-700 rounded-lg p-2.5 text-sm text-gray-200 focus:outline-none focus:border-purple-500">
+            <select id="demo-schema" class="w-full bg-black/40 border border-gray-700 rounded-lg p-2.5 text-sm text-gray-200 focus:outline-none focus:border-blue-500">
               <option value="security">RouteCategory [billing, support, security, human_review]</option>
               <option value="risk">RiskLevel [low, medium, high, critical]</option>
               <option value="tool">ToolAction [search_kb, query_db, escalate_admin]</option>
             </select>
           </div>
           <div class="flex items-center justify-between pt-2">
-            <span class="text-xs text-gray-400">Model: <strong class="text-purple-300">Qwen3-4B-Instruct</strong></span>
-            <button id="demo-eval-btn" onclick="runSimulation()" class="px-5 py-2.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm transition shadow-md shadow-purple-900/40">
+            <span class="text-xs text-gray-400">Model: <strong class="text-blue-300">Qwen3-4B-Instruct</strong></span>
+            <button id="demo-eval-btn" onclick="runSimulation()" class="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition shadow-md shadow-blue-900/40">
               Evaluate Decision →
             </button>
           </div>
@@ -152,13 +152,13 @@
           <div>
             <div class="flex items-center justify-between pb-3 border-b border-gray-800">
               <span class="text-xs font-mono text-gray-400">DECISION OUTPUT</span>
-              <span id="demo-latency" class="text-xs font-mono text-green-400">⚡ 48ms</span>
+              <span id="demo-latency" class="text-xs font-mono text-cyan-400">⚡ 48ms</span>
             </div>
 
             <div class="mt-4 flex items-center justify-between">
               <div>
                 <span class="text-xs text-gray-400 block">Selected Choice</span>
-                <span id="demo-winner" class="text-xl font-bold font-mono text-purple-300">security</span>
+                <span id="demo-winner" class="text-xl font-bold font-mono text-blue-300">security</span>
               </div>
               <div class="text-right">
                 <span class="text-xs text-gray-400 block">Calibrated Confidence</span>
@@ -174,7 +174,7 @@
                   <span>92.4%</span>
                 </div>
                 <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
-                  <div class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 92.4%"></div>
+                  <div class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 92.4%"></div>
                 </div>
               </div>
               <div>
@@ -183,7 +183,7 @@
                   <span>5.1%</span>
                 </div>
                 <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
-                  <div class="bg-indigo-400 h-full rounded-full transition-all duration-500" style="width: 5.1%"></div>
+                  <div class="bg-cyan-500 h-full rounded-full transition-all duration-500" style="width: 5.1%"></div>
                 </div>
               </div>
               <div>
@@ -216,8 +216,8 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="glass-card p-6 rounded-2xl hover:border-purple-500/40 transition">
-        <div class="w-12 h-12 rounded-xl bg-purple-950/80 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl font-mono font-bold mb-4">
+      <div class="glass-card p-6 rounded-2xl hover:border-blue-500/40 transition">
+        <div class="w-12 h-12 rounded-xl bg-blue-950/80 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xl font-mono font-bold mb-4">
           &lt;T&gt;
         </div>
         <h3 class="text-xl font-bold text-white mb-2">Choice&lt;T&gt;</h3>
@@ -225,13 +225,13 @@
           Multi-class categorical routing over strict Enum types. Computes sequence-level conditional log-likelihood across choices with zero string parsing failures.
         </p>
         <ul class="text-xs font-mono text-gray-300 space-y-1.5">
-          <li class="flex items-center"><span class="text-purple-400 mr-2">✔</span> Grammatical Decode Constraints</li>
-          <li class="flex items-center"><span class="text-purple-400 mr-2">✔</span> Full Categorical Softmax Distribution</li>
+          <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Grammatical Decode Constraints</li>
+          <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Full Categorical Softmax Distribution</li>
         </ul>
       </div>
 
-      <div class="glass-card p-6 rounded-2xl hover:border-purple-500/40 transition">
-        <div class="w-12 h-12 rounded-xl bg-indigo-950/80 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl font-mono font-bold mb-4">
+      <div class="glass-card p-6 rounded-2xl hover:border-cyan-500/40 transition">
+        <div class="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl font-mono font-bold mb-4">
           0|1
         </div>
         <h3 class="text-xl font-bold text-white mb-2">Noul</h3>
@@ -239,13 +239,13 @@
           Binary assertion evaluation ($P_{true}, P_{false}$) providing calibrated confidence with formal uncertainty margins. Built for policy gates & content guardrails.
         </p>
         <ul class="text-xs font-mono text-gray-300 space-y-1.5">
-          <li class="flex items-center"><span class="text-indigo-400 mr-2">✔</span> Calibrated Posterior True Probability</li>
-          <li class="flex items-center"><span class="text-indigo-400 mr-2">✔</span> Integrated Ambiguity Flagging</li>
+          <li class="flex items-center"><span class="text-cyan-400 mr-2">✔</span> Calibrated Posterior True Probability</li>
+          <li class="flex items-center"><span class="text-cyan-400 mr-2">✔</span> Integrated Ambiguity Flagging</li>
         </ul>
       </div>
 
-      <div class="glass-card p-6 rounded-2xl hover:border-purple-500/40 transition">
-        <div class="w-12 h-12 rounded-xl bg-pink-950/80 border border-pink-500/30 flex items-center justify-center text-pink-400 text-xl font-mono font-bold mb-4">
+      <div class="glass-card p-6 rounded-2xl hover:border-sky-500/40 transition">
+        <div class="w-12 h-12 rounded-xl bg-sky-950/80 border border-sky-500/30 flex items-center justify-center text-sky-400 text-xl font-mono font-bold mb-4">
           ★
         </div>
         <h3 class="text-xl font-bold text-white mb-2">Score</h3>
@@ -253,8 +253,8 @@
           Ordinal ranking across predefined severity or priority tiers. Calculates expected mathematical value based on probability mass distribution.
         </p>
         <ul class="text-xs font-mono text-gray-300 space-y-1.5">
-          <li class="flex items-center"><span class="text-pink-400 mr-2">✔</span> Continuous Expected Score Metric</li>
-          <li class="flex items-center"><span class="text-pink-400 mr-2">✔</span> Tiered Priority Stratification</li>
+          <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> Continuous Expected Score Metric</li>
+          <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> Tiered Priority Stratification</li>
         </ul>
       </div>
     </div>
@@ -281,35 +281,35 @@
           </thead>
           <tbody class="divide-y divide-gray-800 text-gray-300">
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-purple-400">Tier 1: Edge Gate</td>
+              <td class="py-4 px-6 font-semibold text-blue-400">Tier 1: Edge Gate</td>
               <td class="py-4 px-6 font-mono text-xs">Qwen3-1.7B / 4B (Dense)</td>
               <td class="py-4 px-6">1.7B / 4B</td>
               <td class="py-4 px-6 font-mono text-green-400">&lt; 50ms</td>
               <td class="py-4 px-6 text-gray-400">High-QPS intent sorting, binary filters (/no_think)</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-purple-400">Tier 1: Multimodal</td>
+              <td class="py-4 px-6 font-semibold text-cyan-400">Tier 1: Multimodal</td>
               <td class="py-4 px-6 font-mono text-xs">Gemma 4 E4B (Vision/Text)</td>
               <td class="py-4 px-6">4.5B Effective</td>
               <td class="py-4 px-6 font-mono text-green-400">~60ms</td>
               <td class="py-4 px-6 text-gray-400">Screenshot/receipt/document visual classification</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-indigo-400">Tier 2: Golden Standard</td>
+              <td class="py-4 px-6 font-semibold text-sky-400">Tier 2: Golden Standard</td>
               <td class="py-4 px-6 font-mono text-xs">Qwen3-30B-A3B (MoE)</td>
-              <td class="py-4 px-6 text-indigo-300 font-bold">3B Active / token</td>
+              <td class="py-4 px-6 text-sky-300 font-bold">3B Active / token</td>
               <td class="py-4 px-6 font-mono text-green-400">60-90ms</td>
               <td class="py-4 px-6 text-gray-400">Production routing: 30B capacity at 3B inference cost</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-indigo-400">Tier 2: Single-GPU</td>
+              <td class="py-4 px-6 font-semibold text-blue-400">Tier 2: Single-GPU</td>
               <td class="py-4 px-6 font-mono text-xs">gpt-oss-20b (MXFP4 MoE)</td>
               <td class="py-4 px-6">3.6B Active</td>
               <td class="py-4 px-6 font-mono text-green-400">~80ms</td>
               <td class="py-4 px-6 text-gray-400">Enterprise on-premise single GPU, Apache 2.0</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-pink-400">Tier 3: Fallback</td>
+              <td class="py-4 px-6 font-semibold text-indigo-300">Tier 3: Fallback</td>
               <td class="py-4 px-6 font-mono text-xs">DeepSeek-V4.1-Flash / V3.2</td>
               <td class="py-4 px-6">8B~16B Active (552B)</td>
               <td class="py-4 px-6 font-mono text-yellow-400">200-400ms</td>
@@ -330,15 +330,15 @@
 
     <div class="glass-card rounded-2xl overflow-hidden border border-dark-border">
       <div class="bg-black/60 px-4 py-3 border-b border-dark-border flex items-center justify-between">
-        <span class="text-xs font-mono text-purple-300">python - example.py</span>
+        <span class="text-xs font-mono text-blue-300">python - example.py</span>
         <span class="text-xs text-gray-500 font-mono">pip install openjevpro</span>
       </div>
       <div class="p-6 bg-black/40 overflow-x-auto text-xs sm:text-sm font-mono text-gray-300 leading-relaxed">
-<pre><code><span class="text-purple-400">from</span> enum <span class="text-purple-400">import</span> StrEnum
-<span class="text-purple-400">from</span> openjevpro.schemas <span class="text-purple-400">import</span> ChoiceDecision
-<span class="text-purple-400">from</span> openjevpro.client <span class="text-purple-400">import</span> OpenJevProClient
+<pre><code><span class="text-blue-400">from</span> enum <span class="text-blue-400">import</span> StrEnum
+<span class="text-blue-400">from</span> openjevpro.schemas <span class="text-blue-400">import</span> ChoiceDecision
+<span class="text-blue-400">from</span> openjevpro.client <span class="text-blue-400">import</span> OpenJevProClient
 
-<span class="text-blue-400">class</span> <span class="text-yellow-300">TicketRoute</span>(StrEnum):
+<span class="text-cyan-400">class</span> <span class="text-yellow-300">TicketRoute</span>(StrEnum):
     BILLING = <span class="text-green-300">"billing"</span>
     TECH_SUPPORT = <span class="text-green-300">"tech_support"</span>
     SECURITY = <span class="text-green-300">"security"</span>
@@ -348,19 +348,19 @@
 client = <span class="text-yellow-300">OpenJevProClient</span>(
     base_url=<span class="text-green-300">"http://localhost:8000/v1"</span>,
     model=<span class="text-green-300">"Qwen/Qwen3-4B-Instruct"</span>,
-    temperature_scaling=<span class="text-purple-300">1.30</span>,
-    abstain_threshold=<span class="text-purple-300">0.45</span>
+    temperature_scaling=<span class="text-cyan-300">1.30</span>,
+    abstain_threshold=<span class="text-cyan-300">0.45</span>
 )
 
-decision: ChoiceDecision = client.<span class="text-blue-400">decide_choice</span>(
+decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</span>(
     state={<span class="text-green-300">"ticket_text"</span>: <span class="text-green-300">"Brute-force login attempt detected from untrusted subnet."</span>},
     candidates=TicketRoute,
     criteria=<span class="text-green-300">"Classify incoming ticket to the appropriate response team."</span>
 )
 
-<span class="text-blue-400">print</span>(<span class="text-green-300">f"Selected Action: {decision.value}"</span>)       <span class="text-gray-500"># Output: 'security'</span>
-<span class="text-blue-400">print</span>(<span class="text-green-300">f"Confidence: {decision.confidence:.2%}"</span>)     <span class="text-gray-500"># Output: '92.40%'</span>
-<span class="text-blue-400">print</span>(<span class="text-green-300">f"Abstained: {decision.abstained}"</span>)             <span class="text-gray-500"># Output: False</span></code></pre>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Selected Action: {decision.value}"</span>)       <span class="text-gray-500"># Output: 'security'</span>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Confidence: {decision.confidence:.2%}"</span>)     <span class="text-gray-500"># Output: '92.40%'</span>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Abstained: {decision.abstained}"</span>)             <span class="text-gray-500"># Output: False</span></code></pre>
       </div>
     </div>
   </section>
@@ -376,7 +376,7 @@ decision: ChoiceDecision = client.<span class="text-blue-400">decide_choice</spa
       <!-- Community -->
       <div class="glass-card p-8 rounded-2xl border border-dark-border flex flex-col justify-between">
         <div>
-          <div class="text-xs font-mono uppercase tracking-wider text-purple-400 mb-2">Open-Source Edition</div>
+          <div class="text-xs font-mono uppercase tracking-wider text-blue-400 mb-2">Open-Source Edition</div>
           <h3 class="text-2xl font-bold text-white mb-4">PolyForm Noncommercial</h3>
           <p class="text-sm text-gray-400 mb-6">
             100% free and open for personal learning, academic research, non-profit institutions, and non-commercial development.
@@ -393,23 +393,23 @@ decision: ChoiceDecision = client.<span class="text-blue-400">decide_choice</spa
       </div>
 
       <!-- Commercial -->
-      <div class="glass-card p-8 rounded-2xl border-2 border-purple-500/60 shadow-xl shadow-purple-900/20 flex flex-col justify-between relative">
-        <div class="absolute -top-3 right-6 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+      <div class="glass-card p-8 rounded-2xl border-2 border-blue-500/60 shadow-xl shadow-blue-900/20 flex flex-col justify-between relative">
+        <div class="absolute -top-3 right-6 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
           Enterprise & Production
         </div>
         <div>
-          <div class="text-xs font-mono uppercase tracking-wider text-purple-400 mb-2">Commercial License</div>
+          <div class="text-xs font-mono uppercase tracking-wider text-blue-400 mb-2">Commercial License</div>
           <h3 class="text-2xl font-bold text-white mb-4">Commercial Grant & SLA</h3>
           <p class="text-sm text-gray-400 mb-6">
             Required for enterprise production deployments, commercial SaaS integration, managed APIs, or commercial redistributions.
           </p>
           <ul class="text-sm space-y-2 text-gray-300 mb-6 font-mono text-xs">
-            <li class="flex items-center"><span class="text-purple-400 mr-2">✔</span> Enterprise Production License</li>
-            <li class="flex items-center"><span class="text-purple-400 mr-2">✔</span> Custom Sizing & Temperature Calibration</li>
-            <li class="flex items-center"><span class="text-purple-400 mr-2">✔</span> Commercial Warranty & Dedicated Support</li>
+            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Enterprise Production License</li>
+            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Custom Sizing & Temperature Calibration</li>
+            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Commercial Warranty & Dedicated Support</li>
           </ul>
         </div>
-        <a href="mailto:zhangcy122@gmail.com?subject=OpenJevPro%20Commercial%20License%20Inquiry" class="w-full text-center py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 font-medium text-sm text-white transition shadow-md">
+        <a href="mailto:zhangcy122@gmail.com?subject=OpenJevPro%20Commercial%20License%20Inquiry" class="w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 font-medium text-sm text-white transition shadow-md shadow-blue-900/30">
           Apply for Commercial License →
         </a>
       </div>
@@ -425,7 +425,7 @@ decision: ChoiceDecision = client.<span class="text-blue-400">decide_choice</spa
         <span>Hosted on Hostinger VPS</span>
       </div>
       <div>
-        <span>Licensed under <a href="https://github.com/zhangcy122/OpenJevPro/blob/main/LICENSE" class="text-purple-400 hover:underline">PolyForm Noncommercial 1.0.0</a>. Commercial use requires license.</span>
+        <span>Licensed under <a href="https://github.com/zhangcy122/OpenJevPro/blob/main/LICENSE" class="text-blue-400 hover:underline">PolyForm Noncommercial 1.0.0</a>. Commercial use requires license.</span>
       </div>
       <div>
         <a href="https://github.com/zhangcy122/OpenJevPro" class="hover:text-gray-300 transition">GitHub</a>
@@ -475,11 +475,11 @@ decision: ChoiceDecision = client.<span class="text-blue-400">decide_choice</spa
           bars.innerHTML = `
             <div>
               <div class="flex justify-between text-xs font-mono mb-1 text-gray-300"><span>escalate_admin</span><span>89.2%</span></div>
-              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 89.2%"></div></div>
+              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 89.2%"></div></div>
             </div>
             <div>
               <div class="flex justify-between text-xs font-mono mb-1 text-gray-400"><span>query_db</span><span>7.8%</span></div>
-              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-indigo-400 h-full rounded-full transition-all duration-500" style="width: 7.8%"></div></div>
+              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-cyan-500 h-full rounded-full transition-all duration-500" style="width: 7.8%"></div></div>
             </div>
             <div>
               <div class="flex justify-between text-xs font-mono mb-1 text-gray-400"><span>search_kb</span><span>3.0%</span></div>
@@ -492,11 +492,11 @@ decision: ChoiceDecision = client.<span class="text-blue-400">decide_choice</spa
           bars.innerHTML = `
             <div>
               <div class="flex justify-between text-xs font-mono mb-1 text-gray-300"><span>security</span><span>92.4%</span></div>
-              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 92.4%"></div></div>
+              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 92.4%"></div></div>
             </div>
             <div>
               <div class="flex justify-between text-xs font-mono mb-1 text-gray-400"><span>support</span><span>5.1%</span></div>
-              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-indigo-400 h-full rounded-full transition-all duration-500" style="width: 5.1%"></div></div>
+              <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden"><div class="bg-cyan-500 h-full rounded-full transition-all duration-500" style="width: 5.1%"></div></div>
             </div>
             <div>
               <div class="flex justify-between text-xs font-mono mb-1 text-gray-400"><span>human_review</span><span>2.0%</span></div>
