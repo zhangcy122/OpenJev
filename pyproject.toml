@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openjevpro"
+version = "0.1.0"
+description = "High-Throughput Type-Safe AI Decision Engine (Open Alternative to TypeSafe Jev)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "PolyForm Noncommercial 1.0.0" }
+authors = [
+    { name = "Corel Zhang", email = "zhangcy122@gmail.com" }
+]
+keywords = [
+    "ai",
+    "llm",
+    "decision-engine",
+    "type-safe",
+    "jev",
+    "calibration",
+    "structured-output",
+    "system-1"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+dependencies = [
+    "pydantic>=2.5.0",
+    "requests>=2.31.0",
+    "numpy>=1.24.0"
+]
+
+[project.urls]
+Homepage = "https://openjev.pro"
+Repository = "https://github.com/zhangcy122/OpenJevPro"
+Issues = "https://github.com/zhangcy122/OpenJevPro/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["openjevpro*"]
