@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="zh-CN" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenJevPro — High-Throughput Type-Safe AI Decision Engine</title>
-  <meta name="description" content="OpenJevPro transforms open-source LLMs (Qwen3, DeepSeek-V4.1, Gemma 4) into high-throughput, calibrated, type-safe probabilistic decision services.">
+  <title>OpenJevPro — 超低延迟、类型安全的开源 AI 决策引擎</title>
+  <meta name="description" content="OpenJevPro 将开源大模型转化为高吞吐、严格类型安全与数学标定概率的决策服务（System 1 AI Decisions）。">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -55,43 +55,55 @@
         <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-200 bg-clip-text text-transparent">OpenJevPro</span>
         <span class="text-xs px-2 py-0.5 rounded-full font-mono bg-blue-950/60 text-blue-300 border border-blue-500/30">v0.1.0</span>
       </div>
-      <div class="hidden md:flex items-center space-x-8 text-sm text-gray-300 font-medium">
-        <a href="#features" class="hover:text-blue-400 transition">Features</a>
-        <a href="#playground" class="hover:text-blue-400 transition">Playground</a>
-        <a href="#models" class="hover:text-blue-400 transition">Model Tiers</a>
-        <a href="#quickstart" class="hover:text-blue-400 transition">Quickstart</a>
-        <a href="#commercial" class="hover:text-blue-400 transition">Commercial</a>
+      <div class="hidden md:flex items-center space-x-7 text-sm text-gray-300 font-medium">
+        <a href="#features" data-i18n="nav_features" class="hover:text-blue-400 transition">核心特性</a>
+        <a href="#playground" data-i18n="nav_playground" class="hover:text-blue-400 transition">交互模拟</a>
+        <a href="#benchmarks" data-i18n="nav_benchmarks" class="hover:text-blue-400 transition">实测基准</a>
+        <a href="#models" data-i18n="nav_models" class="hover:text-blue-400 transition">推荐模型</a>
+        <a href="#quickstart" data-i18n="nav_quickstart" class="hover:text-blue-400 transition">快速上手</a>
+        <a href="#commercial" data-i18n="nav_commercial" class="hover:text-blue-400 transition">授权协议</a>
       </div>
-      <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-3">
+        <!-- Prominent Language Switcher -->
+        <div class="flex items-center bg-gray-900/90 border border-blue-500/40 rounded-lg p-1 text-xs font-semibold shadow-inner">
+          <button id="btn-lang-zh" onclick="switchLanguage('zh')" class="px-2.5 py-1 rounded-md transition-all bg-blue-600 text-white shadow-sm flex items-center space-x-1">
+            <span>🇨🇳</span>
+            <span>中文</span>
+          </button>
+          <button id="btn-lang-en" onclick="switchLanguage('en')" class="px-2.5 py-1 rounded-md transition-all text-gray-400 hover:text-white flex items-center space-x-1">
+            <span>🇺🇸</span>
+            <span>EN</span>
+          </button>
+        </div>
+
         <a href="https://github.com/zhangcy122/OpenJevPro" target="_blank" rel="noopener noreferrer" 
-           class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-sm font-medium border border-gray-700 transition">
+           class="flex items-center space-x-2 px-3.5 py-1.5 rounded-lg bg-gray-800/90 hover:bg-gray-700 text-xs sm:text-sm font-medium border border-gray-700 transition">
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
+          <span class="hidden sm:inline">GitHub</span>
         </a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+  <section class="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
     <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-950/70 border border-blue-500/40 text-blue-300 mb-8">
-      <span>🚀 Open-Source Alternative to TypeSafe Jev</span>
+      <span data-i18n="hero_pill_1">🚀 TypeSafe Jev 开源生产级替代方案</span>
       <span class="text-gray-500">•</span>
-      <span class="text-cyan-400">System 1 AI Decision Engine</span>
+      <span data-i18n="hero_pill_2" class="text-cyan-400">System 1 极速 AI 决策引擎</span>
     </div>
-    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
-      Type-Safe, Calibrated AI Decisions at <span class="bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-300 bg-clip-text text-transparent">Ultra-Low Latency</span>
+    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6" data-i18n-html="hero_title">
+      超低延迟、严格类型安全的 <span class="bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-300 bg-clip-text text-transparent">AI 决策引擎</span>
     </h1>
-    <p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
-      Turn open-weight LLMs into non-autoregressive decision primitives (<code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Choice&lt;T&gt;</code>, <code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Noul</code>, <code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Score</code>). 
-      Guaranteed schema adherence with mathematically calibrated posterior confidence for workflow routing and Agent guardrails.
+    <p class="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed" data-i18n-html="hero_desc">
+      将开源大模型转化为非自回归决策原语（<code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Choice&lt;T&gt;</code>, <code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Noul</code>, <code class="text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded">Score</code>）。语法层 100% 保证 Schema 合规，后验概率经数学标定，专为工作流路由与智能体护栏打造。
     </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="https://github.com/zhangcy122/OpenJevPro" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg shadow-blue-900/30 transition transform hover:-translate-y-0.5">
-        Explore GitHub Repository
+      <a href="https://github.com/zhangcy122/OpenJevPro" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg shadow-blue-900/30 transition transform hover:-translate-y-0.5" data-i18n="hero_btn_repo">
+        查看 GitHub 开源仓库
       </a>
-      <a href="#playground" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold glass-card text-gray-200 hover:text-white hover:border-blue-500/50 transition">
-        Try Live Interactive Demo
+      <a href="#playground" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold glass-card text-gray-200 hover:text-white hover:border-blue-500/50 transition" data-i18n="hero_btn_demo">
+        体验实时交互模拟
       </a>
     </div>
 
@@ -99,28 +111,138 @@
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
       <div class="glass-card p-4 rounded-xl text-center">
         <div class="text-2xl font-bold text-blue-400 font-mono">40-120ms</div>
-        <div class="text-xs text-gray-400 mt-1">End-to-End Latency</div>
+        <div class="text-xs text-gray-400 mt-1" data-i18n="stat_latency">端到端极速延迟</div>
       </div>
       <div class="glass-card p-4 rounded-xl text-center">
         <div class="text-2xl font-bold text-cyan-400 font-mono">1-Token</div>
-        <div class="text-xs text-gray-400 mt-1">Near-Zero Output Cost</div>
+        <div class="text-xs text-gray-400 mt-1" data-i18n="stat_cost">近零生成推理成本</div>
       </div>
       <div class="glass-card p-4 rounded-xl text-center">
         <div class="text-2xl font-bold text-sky-400 font-mono">100%</div>
-        <div class="text-xs text-gray-400 mt-1">Type Safety via Grammar</div>
+        <div class="text-xs text-gray-400 mt-1" data-i18n="stat_safety">语法约束类型安全</div>
       </div>
       <div class="glass-card p-4 rounded-xl text-center">
         <div class="text-2xl font-bold text-blue-400 font-mono">ECE &lt; 0.04</div>
-        <div class="text-xs text-gray-400 mt-1">Calibrated Confidence</div>
+        <div class="text-xs text-gray-400 mt-1" data-i18n="stat_ece">概率数学标定置信度</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empirical Benchmarks Section (Jev vs OpenJevPro) -->
+  <section id="benchmarks" class="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-dark-border">
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-mono bg-blue-950/80 text-cyan-400 border border-blue-500/30 mb-3">
+        <span>📊 INDEPENDENT BENCHMARKS & CITATIONS</span>
+      </div>
+      <h2 class="text-3xl font-bold text-white mb-3" data-i18n="bench_title">通用开源模型 + 结构化约束 能否逼近 Jev？</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base" data-i18n="bench_subtitle">
+        答案是肯定的。多项独立实测证明：通用开源模型无需微调，仅靠 Schema 强制解码，其决策精度与专用 Jev 在统计学上置信区间重叠。
+      </p>
+    </div>
+
+    <!-- Benchmark Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="glass-card p-6 rounded-2xl border border-dark-border flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-xs font-mono text-gray-400">GPT-5.6 Luna</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Cloud / Low-Inf</span>
+          </div>
+          <div class="text-3xl font-extrabold text-gray-200 font-mono mb-2">97.1%</div>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4" data-i18n="bench_luna_desc">
+            通用巨模型上限。单次调用计费昂贵，延迟约 300~600ms，需依赖闭源云厂商。
+          </p>
+        </div>
+        <div class="text-[11px] font-mono text-gray-500 pt-3 border-t border-gray-800">JevBench v1 (242 Cases)</div>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl border border-dark-border flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-xs font-mono text-purple-300">TypeSafe Jev (1.13.0)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-500/30 font-mono">Proprietary System 1</span>
+          </div>
+          <div class="text-3xl font-extrabold text-purple-300 font-mono mb-2">96.3%</div>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4" data-i18n="bench_jev_desc">
+            专用微型决策模型。RLCD 标定，~25-45ms 极低延迟，但属于闭源商业付费产品。
+          </p>
+        </div>
+        <div class="text-[11px] font-mono text-gray-500 pt-3 border-t border-gray-800">JevBench v1 (242 Cases)</div>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl border-2 border-blue-500/60 shadow-lg shadow-blue-900/20 flex flex-col justify-between relative">
+        <div class="absolute -top-3 right-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+          Zero-Training Open Alternative
+        </div>
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-xs font-mono text-cyan-300">OpenJevPro (openjev-sglang)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-500/30 font-mono">Qwen3.6-35B MoE</span>
+          </div>
+          <div class="text-3xl font-extrabold text-cyan-400 font-mono mb-2">95.5%</div>
+          <p class="text-xs text-gray-300 leading-relaxed mb-4" data-i18n="bench_openjev_desc">
+            <strong>无需专项训练</strong>。仅依靠 SGLang 词表约束解码，与 Jev 置信区间重叠，完全私有化且自由可审计！
+          </p>
+        </div>
+        <div class="text-[11px] font-mono text-cyan-400/80 pt-3 border-t border-blue-500/20">CI Overlap with Jev (p > 0.05)</div>
+      </div>
+    </div>
+
+    <!-- Independent Citations Grid -->
+    <div class="glass-card p-6 rounded-2xl border border-dark-border">
+      <h3 class="text-base font-bold text-white mb-4 flex items-center space-x-2">
+        <span>🔗</span>
+        <span data-i18n="bench_citations_head">独立实测基准与学术验证文献</span>
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+        <a href="https://benchmarkheaven.com/jev-models" target="_blank" rel="noopener noreferrer" class="p-3 bg-black/40 rounded-lg border border-gray-800 hover:border-blue-500/50 transition group">
+          <div class="text-blue-400 font-semibold group-hover:text-blue-300 flex items-center justify-between">
+            <span>1. JevBench v1 (242 Decision Cases)</span>
+            <span>↗</span>
+          </div>
+          <p class="text-gray-400 mt-1 font-sans text-[11px]" data-i18n="bench_cite_1">
+            横向评测 Jev vs GPT-5.6 vs openjev-sglang，实测开源模型精度逼近 Jev，95% 置信区间重叠。
+          </p>
+        </a>
+
+        <a href="https://github.com/iammrduncan/typesafe-ai-benchmark" target="_blank" rel="noopener noreferrer" class="p-3 bg-black/40 rounded-lg border border-gray-800 hover:border-blue-500/50 transition group">
+          <div class="text-blue-400 font-semibold group-hover:text-blue-300 flex items-center justify-between">
+            <span>2. iammrduncan/typesafe-ai-benchmark</span>
+            <span>↗</span>
+          </div>
+          <p class="text-gray-400 mt-1 font-sans text-[11px]" data-i18n="bench_cite_2">
+            独立复现仓库：评测 Qwen 3.8 27B / Cerebras 结构化输出 vs Jev，公开完整 Raw Results 与代码。
+          </p>
+        </a>
+
+        <a href="https://github.com/mameli/jev-vs-luna" target="_blank" rel="noopener noreferrer" class="p-3 bg-black/40 rounded-lg border border-gray-800 hover:border-blue-500/50 transition group">
+          <div class="text-blue-400 font-semibold group-hover:text-blue-300 flex items-center justify-between">
+            <span>3. mameli/jev-vs-luna (Review Classification)</span>
+            <span>↗</span>
+          </div>
+          <p class="text-gray-400 mt-1 font-sans text-[11px]" data-i18n="bench_cite_3">
+            100 条评论 × 3 次复现对比，深度分析通用大模型准确率上限与极速轻量模型的速度/成本优势。
+          </p>
+        </a>
+
+        <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank" rel="noopener noreferrer" class="p-3 bg-black/40 rounded-lg border border-gray-800 hover:border-blue-500/50 transition group">
+          <div class="text-blue-400 font-semibold group-hover:text-blue-300 flex items-center justify-between">
+            <span>4. TypeSafe: System One Models & Jev</span>
+            <span>↗</span>
+          </div>
+          <p class="text-gray-400 mt-1 font-sans text-[11px]" data-i18n="bench_cite_4">
+            TypeSafe 官方博客：定义无思维链（No-CoT）类型化概率决策原语与 RLCD 标定技术背景。
+          </p>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- Interactive Playground Section -->
-  <section id="playground" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+  <section id="playground" class="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
     <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-white mb-3">⚡ Live Decision Simulator</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Test how OpenJevPro maps arbitrary state inputs into calibrated, typed decision distributions.</p>
+      <h2 class="text-3xl font-bold text-white mb-3" data-i18n="demo_title">⚡ 实时决策模拟器</h2>
+      <p class="text-gray-400 max-w-xl mx-auto text-sm" data-i18n="demo_subtitle">输入任意业务上下文，体验 OpenJevPro 如何瞬时输出严格类型化、概率已标定的决策分布。</p>
     </div>
 
     <div class="glass-card rounded-2xl p-6 sm:p-8 border border-dark-border shadow-2xl">
@@ -128,11 +250,11 @@
         <!-- Input Form -->
         <div class="space-y-4">
           <div>
-            <label class="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Input Context / Ticket State</label>
+            <label class="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2" data-i18n="demo_input_label">输入上下文 / 工单状态 (State)</label>
             <textarea id="demo-input" rows="4" class="w-full bg-black/40 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 focus:outline-none focus:border-blue-500 font-mono">User reports: "Unauthorized access detected from IP 198.51.100.44 attempting brute-force root login."</textarea>
           </div>
           <div>
-            <label class="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Target Enum Schema</label>
+            <label class="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2" data-i18n="demo_schema_label">目标候选枚举 (Enum Schema)</label>
             <select id="demo-schema" class="w-full bg-black/40 border border-gray-700 rounded-lg p-2.5 text-sm text-gray-200 focus:outline-none focus:border-blue-500">
               <option value="security">RouteCategory [billing, support, security, human_review]</option>
               <option value="risk">RiskLevel [low, medium, high, critical]</option>
@@ -140,9 +262,9 @@
             </select>
           </div>
           <div class="flex items-center justify-between pt-2">
-            <span class="text-xs text-gray-400">Model: <strong class="text-blue-300">Qwen3-4B-Instruct</strong></span>
-            <button id="demo-eval-btn" onclick="runSimulation()" class="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition shadow-md shadow-blue-900/40">
-              Evaluate Decision →
+            <span class="text-xs text-gray-400"><span data-i18n="demo_model_label">推理模型:</span> <strong class="text-blue-300 font-mono">Qwen3-4B-Instruct</strong></span>
+            <button id="demo-eval-btn" onclick="runSimulation()" class="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition shadow-md shadow-blue-900/40" data-i18n="demo_eval_btn">
+              执行单 Token 决策 →
             </button>
           </div>
         </div>
@@ -151,17 +273,17 @@
         <div class="bg-black/50 border border-gray-800 rounded-xl p-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between pb-3 border-b border-gray-800">
-              <span class="text-xs font-mono text-gray-400">DECISION OUTPUT</span>
+              <span class="text-xs font-mono text-gray-400" data-i18n="demo_out_header">DECISION OUTPUT (JSON)</span>
               <span id="demo-latency" class="text-xs font-mono text-cyan-400">⚡ 48ms</span>
             </div>
 
             <div class="mt-4 flex items-center justify-between">
               <div>
-                <span class="text-xs text-gray-400 block">Selected Choice</span>
+                <span class="text-xs text-gray-400 block" data-i18n="demo_choice_label">选中决策值</span>
                 <span id="demo-winner" class="text-xl font-bold font-mono text-blue-300">security</span>
               </div>
               <div class="text-right">
-                <span class="text-xs text-gray-400 block">Calibrated Confidence</span>
+                <span class="text-xs text-gray-400 block" data-i18n="demo_conf_label">标定置信度</span>
                 <span id="demo-confidence" class="text-xl font-bold font-mono text-green-400">92.4%</span>
               </div>
             </div>
@@ -200,8 +322,8 @@
 
           <div class="mt-6 pt-3 border-t border-gray-800 text-[11px] font-mono text-gray-500 flex justify-between">
             <span>Abstained: <strong id="demo-abstain" class="text-gray-300">False</strong></span>
-            <span>Temperature: <strong>T=1.30</strong></span>
-            <span>Calibrator: <strong>Platt/ECE</strong></span>
+            <span>Scaling: <strong>T=1.30</strong></span>
+            <span>Calibrator: <strong>ECE / Platt</strong></span>
           </div>
         </div>
       </div>
@@ -209,10 +331,10 @@
   </section>
 
   <!-- Core Features Section -->
-  <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-dark-border">
+  <section id="features" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-dark-border">
     <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-white mb-3">Core Decision Primitives</h2>
-      <p class="text-gray-400 max-w-2xl mx-auto">Replicating TypeSafe Jev semantics with native open-source LLM acceleration.</p>
+      <h2 class="text-3xl font-bold text-white mb-3" data-i18n="feat_title">核心决策原语 (Primitives)</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="feat_subtitle">完美对齐 TypeSafe Jev 语义规范，兼顾原生开源 LLM 的加速吞吐。</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -221,12 +343,12 @@
           &lt;T&gt;
         </div>
         <h3 class="text-xl font-bold text-white mb-2">Choice&lt;T&gt;</h3>
-        <p class="text-gray-400 text-sm leading-relaxed mb-4">
-          Multi-class categorical routing over strict Enum types. Computes sequence-level conditional log-likelihood across choices with zero string parsing failures.
+        <p class="text-gray-400 text-sm leading-relaxed mb-4" data-i18n="feat_choice_desc">
+          基于离散 Enum 类型的多分类路由决策。在词表层限制合法候选范围并计算条件序列对数似然，零格式解析错误。
         </p>
         <ul class="text-xs font-mono text-gray-300 space-y-1.5">
-          <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Grammatical Decode Constraints</li>
-          <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Full Categorical Softmax Distribution</li>
+          <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> <span data-i18n="feat_choice_1">语法约束解码 (Grammar Constraints)</span></li>
+          <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> <span data-i18n="feat_choice_2">全候选 Softmax 归一化概率分布</span></li>
         </ul>
       </div>
 
@@ -235,12 +357,12 @@
           0|1
         </div>
         <h3 class="text-xl font-bold text-white mb-2">Noul</h3>
-        <p class="text-gray-400 text-sm leading-relaxed mb-4">
-          Binary assertion evaluation ($P_{true}, P_{false}$) providing calibrated confidence with formal uncertainty margins. Built for policy gates & content guardrails.
+        <p class="text-gray-400 text-sm leading-relaxed mb-4" data-i18n="feat_noul_desc">
+          二元断言判断器（$P_{true}, P_{false}$），提供严谨的置信区间与不确定度量，专用于智能体策略门控与内容合规护栏。
         </p>
         <ul class="text-xs font-mono text-gray-300 space-y-1.5">
-          <li class="flex items-center"><span class="text-cyan-400 mr-2">✔</span> Calibrated Posterior True Probability</li>
-          <li class="flex items-center"><span class="text-cyan-400 mr-2">✔</span> Integrated Ambiguity Flagging</li>
+          <li class="flex items-center"><span class="text-cyan-400 mr-2">✔</span> <span data-i18n="feat_noul_1">后验真值概率数学标定 (Calibrated P)</span></li>
+          <li class="flex items-center"><span class="text-cyan-400 mr-2">✔</span> <span data-i18n="feat_noul_2">内置弃权与歧义判定 (Abstention)</span></li>
         </ul>
       </div>
 
@@ -249,22 +371,22 @@
           ★
         </div>
         <h3 class="text-xl font-bold text-white mb-2">Score</h3>
-        <p class="text-gray-400 text-sm leading-relaxed mb-4">
-          Ordinal ranking across predefined severity or priority tiers. Calculates expected mathematical value based on probability mass distribution.
+        <p class="text-gray-400 text-sm leading-relaxed mb-4" data-i18n="feat_score_desc">
+          有序严重级或优先级评分原语。根据各分段概率质量分布计算连续数学期望值，杜绝离散幻觉跳变。
         </p>
         <ul class="text-xs font-mono text-gray-300 space-y-1.5">
-          <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> Continuous Expected Score Metric</li>
-          <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> Tiered Priority Stratification</li>
+          <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> <span data-i18n="feat_score_1">连续期望得分计算 (Expected Value)</span></li>
+          <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> <span data-i18n="feat_score_2">动态分级弹性分流</span></li>
         </ul>
       </div>
     </div>
   </section>
 
   <!-- 2025-2026 Model Tiers Section -->
-  <section id="models" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-dark-border">
+  <section id="models" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-dark-border">
     <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-white mb-3">🤖 Recommended Model Tiers (2025–2026)</h2>
-      <p class="text-gray-400 max-w-2xl mx-auto">Optimized for low-latency non-thinking classification with tiered cloud fallbacks.</p>
+      <h2 class="text-3xl font-bold text-white mb-3" data-i18n="model_title">🤖 推荐分层模型矩阵 (2025–2026)</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="model_subtitle">针对非思考决策优化的极速分级策略，支持单卡边缘与云端兜底弹性调度。</p>
     </div>
 
     <div class="glass-card rounded-2xl overflow-hidden border border-dark-border">
@@ -272,48 +394,48 @@
         <table class="w-full text-left text-sm">
           <thead class="bg-black/40 border-b border-dark-border text-xs uppercase font-mono text-gray-400">
             <tr>
-              <th class="py-4 px-6">Tier</th>
-              <th class="py-4 px-6">Model Architecture</th>
-              <th class="py-4 px-6">Active Parameters</th>
-              <th class="py-4 px-6">Latency</th>
-              <th class="py-4 px-6">Ideal Workload</th>
+              <th class="py-4 px-6" data-i18n="tbl_col_tier">层级 (Tier)</th>
+              <th class="py-4 px-6" data-i18n="tbl_col_arch">模型架构</th>
+              <th class="py-4 px-6" data-i18n="tbl_col_param">激活参数量</th>
+              <th class="py-4 px-6" data-i18n="tbl_col_lat">典型延迟</th>
+              <th class="py-4 px-6" data-i18n="tbl_col_workload">适用业务场景</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-800 text-gray-300">
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-blue-400">Tier 1: Edge Gate</td>
+              <td class="py-4 px-6 font-semibold text-blue-400">Tier 1: 极速边缘门控</td>
               <td class="py-4 px-6 font-mono text-xs">Qwen3-1.7B / 4B (Dense)</td>
               <td class="py-4 px-6">1.7B / 4B</td>
               <td class="py-4 px-6 font-mono text-green-400">&lt; 50ms</td>
-              <td class="py-4 px-6 text-gray-400">High-QPS intent sorting, binary filters (/no_think)</td>
+              <td class="py-4 px-6 text-gray-400">超高 QPS 意图初筛，二元门控 (/no_think 模式)</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-cyan-400">Tier 1: Multimodal</td>
+              <td class="py-4 px-6 font-semibold text-cyan-400">Tier 1: 多模态边缘</td>
               <td class="py-4 px-6 font-mono text-xs">Gemma 4 E4B (Vision/Text)</td>
               <td class="py-4 px-6">4.5B Effective</td>
               <td class="py-4 px-6 font-mono text-green-400">~60ms</td>
-              <td class="py-4 px-6 text-gray-400">Screenshot/receipt/document visual classification</td>
+              <td class="py-4 px-6 text-gray-400">票据、截图、文档等视觉状态即时决策</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-sky-400">Tier 2: Golden Standard</td>
+              <td class="py-4 px-6 font-semibold text-sky-400">Tier 2: 黄金标准推荐</td>
               <td class="py-4 px-6 font-mono text-xs">Qwen3-30B-A3B (MoE)</td>
               <td class="py-4 px-6 text-sky-300 font-bold">3B Active / token</td>
               <td class="py-4 px-6 font-mono text-green-400">60-90ms</td>
-              <td class="py-4 px-6 text-gray-400">Production routing: 30B capacity at 3B inference cost</td>
+              <td class="py-4 px-6 text-gray-400">生产级工作流路由：享受 30B 表征容量，仅耗 3B 推理算力</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-blue-400">Tier 2: Single-GPU</td>
+              <td class="py-4 px-6 font-semibold text-blue-400">Tier 2: 单卡企业私有</td>
               <td class="py-4 px-6 font-mono text-xs">gpt-oss-20b (MXFP4 MoE)</td>
               <td class="py-4 px-6">3.6B Active</td>
               <td class="py-4 px-6 font-mono text-green-400">~80ms</td>
-              <td class="py-4 px-6 text-gray-400">Enterprise on-premise single GPU, Apache 2.0</td>
+              <td class="py-4 px-6 text-gray-400">企业本地单张 GPU 部署，宽松 Apache 2.0 协议</td>
             </tr>
             <tr class="hover:bg-white/[0.02]">
-              <td class="py-4 px-6 font-semibold text-indigo-300">Tier 3: Fallback</td>
+              <td class="py-4 px-6 font-semibold text-indigo-300">Tier 3: 复杂长尾仲裁</td>
               <td class="py-4 px-6 font-mono text-xs">DeepSeek-V4.1-Flash / V3.2</td>
               <td class="py-4 px-6">8B~16B Active (552B)</td>
               <td class="py-4 px-6 font-mono text-yellow-400">200-400ms</td>
-              <td class="py-4 px-6 text-gray-400">Complex multi-hop tool arbitration & ambiguous edge cases</td>
+              <td class="py-4 px-6 text-gray-400">多步骤工具调用仲裁，低置信度未知样本弹性兜底</td>
             </tr>
           </tbody>
         </table>
@@ -322,10 +444,10 @@
   </section>
 
   <!-- Quickstart Code Section -->
-  <section id="quickstart" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t border-dark-border">
+  <section id="quickstart" class="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t border-dark-border">
     <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-white mb-3">Quick Start in 30 Seconds</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Drop-in Python client compatible with vLLM, SGLang, and OpenAI endpoints.</p>
+      <h2 class="text-3xl font-bold text-white mb-3" data-i18n="qs_title">30 秒极速上手</h2>
+      <p class="text-gray-400 max-w-xl mx-auto" data-i18n="qs_subtitle">开箱即用的 Python SDK，完美兼容本地 vLLM、SGLang 及标准 OpenAI 兼容服务。</p>
     </div>
 
     <div class="glass-card rounded-2xl overflow-hidden border border-dark-border">
@@ -344,7 +466,7 @@
     SECURITY = <span class="text-green-300">"security"</span>
     ESCALATE = <span class="text-green-300">"human_review"</span>
 
-<span class="text-gray-500"># Connect to local vLLM or cloud endpoint</span>
+<span class="text-gray-500"># 连接本地 SGLang / vLLM 或外部端点</span>
 client = <span class="text-yellow-300">OpenJevProClient</span>(
     base_url=<span class="text-green-300">"http://localhost:8000/v1"</span>,
     model=<span class="text-green-300">"Qwen/Qwen3-4B-Instruct"</span>,
@@ -358,59 +480,59 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
     criteria=<span class="text-green-300">"Classify incoming ticket to the appropriate response team."</span>
 )
 
-<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Selected Action: {decision.value}"</span>)       <span class="text-gray-500"># Output: 'security'</span>
-<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Confidence: {decision.confidence:.2%}"</span>)     <span class="text-gray-500"># Output: '92.40%'</span>
-<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Abstained: {decision.abstained}"</span>)             <span class="text-gray-500"># Output: False</span></code></pre>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Selected Action: {decision.value}"</span>)       <span class="text-gray-500"># 输出: 'security'</span>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Confidence: {decision.confidence:.2%}"</span>)     <span class="text-gray-500"># 输出: '92.40%'</span>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Abstained: {decision.abstained}"</span>)             <span class="text-gray-500"># 输出: False</span></code></pre>
       </div>
     </div>
   </section>
 
   <!-- Commercial Licensing Section -->
-  <section id="commercial" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t border-dark-border">
+  <section id="commercial" class="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t border-dark-border">
     <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-white mb-3">Licensing & Commercial Editions</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Dual-structure tailored for open-source research and enterprise scale.</p>
+      <h2 class="text-3xl font-bold text-white mb-3" data-i18n="lic_title">开源协议与商用授权</h2>
+      <p class="text-gray-400 max-w-xl mx-auto" data-i18n="lic_subtitle">双轨授权设计：兼顾开源学术研究的自由开放与企业生产部署的合规保障。</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <!-- Community -->
       <div class="glass-card p-8 rounded-2xl border border-dark-border flex flex-col justify-between">
         <div>
-          <div class="text-xs font-mono uppercase tracking-wider text-blue-400 mb-2">Open-Source Edition</div>
+          <div class="text-xs font-mono uppercase tracking-wider text-blue-400 mb-2" data-i18n="lic_comm_badge">社区开源版本</div>
           <h3 class="text-2xl font-bold text-white mb-4">PolyForm Noncommercial</h3>
-          <p class="text-sm text-gray-400 mb-6">
-            100% free and open for personal learning, academic research, non-profit institutions, and non-commercial development.
+          <p class="text-sm text-gray-400 mb-6" data-i18n="lic_comm_desc">
+            100% 自由开放，专为个人学习、学术科研、非营利组织及非商业项目设计。
           </p>
           <ul class="text-sm space-y-2 text-gray-300 mb-6 font-mono text-xs">
-            <li class="flex items-center"><span class="text-green-400 mr-2">✔</span> Full source code access on GitHub</li>
-            <li class="flex items-center"><span class="text-green-400 mr-2">✔</span> Python SDK & Calibration Tools</li>
-            <li class="flex items-center"><span class="text-green-400 mr-2">✔</span> Community Issue Support</li>
+            <li class="flex items-center"><span class="text-green-400 mr-2">✔</span> <span data-i18n="lic_comm_1">GitHub 完整源码公开</span></li>
+            <li class="flex items-center"><span class="text-green-400 mr-2">✔</span> <span data-i18n="lic_comm_2">Python SDK 与离线标定工具</span></li>
+            <li class="flex items-center"><span class="text-green-400 mr-2">✔</span> <span data-i18n="lic_comm_3">社区 Issue 交流支持</span></li>
           </ul>
         </div>
-        <a href="https://github.com/zhangcy122/OpenJevPro" class="w-full text-center py-3 rounded-lg bg-gray-800 hover:bg-gray-700 font-medium text-sm transition">
-          View on GitHub
+        <a href="https://github.com/zhangcy122/OpenJevPro" class="w-full text-center py-3 rounded-lg bg-gray-800 hover:bg-gray-700 font-medium text-sm transition" data-i18n="lic_comm_btn">
+          前往 GitHub 仓库
         </a>
       </div>
 
       <!-- Commercial -->
       <div class="glass-card p-8 rounded-2xl border-2 border-blue-500/60 shadow-xl shadow-blue-900/20 flex flex-col justify-between relative">
-        <div class="absolute -top-3 right-6 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-          Enterprise & Production
+        <div class="absolute -top-3 right-6 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="lic_ent_badge">
+          企业生产合规
         </div>
         <div>
-          <div class="text-xs font-mono uppercase tracking-wider text-blue-400 mb-2">Commercial License</div>
-          <h3 class="text-2xl font-bold text-white mb-4">Commercial Grant & SLA</h3>
-          <p class="text-sm text-gray-400 mb-6">
-            Required for enterprise production deployments, commercial SaaS integration, managed APIs, or commercial redistributions.
+          <div class="text-xs font-mono uppercase tracking-wider text-blue-400 mb-2" data-i18n="lic_ent_tag">商业授权许可</div>
+          <h3 class="text-2xl font-bold text-white mb-4" data-i18n="lic_ent_title">Commercial Grant & SLA</h3>
+          <p class="text-sm text-gray-400 mb-6" data-i18n="lic_ent_desc">
+            适用于企业生产环境部署、商业 SaaS 嵌入、托管 API 运营或商业闭源分发。
           </p>
           <ul class="text-sm space-y-2 text-gray-300 mb-6 font-mono text-xs">
-            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Enterprise Production License</li>
-            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Custom Sizing & Temperature Calibration</li>
-            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> Commercial Warranty & Dedicated Support</li>
+            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> <span data-i18n="lic_ent_1">企业专属商用生产授权许可</span></li>
+            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> <span data-i18n="lic_ent_2">定制模型尺寸匹配与专属温度标定</span></li>
+            <li class="flex items-center"><span class="text-blue-400 mr-2">✔</span> <span data-i18n="lic_ent_3">商业 SLA 质保与专属专家支持</span></li>
           </ul>
         </div>
-        <a href="mailto:zhangcy122@gmail.com?subject=OpenJevPro%20Commercial%20License%20Inquiry" class="w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 font-medium text-sm text-white transition shadow-md shadow-blue-900/30">
-          Apply for Commercial License →
+        <a href="mailto:zhangcy122@gmail.com?subject=OpenJevPro%20Commercial%20License%20Inquiry" class="w-full text-center py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 font-medium text-sm text-white transition shadow-md shadow-blue-900/30" data-i18n="lic_ent_btn">
+          申请商业使用授权 →
         </a>
       </div>
     </div>
@@ -425,7 +547,7 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
         <span>Hosted on Hostinger VPS</span>
       </div>
       <div>
-        <span>Licensed under <a href="https://github.com/zhangcy122/OpenJevPro/blob/main/LICENSE" class="text-blue-400 hover:underline">PolyForm Noncommercial 1.0.0</a>. Commercial use requires license.</span>
+        <span data-i18n-html="footer_license">开源遵循 <a href="https://github.com/zhangcy122/OpenJevPro/blob/main/LICENSE" class="text-blue-400 hover:underline">PolyForm Noncommercial 1.0.0</a> 协议。企业商业生产需获得项目方授权。</span>
       </div>
       <div>
         <a href="https://github.com/zhangcy122/OpenJevPro" class="hover:text-gray-300 transition">GitHub</a>
@@ -433,7 +555,204 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
     </div>
   </footer>
 
+  <!-- Multilingual & Interactive Scripts -->
   <script>
+    const translations = {
+      zh: {
+        page_title: "OpenJevPro — 超低延迟、类型安全的开源 AI 决策引擎",
+        nav_features: "核心特性",
+        nav_playground: "交互模拟",
+        nav_benchmarks: "实测基准",
+        nav_models: "推荐模型",
+        nav_quickstart: "快速上手",
+        nav_commercial: "授权协议",
+        hero_pill_1: "🚀 TypeSafe Jev 开源生产级替代方案",
+        hero_pill_2: "System 1 极速 AI 决策引擎",
+        hero_title: "超低延迟、严格类型安全的 <span class=\"bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-300 bg-clip-text text-transparent\">AI 决策引擎</span>",
+        hero_desc: "将开源大模型转化为非自回归决策原语（<code class=\"text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded\">Choice&lt;T&gt;</code>, <code class=\"text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded\">Noul</code>, <code class=\"text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded\">Score</code>）。语法层 100% 保证 Schema 合规，后验概率经数学标定，专为工作流路由与智能体护栏打造。",
+        hero_btn_repo: "查看 GitHub 开源仓库",
+        hero_btn_demo: "体验实时交互模拟",
+        stat_latency: "端到端极速延迟",
+        stat_cost: "近零生成推理成本",
+        stat_safety: "语法约束类型安全",
+        stat_ece: "概率数学标定置信度",
+        bench_title: "通用开源模型 + 结构化约束 能否逼近 Jev？",
+        bench_subtitle: "答案是肯定的。多项独立实测证明：通用开源模型无需微调，仅靠 Schema 强制解码，其决策精度与专用 Jev 在统计学上置信区间重叠。",
+        bench_luna_desc: "通用巨模型上限。单次调用计费昂贵，延迟约 300~600ms，需依赖闭源云厂商。",
+        bench_jev_desc: "专用微型决策模型。RLCD 标定，~25-45ms 极低延迟，但属于闭源商业付费产品。",
+        bench_openjev_desc: "<strong>无需专项训练</strong>。仅依靠 SGLang 词表约束解码，与 Jev 置信区间重叠，完全私有化且自由可审计！",
+        bench_citations_head: "独立实测基准与学术验证文献",
+        bench_cite_1: "横向评测 Jev vs GPT-5.6 vs openjev-sglang，实测开源模型精度逼近 Jev，95% 置信区间重叠。",
+        bench_cite_2: "独立复现仓库：评测 Qwen 3.8 27B / Cerebras 结构化输出 vs Jev，公开完整 Raw Results 与代码。",
+        bench_cite_3: "100 条评论 × 3 次复现对比，深度分析通用大模型准确率上限与极速轻量模型的速度/成本优势。",
+        bench_cite_4: "TypeSafe 官方博客：定义无思维链（No-CoT）类型化概率决策原语与 RLCD 标定技术背景。",
+        demo_title: "⚡ 实时决策模拟器",
+        demo_subtitle: "输入任意业务上下文，体验 OpenJevPro 如何瞬时输出严格类型化、概率已标定的决策分布。",
+        demo_input_label: "输入上下文 / 工单状态 (State)",
+        demo_schema_label: "目标候选枚举 (Enum Schema)",
+        demo_model_label: "推理模型:",
+        demo_eval_btn: "执行单 Token 决策 →",
+        demo_out_header: "DECISION OUTPUT (JSON)",
+        demo_choice_label: "选中决策值",
+        demo_conf_label: "标定置信度",
+        feat_title: "核心决策原语 (Primitives)",
+        feat_subtitle: "完美对齐 TypeSafe Jev 语义规范，兼顾原生开源 LLM 的加速吞吐。",
+        feat_choice_desc: "基于离散 Enum 类型的多分类路由决策。在词表层限制合法候选范围并计算条件序列对数似然，零格式解析错误。",
+        feat_choice_1: "语法约束解码 (Grammar Constraints)",
+        feat_choice_2: "全候选 Softmax 归一化概率分布",
+        feat_noul_desc: "二元断言判断器（$P_{true}, P_{false}$），提供严谨的置信区间与不确定度量，专用于智能体策略门控与内容合规护栏。",
+        feat_noul_1: "后验真值概率数学标定 (Calibrated P)",
+        feat_noul_2: "内置弃权与歧义判定 (Abstention)",
+        feat_score_desc: "有序严重级或优先级评分原语。根据各分段概率质量分布计算连续数学期望值，杜绝离散幻觉跳变。",
+        feat_score_1: "连续期望得分计算 (Expected Value)",
+        feat_score_2: "动态分级弹性分流",
+        model_title: "🤖 推荐分层模型矩阵 (2025–2026)",
+        model_subtitle: "针对非思考决策优化的极速分级策略，支持单卡边缘与云端兜底弹性调度。",
+        tbl_col_tier: "层级 (Tier)",
+        tbl_col_arch: "模型架构",
+        tbl_col_param: "激活参数量",
+        tbl_col_lat: "典型延迟",
+        tbl_col_workload: "适用业务场景",
+        qs_title: "30 秒极速上手",
+        qs_subtitle: "开箱即用的 Python SDK，完美兼容本地 vLLM、SGLang 及标准 OpenAI 兼容服务。",
+        lic_title: "开源协议与商用授权",
+        lic_subtitle: "双轨授权设计：兼顾开源学术研究的自由开放与企业生产部署的合规保障。",
+        lic_comm_badge: "社区开源版本",
+        lic_comm_desc: "100% 自由开放，专为个人学习、学术科研、非营利组织及非商业项目设计。",
+        lic_comm_1: "GitHub 完整源码公开",
+        lic_comm_2: "Python SDK 与离线标定工具",
+        lic_comm_3: "社区 Issue 交流支持",
+        lic_comm_btn: "前往 GitHub 仓库",
+        lic_ent_badge: "企业生产合规",
+        lic_ent_tag: "商业授权许可",
+        lic_ent_title: "Commercial Grant & SLA",
+        lic_ent_desc: "适用于企业生产环境部署、商业 SaaS 嵌入、托管 API 运营或商业闭源分发。",
+        lic_ent_1: "企业专属商用生产授权许可",
+        lic_ent_2: "定制模型尺寸匹配与专属温度标定",
+        lic_ent_3: "商业 SLA 质保与专属专家支持",
+        lic_ent_btn: "申请商业使用授权 →",
+        footer_license: "开源遵循 <a href=\"https://github.com/zhangcy122/OpenJevPro/blob/main/LICENSE\" class=\"text-blue-400 hover:underline\">PolyForm Noncommercial 1.0.0</a> 协议。企业商业生产需获得项目方授权。"
+      },
+      en: {
+        page_title: "OpenJevPro — High-Throughput Type-Safe AI Decision Engine",
+        nav_features: "Features",
+        nav_playground: "Playground",
+        nav_benchmarks: "Benchmarks",
+        nav_models: "Model Tiers",
+        nav_quickstart: "Quickstart",
+        nav_commercial: "Commercial",
+        hero_pill_1: "🚀 Open-Source Alternative to TypeSafe Jev",
+        hero_pill_2: "System 1 AI Decision Engine",
+        hero_title: "Type-Safe, Calibrated AI Decisions at <span class=\"bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-300 bg-clip-text text-transparent\">Ultra-Low Latency</span>",
+        hero_desc: "Turn open-weight LLMs into non-autoregressive decision primitives (<code class=\"text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded\">Choice&lt;T&gt;</code>, <code class=\"text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded\">Noul</code>, <code class=\"text-blue-300 font-mono text-sm bg-blue-950/60 px-1.5 py-0.5 rounded\">Score</code>). Guaranteed schema adherence with mathematically calibrated posterior confidence for workflow routing and Agent guardrails.",
+        hero_btn_repo: "Explore GitHub Repository",
+        hero_btn_demo: "Try Live Interactive Demo",
+        stat_latency: "End-to-End Latency",
+        stat_cost: "Near-Zero Output Cost",
+        stat_safety: "Type Safety via Grammar",
+        stat_ece: "Calibrated Confidence",
+        bench_title: "Can Generic Open LLMs + Structured Output Match Jev?",
+        bench_subtitle: "Yes, empirically. Multiple independent benchmarks confirm that generic open-source models with schema-constrained decoding match Jev's decision accuracy without fine-tuning.",
+        bench_luna_desc: "General giant model ceiling. Expensive per-call pricing, 300~600ms latency, proprietary cloud lock-in.",
+        bench_jev_desc: "Dedicated compact decision model. RLCD calibrated, ~25-45ms latency, but proprietary commercial closed source.",
+        bench_openjev_desc: "<strong>Zero fine-tuning needed</strong>. SGLang grammar decoding matches Jev within overlapping confidence intervals. 100% self-hosted & auditable!",
+        bench_citations_head: "Independent Empirical Benchmarks & Citations",
+        bench_cite_1: "Cross-comparison across 242 cases: openjev-sglang approaches Jev accuracy with overlapping 95% confidence intervals.",
+        bench_cite_2: "Independent reproducibility repo: Qwen 3.8 27B / Cerebras structured output vs Jev with raw results & code.",
+        bench_cite_3: "100 reviews × 3 runs comparing large general LLM accuracy ceiling vs lightweight fast decision latency/cost.",
+        bench_cite_4: "TypeSafe official launch blog: technical definition of System One No-CoT probabilistic primitives & RLCD.",
+        demo_title: "⚡ Live Decision Simulator",
+        demo_subtitle: "Test how OpenJevPro maps arbitrary state inputs into calibrated, typed decision distributions.",
+        demo_input_label: "Input Context / Ticket State",
+        demo_schema_label: "Target Enum Schema",
+        demo_model_label: "Inference Model:",
+        demo_eval_btn: "Evaluate 1-Token Decision →",
+        demo_out_header: "DECISION OUTPUT (JSON)",
+        demo_choice_label: "Selected Choice",
+        demo_conf_label: "Calibrated Confidence",
+        feat_title: "Core Decision Primitives",
+        feat_subtitle: "Replicating TypeSafe Jev semantics with native open-source LLM acceleration.",
+        feat_choice_desc: "Multi-class categorical routing over strict Enum types. Computes sequence-level conditional log-likelihood across choices with zero parsing errors.",
+        feat_choice_1: "Grammatical Decode Constraints",
+        feat_choice_2: "Full Categorical Softmax Distribution",
+        feat_noul_desc: "Binary assertion evaluation ($P_{true}, P_{false}$) providing calibrated confidence with formal uncertainty margins for policy gates & guardrails.",
+        feat_noul_1: "Calibrated Posterior True Probability",
+        feat_noul_2: "Integrated Ambiguity Flagging",
+        feat_score_desc: "Ordinal ranking across predefined severity tiers. Calculates expected mathematical value based on probability mass distribution.",
+        feat_score_1: "Continuous Expected Score Metric",
+        feat_score_2: "Tiered Priority Stratification",
+        model_title: "🤖 Recommended Model Tiers (2025–2026)",
+        model_subtitle: "Optimized for low-latency non-thinking classification with tiered cloud fallbacks.",
+        tbl_col_tier: "Tier",
+        tbl_col_arch: "Model Architecture",
+        tbl_col_param: "Active Parameters",
+        tbl_col_lat: "Latency",
+        tbl_col_workload: "Ideal Workload",
+        qs_title: "Quick Start in 30 Seconds",
+        qs_subtitle: "Drop-in Python client compatible with vLLM, SGLang, and OpenAI endpoints.",
+        lic_title: "Licensing & Commercial Editions",
+        lic_subtitle: "Dual-structure tailored for open-source research and enterprise scale.",
+        lic_comm_badge: "Open-Source Edition",
+        lic_comm_desc: "100% free and open for personal learning, academic research, non-profit institutions, and non-commercial development.",
+        lic_comm_1: "Full source code access on GitHub",
+        lic_comm_2: "Python SDK & Calibration Tools",
+        lic_comm_3: "Community Issue Support",
+        lic_comm_btn: "View on GitHub",
+        lic_ent_badge: "Enterprise & Production",
+        lic_ent_tag: "Commercial License",
+        lic_ent_title: "Commercial Grant & SLA",
+        lic_ent_desc: "Required for enterprise production deployments, commercial SaaS integration, managed APIs, or commercial redistributions.",
+        lic_ent_1: "Enterprise Production License",
+        lic_ent_2: "Custom Sizing & Temperature Calibration",
+        lic_ent_3: "Commercial Warranty & Dedicated Support",
+        lic_ent_btn: "Apply for Commercial License →",
+        footer_license: "Licensed under <a href=\"https://github.com/zhangcy122/OpenJevPro/blob/main/LICENSE\" class=\"text-blue-400 hover:underline\">PolyForm Noncommercial 1.0.0</a>. Commercial use requires license."
+      }
+    };
+
+    let currentLang = localStorage.getItem('openjev_lang') || 'zh';
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('openjev_lang', lang);
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+      // Update button visual states
+      const btnZh = document.getElementById('btn-lang-zh');
+      const btnEn = document.getElementById('btn-lang-en');
+      if (lang === 'zh') {
+        btnZh.className = "px-2.5 py-1 rounded-md transition-all bg-blue-600 text-white shadow-sm flex items-center space-x-1";
+        btnEn.className = "px-2.5 py-1 rounded-md transition-all text-gray-400 hover:text-white flex items-center space-x-1";
+      } else {
+        btnEn.className = "px-2.5 py-1 rounded-md transition-all bg-blue-600 text-white shadow-sm flex items-center space-x-1";
+        btnZh.className = "px-2.5 py-1 rounded-md transition-all text-gray-400 hover:text-white flex items-center space-x-1";
+      }
+
+      // Update text nodes
+      const dict = translations[lang];
+      document.title = dict.page_title;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.innerText = dict[key];
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      switchLanguage(currentLang);
+    });
+
+    // Simulator logic
     function runSimulation() {
       const btn = document.getElementById('demo-eval-btn');
       const latencyEl = document.getElementById('demo-latency');
@@ -443,12 +762,12 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
       const schema = document.getElementById('demo-schema').value;
 
       btn.disabled = true;
-      btn.innerText = 'Evaluating...';
+      btn.innerText = currentLang === 'zh' ? '评估计算中...' : 'Evaluating...';
       latencyEl.innerText = '⚡ Processing...';
 
       setTimeout(() => {
         btn.disabled = false;
-        btn.innerText = 'Evaluate Decision →';
+        btn.innerText = translations[currentLang].demo_eval_btn;
         const ms = Math.floor(Math.random() * 25) + 38;
         latencyEl.innerText = `⚡ ${ms}ms`;
 
