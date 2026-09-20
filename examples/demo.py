@@ -1,6 +1,5 @@
-from enum import StrEnum
-from openjev.schemas import ChoiceDecision
-from openjev.client import OpenJevClient
+from openjevpro.schemas import ChoiceDecision
+from openjevpro.client import OpenJevProClient
 
 class IntentRoute(StrEnum):
     SEARCH = "web_search"
@@ -9,8 +8,8 @@ class IntentRoute(StrEnum):
     REQUEST_CLARIFICATION = "request_clarification"
 
 def main():
-    print("OpenJev Demo: Routing Workflow")
-    client = OpenJevClient(
+    print("OpenJevPro Demo: Routing Workflow")
+    client = OpenJevProClient(
         base_url="http://localhost:8000/v1",
         model="Qwen/Qwen3-4B-Instruct",
         temperature_scaling=1.35,

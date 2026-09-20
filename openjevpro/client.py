@@ -3,10 +3,10 @@ from typing import Dict, Any, Type, Union, List, Optional
 from enum import Enum
 import requests
 
-from openjev.schemas import ChoiceDecision, NoulDecision
-from openjev.calibrator import TemperatureCalibrator
+from openjevpro.schemas import ChoiceDecision, NoulDecision
+from openjevpro.calibrator import TemperatureCalibrator
 
-class OpenJevClient:
+class OpenJevProClient:
     """Client for querying open-source LLM APIs with Jev-style typed probabilistic decisions."""
 
     def __init__(
@@ -93,3 +93,7 @@ class OpenJevClient:
             abstained=abstained,
             raw_logits=extracted_logits
         )
+
+# Backward compatibility alias
+OpenJevClient = OpenJevProClient
+

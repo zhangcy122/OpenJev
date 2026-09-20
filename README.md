@@ -1,22 +1,22 @@
-# OpenJev
+# OpenJevPro
 
-> **Open-Source Alternative to TypeSafe Jev**  
+> **Production-Grade Open Alternative to TypeSafe Jev**  
 > Transform modern open-weight LLMs (Qwen3, DeepSeek-V4.1, Gemma 4, gpt-oss) into high-throughput, typed probabilistic decision services (System 1 Decisions).
 
 ---
 
 ## 💡 Overview
 
-**OpenJev** is a lightweight, high-performance framework designed to replicate and extend the core capabilities of TypeSafe Jev using open-source Large Language Models. 
+**OpenJevPro** is a lightweight, high-performance framework designed to replicate and extend the core capabilities of TypeSafe Jev using open-source Large Language Models. 
 
-Instead of generating free-form, uncalibrated natural language strings, OpenJev provides non-autoregressive, strictly typed decision primitives (**`Choice<T>`**, **`Noul`**, **`Score`**) with mathematically calibrated posterior probabilities.
+Instead of generating free-form, uncalibrated natural language strings, OpenJevPro provides non-autoregressive, strictly typed decision primitives (**`Choice<T>`**, **`Noul`**, **`Score`**) with mathematically calibrated posterior probabilities.
 
 ```
 Incoming State & Questions
            │
            ▼
 ┌───────────────────────────────────────────────────────────┐
-│                    OpenJev Engine                         │
+│                    OpenJevPro Engine                      │
 │                                                           │
 │  1. Schema Enforcement (vLLM Guided Decoding / Grammar)   │
 │  2. Candidate Log-Likelihood Extraction (Logprobs)        │
@@ -44,7 +44,7 @@ All primitives incorporate first-class **Abstention & Fallback Options** (`UNKNO
 
 ## 🤖 Recommended Base Models (2025–2026 Tiers)
 
-For constrained decision tasks (classification, intent detection, workflow routing, guardrails), **bigger is not always better**. OpenJev follows a tiered deployment strategy prioritizing non-thinking mode, compact active parameter sizes, and low latency:
+For constrained decision tasks (classification, intent detection, workflow routing, guardrails), **bigger is not always better**. OpenJevPro follows a tiered deployment strategy prioritizing non-thinking mode, compact active parameter sizes, and low latency:
 
 | Tier | Model | Architecture & Active Params | Context | Recommended Use Case |
 | :--- | :--- | :--- | :--- | :--- |
@@ -58,7 +58,7 @@ For constrained decision tasks (classification, intent detection, workflow routi
 | **Tier 3: Complex Arbitration & Fallback** | **DeepSeek-V4.1-Flash / V3.2** | MoE (552B total, 8B/16B active) • API/Cluster | 1M | Hard-sample fallback, multi-step tool plan arbitration |
 | | **Qwen3-Coder-30B-A3B** | MoE (30B total, 3B active) | 256K | Repo-level action routing, MCP tool selection |
 
-> **Best Practice**: Run Tier 1/2 models with reasoning/thinking disabled (`/no_think`) for routine requests to achieve sub-100ms TTFT. Only escalate to Tier 3 (e.g. DeepSeek-V3.2) when `confidence < threshold` or when an explicit `HUMAN_REVIEW` / `UNKNOWN` signal is triggered.
+> **Best Practice**: Run Tier 1/2 models with reasoning/thinking disabled (`/no_think`) for routine requests to achieve sub-100ms TTFT. Only escalate to Tier 3 (e.g. DeepSeek-V4.1-Flash) when `confidence < threshold` or when an explicit `HUMAN_REVIEW` / `UNKNOWN` signal is triggered.
 
 ---
 
@@ -72,7 +72,7 @@ For a state $x$ and discrete candidate $y_i$, candidate scoring evaluates the co
 $$s_i = \sum_{t=1}^{|y_i|} \log P_\theta(y_{i,t} \mid x, y_{i,<t})$$
 
 ### 3. Confidence Calibration
-Raw LLM token logprobs often exhibit severe **overconfidence**. OpenJev applies domain-level calibration:
+Raw LLM token logprobs often exhibit severe **overconfidence**. OpenJevPro applies domain-level calibration:
 $$p_i = \frac{\exp(s_i / T)}{\sum_{j} \exp(s_j / T)}$$
 where temperature $T$ is fitted on offline validation benchmarks to minimize Expected Calibration Error (ECE).
 
@@ -83,8 +83,8 @@ where temperature $T$ is fitted on offline validation benchmarks to minimize Exp
 ### Installation
 
 ```bash
-git clone https://github.com/zhangcy122/OpenJev.git
-cd OpenJev
+git clone https://github.com/zhangcy122/OpenJevPro.git
+cd OpenJevPro
 pip install -r requirements.txt
 ```
 
@@ -92,8 +92,8 @@ pip install -r requirements.txt
 
 ```python
 from enum import StrEnum
-from openjev.schemas import ChoiceDecision
-from openjev.client import OpenJevClient
+from openjevpro.schemas import ChoiceDecision
+from openjevpro.client import OpenJevProClient
 
 class TicketRoute(StrEnum):
     BILLING = "billing"
@@ -102,7 +102,7 @@ class TicketRoute(StrEnum):
     ESCALATE = "human_review"
 
 # Initialized with a fast Tier 1/2 model (e.g., Qwen3-4B or Qwen3-30B-A3B)
-client = OpenJevClient(
+client = OpenJevProClient(
     base_url="http://localhost:8000/v1",  # vLLM / SGLang endpoint
     model="Qwen/Qwen3-4B-Instruct",
     temperature_scaling=1.30,
@@ -131,6 +131,7 @@ print(f"Abstained: {decision.abstained}")
 
 ---
 
-## 📄 License
+## 📄 License & Commercial Terms
 
-MIT License.
+* **Non-Commercial & Community Use**: OpenJevPro is licensed under the **[PolyForm Noncommercial License 1.0.0](LICENSE)**. Free for personal learning, academic research, non-profit institutions, and non-commercial development.
+* **Commercial Use**: Any use within commercial enterprises, production environments, commercial SaaS products, or paid services **requires a commercial license from the project maintainers**. See **[LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md)** for details on applying for commercial authorization.
