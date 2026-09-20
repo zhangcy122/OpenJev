@@ -1,7 +1,7 @@
 # OpenJev
 
 > **Open-Source Alternative to TypeSafe Jev**  
-> Transform modern open-weight LLMs (Qwen3, DeepSeek-V3.2, Gemma 4, gpt-oss) into high-throughput, typed probabilistic decision services (System 1 Decisions).
+> Transform modern open-weight LLMs (Qwen3, DeepSeek-V4.1, Gemma 4, gpt-oss) into high-throughput, typed probabilistic decision services (System 1 Decisions).
 
 ---
 
@@ -55,7 +55,7 @@ For constrained decision tasks (classification, intent detection, workflow routi
 | | **Gemma 4 26B-A4B** | MoE (25.2B total, 3.8B active) | 256K | Server-grade fast decision router, native function calling |
 | | **gpt-oss-20b** | MoE (21B total, 3.6B active) • MXFP4 | 128K | Single-GPU server deployment, Apache 2.0 open license |
 | | **Mistral Small 3.2 / 4** | 24B Dense / 119B MoE (6B active) | 128K–256K | General enterprise workflow classification and agent routing |
-| **Tier 3: Complex Arbitration & Fallback** | **DeepSeek-V3.2** | MoE (671B total, 37B active) • DSA | 128K | Hard-sample fallback, multi-step tool plan arbitration |
+| **Tier 3: Complex Arbitration & Fallback** | **DeepSeek-V4.1-Flash / V3.2** | MoE (552B total, 8B/16B active) • API/Cluster | 1M | Hard-sample fallback, multi-step tool plan arbitration |
 | | **Qwen3-Coder-30B-A3B** | MoE (30B total, 3B active) | 256K | Repo-level action routing, MCP tool selection |
 
 > **Best Practice**: Run Tier 1/2 models with reasoning/thinking disabled (`/no_think`) for routine requests to achieve sub-100ms TTFT. Only escalate to Tier 3 (e.g. DeepSeek-V3.2) when `confidence < threshold` or when an explicit `HUMAN_REVIEW` / `UNKNOWN` signal is triggered.
