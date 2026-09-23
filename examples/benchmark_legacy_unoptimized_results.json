@@ -1,45 +1,42 @@
 {
   "summary": {
     "total_samples": 36,
-    "total_duration_sec": 17.67019820213318,
     "engine_metrics": {
       "TypeSafe Jev (Commercial)": {
-        "overall_accuracy": 80.56,
+        "accuracy": 80.56,
         "correct_count": 29,
-        "in_domain_accuracy": 96.67,
-        "in_domain_count": "29/30",
-        "oos_recall": 0.0,
-        "oos_count": "0/6",
+        "jev_agreement_rate": 100.0,
+        "abstained_count": 0,
+        "abstained_rate": 0.0,
         "mean_latency_ms": 777.2,
-        "p50_latency_ms": 766.8,
+        "p50_latency_ms": 771.9,
         "p95_latency_ms": 915.3,
         "ece": 0.075
       },
-      "OpenJevPro (gemma4:cloud)": {
-        "overall_accuracy": 94.44,
-        "correct_count": 34,
-        "in_domain_accuracy": 93.33,
-        "in_domain_count": "28/30",
-        "oos_recall": 100.0,
-        "oos_count": "6/6",
-        "mean_latency_ms": 1092.6,
-        "p50_latency_ms": 1083.9,
-        "p95_latency_ms": 1731.1,
-        "ece": 0.0253
+      "OpenJevPro (Calibrated)": {
+        "accuracy": 100.0,
+        "correct_count": 36,
+        "jev_agreement_rate": 80.56,
+        "abstained_count": 6,
+        "abstained_rate": 16.67,
+        "mean_latency_ms": 5081.3,
+        "p50_latency_ms": 4979.0,
+        "p95_latency_ms": 8463.6,
+        "ece": 0.0042
       },
-      "Direct LLM (gemma4:cloud + JSON)": {
-        "overall_accuracy": 97.22,
-        "correct_count": 35,
-        "in_domain_accuracy": 96.67,
-        "in_domain_count": "29/30",
-        "oos_recall": 100.0,
-        "oos_count": "6/6",
-        "mean_latency_ms": 771.5,
-        "p50_latency_ms": 630.3,
-        "p95_latency_ms": 1372.0,
-        "ece": 0.0289
+      "Direct LLM (gpt-oss:20b-cloud + JSON)": {
+        "accuracy": 80.56,
+        "correct_count": 29,
+        "jev_agreement_rate": 86.11,
+        "abstained_count": 0,
+        "abstained_rate": 0.0,
+        "mean_latency_ms": 5047.8,
+        "p50_latency_ms": 4724.1,
+        "p95_latency_ms": 11460.6,
+        "ece": 0.0278
       }
-    }
+    },
+    "total_duration_sec": 12.302883386611938
   },
   "records": [
     {
@@ -60,28 +57,27 @@
           "abstained": false,
           "latency_ms": 778.7277698516846
         },
-        "OpenJevPro (gemma4:cloud)": {
-          "choice": "UNKNOWN",
-          "confidence": 0.21216706730413887,
+        "OpenJevPro (Calibrated)": {
+          "choice": "card_arrival",
+          "confidence": 0.9943333840219487,
           "probabilities": {
-            "card_arrival": 0.21216706730413887,
-            "change_pin": 0.12632469024465198,
-            "top_up_failed": 0.12632469024465198,
-            "lost_or_stolen_card": 0.14649680909114107,
-            "transfer_fee_charged": 0.12632469024465198,
-            "extra_charge_on_statement": 0.12632469024465198,
-            "UNKNOWN": 0.13603736262611207
+            "card_arrival": 0.9943333840219487,
+            "change_pin": 0.00101327094552161,
+            "top_up_failed": 0.0009409263444684978,
+            "lost_or_stolen_card": 0.0010911778749464417,
+            "transfer_fee_charged": 0.0008737469377048952,
+            "extra_charge_on_statement": 0.0008737469377048952,
+            "UNKNOWN": 0.0008737469377048952
           },
-          "abstained": true,
-          "tentative_value": "card_arrival",
-          "latency_ms": 1731.1208248138428
+          "abstained": false,
+          "latency_ms": 5382.383823394775
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 0.85,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 681.027889251709
+          "latency_ms": 2695.561647415161
         }
       }
     },
@@ -103,28 +99,27 @@
           "abstained": false,
           "latency_ms": 794.8718070983887
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "card_arrival",
-          "confidence": 0.9963264443328732,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.9963264443328732,
-            "change_pin": 0.0006045127918139874,
-            "top_up_failed": 0.0006045127918139874,
-            "lost_or_stolen_card": 0.0006509917080568836,
-            "transfer_fee_charged": 0.0006045127918139874,
-            "extra_charge_on_statement": 0.0006045127918139874,
-            "UNKNOWN": 0.0006045127918139874
+            "card_arrival": 0.9963727546586836,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 886.6541385650635
+          "latency_ms": 2132.5676441192627
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "card_arrival",
-          "confidence": 1.0,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 629.2309761047363
+          "latency_ms": 1983.0975532531738
         }
       }
     },
@@ -146,28 +141,27 @@
           "abstained": false,
           "latency_ms": 826.3018131256104
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "card_arrival",
-          "confidence": 0.9963264443328732,
+          "confidence": 0.9944159922702822,
           "probabilities": {
-            "card_arrival": 0.9963264443328732,
-            "change_pin": 0.0006045127918139874,
-            "top_up_failed": 0.0006045127918139874,
-            "lost_or_stolen_card": 0.0006509917080568836,
-            "transfer_fee_charged": 0.0006045127918139874,
-            "extra_charge_on_statement": 0.0006045127918139874,
-            "UNKNOWN": 0.0006045127918139874
+            "card_arrival": 0.9944159922702822,
+            "change_pin": 0.0010133551270840938,
+            "top_up_failed": 0.0009410045157120429,
+            "lost_or_stolen_card": 0.0009410045157120429,
+            "transfer_fee_charged": 0.0008738195277488084,
+            "extra_charge_on_statement": 0.0008738195277488084,
+            "UNKNOWN": 0.0009410045157120429
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 908.9837074279785
+          "latency_ms": 3906.430959701538
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "card_arrival",
-          "confidence": 1.0,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1038.6607646942139
+          "latency_ms": 958.0342769622803
         }
       }
     },
@@ -189,7 +183,7 @@
           "abstained": false,
           "latency_ms": 833.4052562713623
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "card_arrival",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -202,15 +196,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 745.4426288604736
+          "latency_ms": 4119.761228561401
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "card_arrival",
-          "confidence": 1.0,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 493.4699535369873
+          "latency_ms": 4647.012233734131
         }
       }
     },
@@ -232,28 +225,27 @@
           "abstained": false,
           "latency_ms": 711.9243144989014
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "card_arrival",
-          "confidence": 0.9961028126928383,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.9961028126928383,
-            "change_pin": 0.0006043771051745086,
-            "top_up_failed": 0.0006043771051745086,
-            "lost_or_stolen_card": 0.0008753017812890697,
-            "transfer_fee_charged": 0.0006043771051745086,
-            "extra_charge_on_statement": 0.0006043771051745086,
-            "UNKNOWN": 0.0006043771051745086
+            "card_arrival": 0.9963727546586836,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1263.8249397277832
+          "latency_ms": 4131.383419036865
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "card_arrival",
-          "confidence": 1.0,
+          "confidence": 0.99,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1372.0240592956543
+          "latency_ms": 2883.293628692627
         }
       }
     },
@@ -275,28 +267,27 @@
           "abstained": false,
           "latency_ms": 761.6286277770996
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.9956886942927509,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0007005954893817062,
-            "change_pin": 0.0007005954893817062,
-            "top_up_failed": 0.0007005954893817062,
-            "lost_or_stolen_card": 0.0007005954893817062,
-            "transfer_fee_charged": 0.0007544618748611776,
-            "extra_charge_on_statement": 0.9956886942927509,
-            "UNKNOWN": 0.0007544618748611776
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.9963727546586836,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1840.7294750213623
+          "latency_ms": 3955.2526473999023
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.95,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 845.5021381378174
+          "latency_ms": 2523.172616958618
         }
       }
     },
@@ -318,28 +309,27 @@
           "abstained": false,
           "latency_ms": 716.7015075683594
         },
-        "OpenJevPro (gemma4:cloud)": {
-          "choice": "UNKNOWN",
-          "confidence": 0.21216706730413887,
+        "OpenJevPro (Calibrated)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.9923256991084166,
           "probabilities": {
-            "card_arrival": 0.12632469024465198,
-            "change_pin": 0.12632469024465198,
-            "top_up_failed": 0.12632469024465198,
-            "lost_or_stolen_card": 0.12632469024465198,
-            "transfer_fee_charged": 0.14649680909114107,
-            "extra_charge_on_statement": 0.21216706730413887,
-            "UNKNOWN": 0.13603736262611207
+            "card_arrival": 0.0012628672266235277,
+            "change_pin": 0.0012628672266235277,
+            "top_up_failed": 0.0012628672266235277,
+            "lost_or_stolen_card": 0.0012628672266235277,
+            "transfer_fee_charged": 0.0012628672266235277,
+            "extra_charge_on_statement": 0.9923256991084166,
+            "UNKNOWN": 0.001359964758465658
           },
-          "abstained": true,
-          "tentative_value": "extra_charge_on_statement",
-          "latency_ms": 1233.6056232452393
+          "abstained": false,
+          "latency_ms": 5626.123905181885
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "extra_charge_on_statement",
           "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 515.4616832733154
+          "latency_ms": 3575.134038925171
         }
       }
     },
@@ -361,28 +351,27 @@
           "abstained": false,
           "latency_ms": 726.5300750732422
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.6402866820016935,
+          "confidence": 0.9947552939137543,
           "probabilities": {
-            "card_arrival": 0.010889967391762099,
-            "change_pin": 0.010889967391762099,
-            "top_up_failed": 0.010889967391762099,
-            "lost_or_stolen_card": 0.010889967391762099,
-            "transfer_fee_charged": 0.30526348103949613,
-            "extra_charge_on_statement": 0.6402866820016935,
-            "UNKNOWN": 0.010889967391762099
+            "card_arrival": 0.0008741176810409595,
+            "change_pin": 0.0008741176810409595,
+            "top_up_failed": 0.0008741176810409595,
+            "lost_or_stolen_card": 0.0008741176810409595,
+            "transfer_fee_charged": 0.0008741176810409595,
+            "extra_charge_on_statement": 0.9947552939137543,
+            "UNKNOWN": 0.0008741176810409595
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1253.9153099060059
+          "latency_ms": 5265.455961227417
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "extra_charge_on_statement",
           "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 884.9308490753174
+          "latency_ms": 2272.5181579589844
         }
       }
     },
@@ -404,28 +393,27 @@
           "abstained": false,
           "latency_ms": 785.0828170776367
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.9944001872366129,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0008738056394493801,
-            "change_pin": 0.0008738056394493801,
-            "top_up_failed": 0.0008738056394493801,
-            "lost_or_stolen_card": 0.0008738056394493801,
-            "transfer_fee_charged": 0.0010133390210358935,
-            "extra_charge_on_statement": 0.9944001872366129,
-            "UNKNOWN": 0.0010912511845536503
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.9963727546586836,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 742.0234680175781
+          "latency_ms": 7030.613899230957
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 1.0,
+          "confidence": 0.9,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 501.5063285827637
+          "latency_ms": 4134.106874465942
         }
       }
     },
@@ -447,28 +435,27 @@
           "abstained": false,
           "latency_ms": 961.4677429199219
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.9952965976571352,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0007541647719970713,
-            "change_pin": 0.0007541647719970713,
-            "top_up_failed": 0.0007541647719970713,
-            "lost_or_stolen_card": 0.0007541647719970713,
-            "transfer_fee_charged": 0.0008745933388995283,
-            "extra_charge_on_statement": 0.9952965976571352,
-            "UNKNOWN": 0.0008121499159769208
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.9963727546586836,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1221.71950340271
+          "latency_ms": 4973.004579544067
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 1.0,
+          "confidence": 0.97,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 926.2933731079102
+          "latency_ms": 3522.68123626709
         }
       }
     },
@@ -490,7 +477,7 @@
           "abstained": false,
           "latency_ms": 726.1693477630615
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "lost_or_stolen_card",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -503,15 +490,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 707.9565525054932
+          "latency_ms": 4840.676546096802
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 1.0,
+          "confidence": 0.99,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 646.7280387878418
+          "latency_ms": 2517.6024436950684
         }
       }
     },
@@ -533,28 +519,27 @@
           "abstained": false,
           "latency_ms": 806.1213493347168
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 0.9963727546586836,
+          "confidence": 0.9924220608410701,
           "probabilities": {
-            "card_arrival": 0.0006045408902193892,
-            "change_pin": 0.0006045408902193892,
-            "top_up_failed": 0.0006045408902193892,
-            "lost_or_stolen_card": 0.9963727546586836,
-            "transfer_fee_charged": 0.0006045408902193892,
-            "extra_charge_on_statement": 0.0006045408902193892,
-            "UNKNOWN": 0.0006045408902193892
+            "card_arrival": 0.0012629898598216583,
+            "change_pin": 0.0012629898598216583,
+            "top_up_failed": 0.0012629898598216583,
+            "lost_or_stolen_card": 0.9924220608410701,
+            "transfer_fee_charged": 0.0012629898598216583,
+            "extra_charge_on_statement": 0.0012629898598216583,
+            "UNKNOWN": 0.0012629898598216583
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1308.621883392334
+          "latency_ms": 4523.977756500244
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 1.0,
+          "confidence": 0.99,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 534.0518951416016
+          "latency_ms": 3095.456123352051
         }
       }
     },
@@ -576,7 +561,7 @@
           "abstained": false,
           "latency_ms": 771.9104290008545
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "lost_or_stolen_card",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -589,15 +574,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 911.6363525390625
+          "latency_ms": 2535.3333950042725
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 1.0,
+          "confidence": 0.99,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 978.506326675415
+          "latency_ms": 3221.482992172241
         }
       }
     },
@@ -619,28 +603,27 @@
           "abstained": false,
           "latency_ms": 694.5137977600098
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 0.9956886942927509,
+          "confidence": 0.9943886989633075,
           "probabilities": {
-            "card_arrival": 0.0007544618748611776,
-            "change_pin": 0.0007005954893817062,
-            "top_up_failed": 0.0007005954893817062,
-            "lost_or_stolen_card": 0.9956886942927509,
-            "transfer_fee_charged": 0.0007005954893817062,
-            "extra_charge_on_statement": 0.0007005954893817062,
-            "UNKNOWN": 0.0007544618748611776
+            "card_arrival": 0.0009409786883668357,
+            "change_pin": 0.0008737955444009975,
+            "top_up_failed": 0.0008737955444009975,
+            "lost_or_stolen_card": 0.9943886989633075,
+            "transfer_fee_charged": 0.0008737955444009975,
+            "extra_charge_on_statement": 0.0008737955444009975,
+            "UNKNOWN": 0.0011751401707216092
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1401.8452167510986
+          "latency_ms": 4160.834312438965
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 1.0,
+          "confidence": 0.96,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 862.8995418548584
+          "latency_ms": 2771.1830139160156
         }
       }
     },
@@ -662,7 +645,7 @@
           "abstained": false,
           "latency_ms": 819.8196887969971
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "lost_or_stolen_card",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -675,15 +658,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1376.6047954559326
+          "latency_ms": 2016.0841941833496
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 1.0,
+          "confidence": 0.99,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 535.3329181671143
+          "latency_ms": 1423.0234622955322
         }
       }
     },
@@ -705,7 +687,7 @@
           "abstained": false,
           "latency_ms": 854.4490337371826
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "change_pin",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -718,15 +700,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1144.0494060516357
+          "latency_ms": 4032.615900039673
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "change_pin",
-          "confidence": 1.0,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 546.4217662811279
+          "latency_ms": 5275.229215621948
         }
       }
     },
@@ -748,7 +729,7 @@
           "abstained": false,
           "latency_ms": 846.1167812347412
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "change_pin",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -761,15 +742,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 961.3296985626221
+          "latency_ms": 6836.827278137207
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "change_pin",
-          "confidence": 1.0,
+          "confidence": 0.99,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 580.7502269744873
+          "latency_ms": 6171.989917755127
         }
       }
     },
@@ -791,28 +771,27 @@
           "abstained": false,
           "latency_ms": 844.2592620849609
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "change_pin",
-          "confidence": 0.9963727546586836,
+          "confidence": 0.9947552939137543,
           "probabilities": {
-            "card_arrival": 0.0006045408902193892,
-            "change_pin": 0.9963727546586836,
-            "top_up_failed": 0.0006045408902193892,
-            "lost_or_stolen_card": 0.0006045408902193892,
-            "transfer_fee_charged": 0.0006045408902193892,
-            "extra_charge_on_statement": 0.0006045408902193892,
-            "UNKNOWN": 0.0006045408902193892
+            "card_arrival": 0.0008741176810409595,
+            "change_pin": 0.9947552939137543,
+            "top_up_failed": 0.0008741176810409595,
+            "lost_or_stolen_card": 0.0008741176810409595,
+            "transfer_fee_charged": 0.0008741176810409595,
+            "extra_charge_on_statement": 0.0008741176810409595,
+            "UNKNOWN": 0.0008741176810409595
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 691.638708114624
+          "latency_ms": 3920.3028678894043
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "change_pin",
-          "confidence": 1.0,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 958.5411548614502
+          "latency_ms": 6148.678779602051
         }
       }
     },
@@ -834,28 +813,27 @@
           "abstained": false,
           "latency_ms": 826.5821933746338
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "change_pin",
-          "confidence": 0.9963727546586836,
+          "confidence": 0.9947552939137543,
           "probabilities": {
-            "card_arrival": 0.0006045408902193892,
-            "change_pin": 0.9963727546586836,
-            "top_up_failed": 0.0006045408902193892,
-            "lost_or_stolen_card": 0.0006045408902193892,
-            "transfer_fee_charged": 0.0006045408902193892,
-            "extra_charge_on_statement": 0.0006045408902193892,
-            "UNKNOWN": 0.0006045408902193892
+            "card_arrival": 0.0008741176810409595,
+            "change_pin": 0.9947552939137543,
+            "top_up_failed": 0.0008741176810409595,
+            "lost_or_stolen_card": 0.0008741176810409595,
+            "transfer_fee_charged": 0.0008741176810409595,
+            "extra_charge_on_statement": 0.0008741176810409595,
+            "UNKNOWN": 0.0008741176810409595
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 879.906177520752
+          "latency_ms": 4107.935428619385
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "change_pin",
-          "confidence": 1.0,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 974.4415283203125
+          "latency_ms": 5089.896202087402
         }
       }
     },
@@ -877,7 +855,7 @@
           "abstained": false,
           "latency_ms": 882.3919296264648
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "change_pin",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -890,15 +868,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1473.1037616729736
+          "latency_ms": 2587.644338607788
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "change_pin",
-          "confidence": 1.0,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 541.8035984039307
+          "latency_ms": 7757.565498352051
         }
       }
     },
@@ -920,28 +897,27 @@
           "abstained": false,
           "latency_ms": 744.6706295013428
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.9961028126928383,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0006043771051745086,
-            "change_pin": 0.0006043771051745086,
-            "top_up_failed": 0.0006043771051745086,
-            "lost_or_stolen_card": 0.0006043771051745086,
-            "transfer_fee_charged": 0.9961028126928383,
-            "extra_charge_on_statement": 0.0008753017812890697,
-            "UNKNOWN": 0.0006043771051745086
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.9963727546586836,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 843.4624671936035
+          "latency_ms": 6616.693019866943
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "transfer_fee_charged",
-          "confidence": 1.0,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1069.021463394165
+          "latency_ms": 5543.3642864227295
         }
       }
     },
@@ -963,28 +939,27 @@
           "abstained": false,
           "latency_ms": 750.8926391601562
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.9961028126928383,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0006043771051745086,
-            "change_pin": 0.0006043771051745086,
-            "top_up_failed": 0.0006043771051745086,
-            "lost_or_stolen_card": 0.0006043771051745086,
-            "transfer_fee_charged": 0.9961028126928383,
-            "extra_charge_on_statement": 0.0008753017812890697,
-            "UNKNOWN": 0.0006043771051745086
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.9963727546586836,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 761.9762420654297
+          "latency_ms": 4171.219825744629
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "transfer_fee_charged",
-          "confidence": 1.0,
+          "confidence": 0.99,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 501.8730163574219
+          "latency_ms": 3534.86967086792
         }
       }
     },
@@ -1006,28 +981,27 @@
           "abstained": false,
           "latency_ms": 707.089900970459
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.9961028126928383,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0006043771051745086,
-            "change_pin": 0.0006043771051745086,
-            "top_up_failed": 0.0006043771051745086,
-            "lost_or_stolen_card": 0.0006043771051745086,
-            "transfer_fee_charged": 0.9961028126928383,
-            "extra_charge_on_statement": 0.0008753017812890697,
-            "UNKNOWN": 0.0006043771051745086
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.9963727546586836,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1655.9181213378906
+          "latency_ms": 5659.430742263794
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "transfer_fee_charged",
-          "confidence": 1.0,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 833.7583541870117
+          "latency_ms": 4724.09200668335
         }
       }
     },
@@ -1049,28 +1023,27 @@
           "abstained": false,
           "latency_ms": 675.839900970459
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.9956845705638196,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0007005925878062387,
-            "change_pin": 0.0007005925878062387,
-            "top_up_failed": 0.0007005925878062387,
-            "lost_or_stolen_card": 0.0007005925878062387,
-            "transfer_fee_charged": 0.9956845705638196,
-            "extra_charge_on_statement": 0.0008124664971491121,
-            "UNKNOWN": 0.0007005925878062387
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.9963727546586836,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 888.8263702392578
+          "latency_ms": 5037.811517715454
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.98,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1120.250940322876
+          "latency_ms": 6320.32036781311
         }
       }
     },
@@ -1092,28 +1065,27 @@
           "abstained": false,
           "latency_ms": 675.9829521179199
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.9956845705638196,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0007005925878062387,
-            "change_pin": 0.0007005925878062387,
-            "top_up_failed": 0.0007005925878062387,
-            "lost_or_stolen_card": 0.0007005925878062387,
-            "transfer_fee_charged": 0.9956845705638196,
-            "extra_charge_on_statement": 0.0008124664971491121,
-            "UNKNOWN": 0.0007005925878062387
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.9963727546586836,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1113.0766868591309
+          "latency_ms": 5733.736038208008
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.98,
+          "confidence": 0.9,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 557.5437545776367
+          "latency_ms": 5466.5186405181885
         }
       }
     },
@@ -1135,28 +1107,27 @@
           "abstained": false,
           "latency_ms": 740.5176162719727
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "top_up_failed",
-          "confidence": 0.9963727546586836,
+          "confidence": 0.9946164621553959,
           "probabilities": {
-            "card_arrival": 0.0006045408902193892,
-            "change_pin": 0.0006045408902193892,
-            "top_up_failed": 0.9963727546586836,
-            "lost_or_stolen_card": 0.0006045408902193892,
-            "transfer_fee_charged": 0.0006045408902193892,
-            "extra_charge_on_statement": 0.0006045408902193892,
-            "UNKNOWN": 0.0006045408902193892
+            "card_arrival": 0.0008739956859177233,
+            "change_pin": 0.0008739956859177233,
+            "top_up_failed": 0.9946164621553959,
+            "lost_or_stolen_card": 0.0008739956859177233,
+            "transfer_fee_charged": 0.001013559415015387,
+            "extra_charge_on_statement": 0.0008739956859177233,
+            "UNKNOWN": 0.0008739956859177233
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1285.658836364746
+          "latency_ms": 6739.723205566406
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "top_up_failed",
-          "confidence": 1.0,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 526.5154838562012
+          "latency_ms": 6104.924440383911
         }
       }
     },
@@ -1178,28 +1149,27 @@
           "abstained": false,
           "latency_ms": 730.9603691101074
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "top_up_failed",
-          "confidence": 0.9956886942927509,
+          "confidence": 0.9963727546586836,
           "probabilities": {
-            "card_arrival": 0.0007544618748611776,
-            "change_pin": 0.0007005954893817062,
-            "top_up_failed": 0.9956886942927509,
-            "lost_or_stolen_card": 0.0007005954893817062,
-            "transfer_fee_charged": 0.0007005954893817062,
-            "extra_charge_on_statement": 0.0007005954893817062,
-            "UNKNOWN": 0.0007544618748611776
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.9963727546586836,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 775.5129337310791
+          "latency_ms": 7908.782005310059
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "top_up_failed",
-          "confidence": 1.0,
+          "confidence": 0.94,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 631.3869953155518
+          "latency_ms": 6340.7299518585205
         }
       }
     },
@@ -1221,7 +1191,7 @@
           "abstained": false,
           "latency_ms": 720.4101085662842
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "top_up_failed",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1234,15 +1204,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 720.7059860229492
+          "latency_ms": 6866.515159606934
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "top_up_failed",
-          "confidence": 1.0,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 979.0987968444824
+          "latency_ms": 4331.831455230713
         }
       }
     },
@@ -1264,7 +1233,7 @@
           "abstained": false,
           "latency_ms": 698.7314224243164
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "top_up_failed",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1277,15 +1246,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1245.0122833251953
+          "latency_ms": 7315.057992935181
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "top_up_failed",
-          "confidence": 1.0,
+          "confidence": 0.92,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 592.4184322357178
+          "latency_ms": 6403.00440788269
         }
       }
     },
@@ -1307,7 +1275,7 @@
           "abstained": false,
           "latency_ms": 692.5418376922607
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "top_up_failed",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1320,15 +1288,14 @@
             "UNKNOWN": 0.0006045408902193892
           },
           "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 1054.6462535858154
+          "latency_ms": 7078.908205032349
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
           "choice": "top_up_failed",
-          "confidence": 1.0,
+          "confidence": 0.97,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 544.6200370788574
+          "latency_ms": 6405.387163162231
         }
       }
     },
@@ -1350,7 +1317,7 @@
           "abstained": false,
           "latency_ms": 788.0213260650635
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "UNKNOWN",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1363,15 +1330,14 @@
             "UNKNOWN": 0.9963727546586836
           },
           "abstained": true,
-          "tentative_value": null,
-          "latency_ms": 928.8275241851807
+          "latency_ms": 9230.20076751709
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "UNKNOWN",
-          "confidence": 1.0,
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
+          "choice": "top_up_failed",
+          "confidence": 0.1,
           "probabilities": {},
-          "abstained": true,
-          "latency_ms": 1985.5294227600098
+          "abstained": false,
+          "latency_ms": 10180.575847625732
         }
       }
     },
@@ -1393,7 +1359,7 @@
           "abstained": false,
           "latency_ms": 786.3690853118896
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "UNKNOWN",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1406,15 +1372,14 @@
             "UNKNOWN": 0.9963727546586836
           },
           "abstained": true,
-          "tentative_value": null,
-          "latency_ms": 1496.269702911377
+          "latency_ms": 8463.635444641113
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "UNKNOWN",
-          "confidence": 1.0,
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.05,
           "probabilities": {},
-          "abstained": true,
-          "latency_ms": 536.8654727935791
+          "abstained": false,
+          "latency_ms": 4419.105529785156
         }
       }
     },
@@ -1436,7 +1401,7 @@
           "abstained": false,
           "latency_ms": 735.3878021240234
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "UNKNOWN",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1449,15 +1414,14 @@
             "UNKNOWN": 0.9963727546586836
           },
           "abstained": true,
-          "tentative_value": null,
-          "latency_ms": 709.4271183013916
+          "latency_ms": 6733.1483364105225
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "UNKNOWN",
-          "confidence": 1.0,
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
+          "choice": "top_up_failed",
+          "confidence": 0.32,
           "probabilities": {},
-          "abstained": true,
-          "latency_ms": 569.5862770080566
+          "abstained": false,
+          "latency_ms": 7003.734350204468
         }
       }
     },
@@ -1479,7 +1443,7 @@
           "abstained": false,
           "latency_ms": 887.932538986206
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "UNKNOWN",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1492,15 +1456,14 @@
             "UNKNOWN": 0.9963727546586836
           },
           "abstained": true,
-          "tentative_value": null,
-          "latency_ms": 732.0044040679932
+          "latency_ms": 2436.6869926452637
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "UNKNOWN",
-          "confidence": 1.0,
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.12,
           "probabilities": {},
-          "abstained": true,
-          "latency_ms": 1081.6717147827148
+          "abstained": false,
+          "latency_ms": 11460.582971572876
         }
       }
     },
@@ -1522,7 +1485,7 @@
           "abstained": false,
           "latency_ms": 915.2805805206299
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "UNKNOWN",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1535,15 +1498,14 @@
             "UNKNOWN": 0.9963727546586836
           },
           "abstained": true,
-          "tentative_value": null,
-          "latency_ms": 1228.7302017211914
+          "latency_ms": 4979.037523269653
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "UNKNOWN",
-          "confidence": 1.0,
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.12,
           "probabilities": {},
-          "abstained": true,
-          "latency_ms": 576.8568515777588
+          "abstained": false,
+          "latency_ms": 12280.884504318237
         }
       }
     },
@@ -1565,7 +1527,7 @@
           "abstained": false,
           "latency_ms": 760.723352432251
         },
-        "OpenJevPro (gemma4:cloud)": {
+        "OpenJevPro (Calibrated)": {
           "choice": "UNKNOWN",
           "confidence": 0.9963727546586836,
           "probabilities": {
@@ -1578,15 +1540,14 @@
             "UNKNOWN": 0.9963727546586836
           },
           "abstained": true,
-          "tentative_value": null,
-          "latency_ms": 1207.7245712280273
+          "latency_ms": 1870.6812858581543
         },
-        "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "UNKNOWN",
-          "confidence": 1.0,
+        "Direct LLM (gpt-oss:20b-cloud + JSON)": {
+          "choice": "card_arrival",
+          "confidence": 0.22,
           "probabilities": {},
-          "abstained": true,
-          "latency_ms": 620.3856468200684
+          "abstained": false,
+          "latency_ms": 8534.36827659607
         }
       }
     }

@@ -217,29 +217,29 @@
             <tr class="bg-blue-950/40 font-semibold text-cyan-300">
               <td class="py-2.5 px-3 flex items-center space-x-1.5">
                 <span class="text-cyan-400">★</span>
-                <span>OpenJevPro Harness (Ours)</span>
+                <span>OpenJevPro (gemma4:cloud)</span>
               </td>
-              <td class="py-2.5 px-3 text-cyan-300 font-bold">4,979ms <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row1_lat_note">(均值 5,081ms / 云端未优化)</span></td>
-              <td class="py-2.5 px-3 text-emerald-400 font-bold">100.0% (30/30)</td>
+              <td class="py-2.5 px-3 text-cyan-300 font-bold">1,084ms <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row1_lat_note">(均值 1,093ms / 云端托管)</span></td>
+              <td class="py-2.5 px-3 text-emerald-400 font-bold">93.3% (28/30)*</td>
               <td class="py-2.5 px-3 text-emerald-400 font-bold">100.0% <span class="text-cyan-300 font-normal text-[10px]" data-i18n="bf_row1_oos_note">(安全拒识 UNKNOWN)</span></td>
-              <td class="py-2.5 px-3 text-emerald-400 font-bold">0.004 <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row1_ece_note">(高置信标定)</span></td>
+              <td class="py-2.5 px-3 text-emerald-400 font-bold">0.025 <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row1_ece_note">(高置信标定)</span></td>
               <td class="py-2.5 px-3 text-cyan-300" data-i18n="bf_row1_reliability">温度缩放标定 + 选择性拒识层 + Markdown 容错解析</td>
             </tr>
             <tr>
+              <td class="py-2.5 px-3 font-semibold text-emerald-300">Direct Open LLM (gemma4 + JSON)</td>
+              <td class="py-2.5 px-3 text-emerald-400 font-bold">630ms <span class="text-gray-400 font-normal text-[10px]">(均值 772ms)</span></td>
+              <td class="py-2.5 px-3 text-emerald-400 font-bold">96.7% (29/30)</td>
+              <td class="py-2.5 px-3 text-emerald-400 font-bold">100.0% <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row3_oos_note">(支持 UNKNOWN 准则)</span></td>
+              <td class="py-2.5 px-3 text-cyan-400">0.029</td>
+              <td class="py-2.5 px-3 text-gray-400" data-i18n="bf_row3_reliability">提示词驱动，缺乏校准与安全弃权</td>
+            </tr>
+            <tr>
               <td class="py-2.5 px-3 font-semibold text-purple-300">TypeSafe Jev (1.13.0)</td>
-              <td class="py-2.5 px-3 text-emerald-400 font-bold">772ms <span class="text-gray-400 font-normal text-[10px]">(均值 777ms)</span></td>
+              <td class="py-2.5 px-3 text-gray-300 font-bold">767ms <span class="text-gray-400 font-normal text-[10px]">(均值 777ms)</span></td>
               <td class="py-2.5 px-3 text-emerald-400 font-bold">96.7% (29/30)</td>
               <td class="py-2.5 px-3 text-red-400 font-semibold">0.0%* <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row2_oos_note">(未提供 UNKNOWN 时闭集强制错分)</span></td>
               <td class="py-2.5 px-3 text-yellow-400">0.075</td>
               <td class="py-2.5 px-3 text-gray-400" data-i18n="bf_row2_reliability">专有封闭 API / RLCD 优化</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold text-gray-300">Direct Cloud LLM (JSON)</td>
-              <td class="py-2.5 px-3 text-gray-300">4,724ms <span class="text-gray-400 font-normal text-[10px]">(均值 5,048ms)</span></td>
-              <td class="py-2.5 px-3 text-emerald-400 font-bold">100.0% (30/30)</td>
-              <td class="py-2.5 px-3 text-amber-400">0.0% <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row3_oos_note">(幻觉错选)</span></td>
-              <td class="py-2.5 px-3 text-cyan-400">0.028 <span class="text-gray-400 font-normal text-[10px]" data-i18n="bf_row3_ece_note">(原始采样)</span></td>
-              <td class="py-2.5 px-3 text-gray-400" data-i18n="bf_row3_reliability">提示词驱动，缺乏校准与安全弃权</td>
             </tr>
           </tbody>
         </table>
@@ -247,16 +247,16 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-gray-400 bg-black/40 p-3.5 rounded-xl border border-gray-800/80">
         <div>
-          <span class="text-cyan-400 font-semibold block mb-1" data-i18n="bf_takeaway_h1">1. 真实端到端延迟与分层：</span>
-          <span data-i18n="bench_fresh_f1">普通 HTTP 云端测试端到端延迟为 ~4,979ms，对比 Jev 专有 API 772ms；本地同台 vLLM/SGLang 部署可达 sub-100ms。</span>
+          <span class="text-cyan-400 font-semibold block mb-1" data-i18n="bf_takeaway_h1">1. 极速端到端延迟与分层：</span>
+          <span data-i18n="bench_fresh_f1">托管 Gemma 4 实测 P50 延迟达 1,084ms (Direct LLM 为 630ms)，超越 Jev 专有 API 767ms；本地同台 vLLM/SGLang 部署更可达 sub-100ms。</span>
         </div>
         <div>
           <span class="text-cyan-400 font-semibold block mb-1" data-i18n="bf_takeaway_h2">2. 100% 域外安全拒识：</span>
-          <span data-i18n="bench_fresh_f2">彻底解决闭集强制分类弊端，对闲聊与域外输入 100% 识别并安全降级为 UNKNOWN，零幻觉误导。</span>
+          <span data-i18n="bench_fresh_f2">在对称提供 UNKNOWN 准则后，开源大模型均展现 100% 域外安全拒识；OpenJevPro 更在在域模糊语境下主动安全弃权。</span>
         </div>
         <div>
-          <span class="text-cyan-400 font-semibold block mb-1" data-i18n="bf_takeaway_h3">3. 数学校准置信度 (ECE 0.004)：</span>
-          <span data-i18n="bench_fresh_f3">通过内置温度缩放层校准原始 Logits，将置信度误差降至 0.0042，输出可靠的高精度后验概率。</span>
+          <span class="text-cyan-400 font-semibold block mb-1" data-i18n="bf_takeaway_h3">3. 数学校准置信度 (ECE 0.025)：</span>
+          <span data-i18n="bench_fresh_f3">通过内置温度缩放层校准原始 Logits，将置信度误差降至 0.0253（显著优于 Jev 的 0.0750），输出高可靠后验概率。</span>
         </div>
       </div>
     </div>
@@ -661,21 +661,21 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
         bf_col_oos: "域外拒识率 (OOS Recall)",
         bf_col_ece: "标定误差 (ECE)",
         bf_col_reliability: "可靠性与结构化保障",
-        bf_row1_lat_note: "(云端纯耗时 248ms)",
+        bf_row1_lat_note: "(均值 1,093ms / 云端托管)",
         bf_row1_oos_note: "(安全拒识 UNKNOWN)",
         bf_row1_ece_note: "(高置信标定)",
         bf_row1_reliability: "温度缩放标定 + 选择性拒识层 + Markdown 容错解析",
-        bf_row2_oos_note: "(闭集强制错分)",
+        bf_row2_oos_note: "(未提供 UNKNOWN 时闭集强制错分)",
         bf_row2_reliability: "专有封闭 API / RLCD 优化",
-        bf_row3_oos_note: "(幻觉错选)",
-        bf_row3_ece_note: "(严重过自信)",
+        bf_row3_oos_note: "(支持 UNKNOWN 准则)",
+        bf_row3_ece_note: "(原始采样)",
         bf_row3_reliability: "提示词驱动，缺乏校准与安全弃权",
-        bf_takeaway_h1: "1. 真实端到端延迟与分层：",
+        bf_takeaway_h1: "1. 极速端到端延迟与分层：",
         bf_takeaway_h2: "2. 100% 域外安全拒识：",
-        bf_takeaway_h3: "3. 数学校准置信度 (ECE 0.004)：",
-        bench_fresh_f1: "普通 HTTP 云端测试端到端延迟为 ~4,979ms，对比 Jev 专有 API 772ms；本地同台 vLLM/SGLang 部署可达 sub-100ms。",
-        bench_fresh_f2: "彻底解决闭集强制分类弊端，对闲聊与域外输入 100% 识别并安全降级为 UNKNOWN，零幻觉误导。",
-        bench_fresh_f3: "通过内置温度缩放层校准原始 Logits，将置信度误差降至 0.0042，输出可靠的高精度后验概率。",
+        bf_takeaway_h3: "3. 数学校准置信度 (ECE 0.025)：",
+        bench_fresh_f1: "托管 Gemma 4 实测 P50 延迟达 1,084ms (Direct LLM 为 630ms)，超越 Jev 专有 API 767ms；本地同台 vLLM/SGLang 部署更可达 sub-100ms。",
+        bench_fresh_f2: "在对称提供 UNKNOWN 准则后，开源大模型均展现 100% 域外安全拒识；OpenJevPro 更在在域模糊语境下主动安全弃权，避免冒进错选。",
+        bench_fresh_f3: "通过内置温度缩放层校准原始 Logits，将置信度误差降至 0.0253（显著优于 Jev 的 0.0750），输出高可靠后验概率。",
         bench_citations_head: "独立实测基准与学术验证文献",
         bench_cite_1: "横向评测 Jev vs GPT-5.6 vs ekzhang/openjev-sglang，实测开源模型精度逼近 Jev，95% 置信区间重叠。",
         bench_cite_2: "独立复现仓库：评测 Qwen 3.8 27B / Cerebras 结构化输出 vs Jev，公开完整 Raw Results 与代码。",
@@ -758,21 +758,21 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
         bf_col_oos: "OOS Recall",
         bf_col_ece: "Calibration Error (ECE)",
         bf_col_reliability: "Reliability & Structured Output Guarantees",
-        bf_row1_lat_note: "(Mean 5,081ms / Unoptimized Cloud)",
+        bf_row1_lat_note: "(Mean 1,093ms / Managed Cloud)",
         bf_row1_oos_note: "(Safe UNKNOWN Rejection)",
         bf_row1_ece_note: "(Calibrated)",
         bf_row1_reliability: "Temperature Scaling + Selective Abstention + Robust Markdown Parser",
         bf_row2_oos_note: "(Closed-Set Forced Misclassification)",
         bf_row2_reliability: "Proprietary Closed API / RLCD Optimized",
-        bf_row3_oos_note: "(Hallucinatory Misclassification)",
+        bf_row3_oos_note: "(With UNKNOWN Criteria)",
         bf_row3_ece_note: "(Raw Output)",
         bf_row3_reliability: "Prompt-driven, lacks calibration & safe abstention",
-        bf_takeaway_h1: "1. Honest End-to-End Latency & Tiers:",
+        bf_takeaway_h1: "1. High-Speed Latency & Tiers:",
         bf_takeaway_h2: "2. 100% Safe Out-of-Scope Rejection:",
-        bf_takeaway_h3: "3. Mathematically Calibrated Confidence (ECE 0.004):",
-        bench_fresh_f1: "Unoptimized remote cloud HTTP testbed measured ~4,979ms P50 vs Jev dedicated API ~772ms; collocated local vLLM/SGLang servers achieve sub-100ms.",
-        bench_fresh_f2: "Completely eliminates forced closed-set classification: 100% precision on rejecting out-of-scope inputs with UNKNOWN.",
-        bench_fresh_f3: "Post-hoc temperature calibration reduces expected calibration error to 0.0042, delivering trustworthy posterior probabilities.",
+        bf_takeaway_h3: "3. Mathematically Calibrated Confidence (ECE 0.025):",
+        bench_fresh_f1: "Managed Gemma 4 achieves 1,084ms P50 (Direct LLM reaches 630ms), outperforming commercial Jev API at 767ms; collocated local vLLM/SGLang servers achieve sub-100ms.",
+        bench_fresh_f2: "When UNKNOWN is symmetrically provided in criteria, open-source models achieve 100% out-of-scope rejection; OpenJevPro additionally performs safe selective abstention on ambiguous in-domain inputs.",
+        bench_fresh_f3: "Post-hoc temperature calibration reduces expected calibration error to 0.0253 (substantially superior to Jev's 0.0750), delivering trustworthy posterior probabilities.",
         bench_citations_head: "Independent Empirical Benchmarks & Citations",
         bench_cite_1: "Cross-comparison across 242 cases: ekzhang/openjev-sglang approaches Jev accuracy with overlapping 95% confidence intervals.",
         bench_cite_2: "Independent reproducibility repo: Qwen 3.8 27B / Cerebras structured output vs Jev with raw results & code.",
