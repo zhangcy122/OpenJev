@@ -1,7 +1,7 @@
 {
   "summary": {
     "total_samples": 36,
-    "total_duration_sec": 21.1785945892334,
+    "total_duration_sec": 17.67019820213318,
     "engine_metrics": {
       "TypeSafe Jev (Commercial)": {
         "overall_accuracy": 80.56,
@@ -22,22 +22,22 @@
         "in_domain_count": "28/30",
         "oos_recall": 100.0,
         "oos_count": "6/6",
-        "mean_latency_ms": 1448.5,
-        "p50_latency_ms": 1281.5,
-        "p95_latency_ms": 3816.5,
-        "ece": 0.0352
+        "mean_latency_ms": 1092.6,
+        "p50_latency_ms": 1083.9,
+        "p95_latency_ms": 1731.1,
+        "ece": 0.0253
       },
       "Direct LLM (gemma4:cloud + JSON)": {
-        "overall_accuracy": 80.56,
-        "correct_count": 29,
+        "overall_accuracy": 97.22,
+        "correct_count": 35,
         "in_domain_accuracy": 96.67,
         "in_domain_count": "29/30",
-        "oos_recall": 0.0,
-        "oos_count": "0/6",
-        "mean_latency_ms": 835.2,
-        "p50_latency_ms": 812.6,
-        "p95_latency_ms": 1386.9,
-        "ece": 0.0336
+        "oos_recall": 100.0,
+        "oos_count": "6/6",
+        "mean_latency_ms": 771.5,
+        "p50_latency_ms": 630.3,
+        "p95_latency_ms": 1372.0,
+        "ece": 0.0289
       }
     }
   },
@@ -61,27 +61,27 @@
           "latency_ms": 778.7277698516846
         },
         "OpenJevPro (gemma4:cloud)": {
-          "choice": "lost_or_stolen_card",
-          "confidence": 0.548040984218233,
+          "choice": "UNKNOWN",
+          "confidence": 0.21216706730413887,
           "probabilities": {
-            "card_arrival": 0.3784105443850538,
-            "change_pin": 0.013499415242922575,
-            "top_up_failed": 0.013499415242922575,
-            "lost_or_stolen_card": 0.548040984218233,
-            "transfer_fee_charged": 0.013499415242922575,
-            "extra_charge_on_statement": 0.013499415242922575,
-            "UNKNOWN": 0.019550810425022908
+            "card_arrival": 0.21216706730413887,
+            "change_pin": 0.12632469024465198,
+            "top_up_failed": 0.12632469024465198,
+            "lost_or_stolen_card": 0.14649680909114107,
+            "transfer_fee_charged": 0.12632469024465198,
+            "extra_charge_on_statement": 0.12632469024465198,
+            "UNKNOWN": 0.13603736262611207
           },
-          "abstained": false,
-          "tentative_value": null,
-          "latency_ms": 704.7207355499268
+          "abstained": true,
+          "tentative_value": "card_arrival",
+          "latency_ms": 1731.1208248138428
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "lost_or_stolen_card",
           "confidence": 0.85,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1386.904239654541
+          "latency_ms": 681.027889251709
         }
       }
     },
@@ -117,14 +117,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1689.8679733276367
+          "latency_ms": 886.6541385650635
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 566.4525032043457
+          "latency_ms": 629.2309761047363
         }
       }
     },
@@ -160,14 +160,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1769.343614578247
+          "latency_ms": 908.9837074279785
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1021.0766792297363
+          "latency_ms": 1038.6607646942139
         }
       }
     },
@@ -203,14 +203,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1694.4503784179688
+          "latency_ms": 745.4426288604736
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 545.5911159515381
+          "latency_ms": 493.4699535369873
         }
       }
     },
@@ -246,14 +246,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 919.929027557373
+          "latency_ms": 1263.8249397277832
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 591.6814804077148
+          "latency_ms": 1372.0240592956543
         }
       }
     },
@@ -277,26 +277,26 @@
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.9944001872366129,
+          "confidence": 0.9956886942927509,
           "probabilities": {
-            "card_arrival": 0.0008738056394493801,
-            "change_pin": 0.0008738056394493801,
-            "top_up_failed": 0.0008738056394493801,
-            "lost_or_stolen_card": 0.0008738056394493801,
-            "transfer_fee_charged": 0.0010133390210358935,
-            "extra_charge_on_statement": 0.9944001872366129,
-            "UNKNOWN": 0.0010912511845536503
+            "card_arrival": 0.0007005954893817062,
+            "change_pin": 0.0007005954893817062,
+            "top_up_failed": 0.0007005954893817062,
+            "lost_or_stolen_card": 0.0007005954893817062,
+            "transfer_fee_charged": 0.0007544618748611776,
+            "extra_charge_on_statement": 0.9956886942927509,
+            "UNKNOWN": 0.0007544618748611776
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 782.4442386627197
+          "latency_ms": 1840.7294750213623
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 1.0,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 947.1664428710938
+          "latency_ms": 845.5021381378174
         }
       }
     },
@@ -320,26 +320,26 @@
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
-          "confidence": 0.22698175756125374,
+          "confidence": 0.21216706730413887,
           "probabilities": {
-            "card_arrival": 0.12549639819182157,
-            "change_pin": 0.12549639819182157,
-            "top_up_failed": 0.12549639819182157,
-            "lost_or_stolen_card": 0.12549639819182157,
-            "transfer_fee_charged": 0.14553625147963847,
-            "extra_charge_on_statement": 0.22698175756125374,
-            "UNKNOWN": 0.12549639819182157
+            "card_arrival": 0.12632469024465198,
+            "change_pin": 0.12632469024465198,
+            "top_up_failed": 0.12632469024465198,
+            "lost_or_stolen_card": 0.12632469024465198,
+            "transfer_fee_charged": 0.14649680909114107,
+            "extra_charge_on_statement": 0.21216706730413887,
+            "UNKNOWN": 0.13603736262611207
           },
           "abstained": true,
           "tentative_value": "extra_charge_on_statement",
-          "latency_ms": 1136.2781524658203
+          "latency_ms": 1233.6056232452393
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 1.0,
+          "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 872.2078800201416
+          "latency_ms": 515.4616832733154
         }
       }
     },
@@ -375,14 +375,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 982.170820236206
+          "latency_ms": 1253.9153099060059
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "extra_charge_on_statement",
           "confidence": 0.95,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 629.4419765472412
+          "latency_ms": 884.9308490753174
         }
       }
     },
@@ -406,26 +406,26 @@
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.9925836023508079,
+          "confidence": 0.9944001872366129,
           "probabilities": {
-            "card_arrival": 0.0010892576708416445,
-            "change_pin": 0.0010892576708416445,
-            "top_up_failed": 0.0010892576708416445,
-            "lost_or_stolen_card": 0.0010892576708416445,
-            "transfer_fee_charged": 0.0019701092949839477,
-            "extra_charge_on_statement": 0.9925836023508079,
-            "UNKNOWN": 0.0010892576708416445
+            "card_arrival": 0.0008738056394493801,
+            "change_pin": 0.0008738056394493801,
+            "top_up_failed": 0.0008738056394493801,
+            "lost_or_stolen_card": 0.0008738056394493801,
+            "transfer_fee_charged": 0.0010133390210358935,
+            "extra_charge_on_statement": 0.9944001872366129,
+            "UNKNOWN": 0.0010912511845536503
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1390.6278610229492
+          "latency_ms": 742.0234680175781
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "extra_charge_on_statement",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 580.4569721221924
+          "latency_ms": 501.5063285827637
         }
       }
     },
@@ -461,14 +461,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1359.6539497375488
+          "latency_ms": 1221.71950340271
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "extra_charge_on_statement",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 752.7899742126465
+          "latency_ms": 926.2933731079102
         }
       }
     },
@@ -504,14 +504,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 776.6537666320801
+          "latency_ms": 707.9565525054932
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1142.838478088379
+          "latency_ms": 646.7280387878418
         }
       }
     },
@@ -547,14 +547,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1683.4065914154053
+          "latency_ms": 1308.621883392334
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 592.5581455230713
+          "latency_ms": 534.0518951416016
         }
       }
     },
@@ -590,14 +590,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1598.6137390136719
+          "latency_ms": 911.6363525390625
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 664.3953323364258
+          "latency_ms": 978.506326675415
         }
       }
     },
@@ -633,14 +633,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 768.1598663330078
+          "latency_ms": 1401.8452167510986
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 905.0462245941162
+          "latency_ms": 862.8995418548584
         }
       }
     },
@@ -676,14 +676,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1081.3004970550537
+          "latency_ms": 1376.6047954559326
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 874.4876384735107
+          "latency_ms": 535.3329181671143
         }
       }
     },
@@ -719,14 +719,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1031.390905380249
+          "latency_ms": 1144.0494060516357
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 564.0103816986084
+          "latency_ms": 546.4217662811279
         }
       }
     },
@@ -762,14 +762,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 784.773588180542
+          "latency_ms": 961.3296985626221
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1328.989028930664
+          "latency_ms": 580.7502269744873
         }
       }
     },
@@ -805,14 +805,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1513.4317874908447
+          "latency_ms": 691.638708114624
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 951.4856338500977
+          "latency_ms": 958.5411548614502
         }
       }
     },
@@ -848,14 +848,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1666.5010452270508
+          "latency_ms": 879.906177520752
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 502.0599365234375
+          "latency_ms": 974.4415283203125
         }
       }
     },
@@ -891,14 +891,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1574.4273662567139
+          "latency_ms": 1473.1037616729736
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 536.3185405731201
+          "latency_ms": 541.8035984039307
         }
       }
     },
@@ -934,14 +934,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1153.3455848693848
+          "latency_ms": 843.4624671936035
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "transfer_fee_charged",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 966.2010669708252
+          "latency_ms": 1069.021463394165
         }
       }
     },
@@ -965,26 +965,26 @@
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.9956845705638196,
+          "confidence": 0.9961028126928383,
           "probabilities": {
-            "card_arrival": 0.0007005925878062387,
-            "change_pin": 0.0007005925878062387,
-            "top_up_failed": 0.0007005925878062387,
-            "lost_or_stolen_card": 0.0007005925878062387,
-            "transfer_fee_charged": 0.9956845705638196,
-            "extra_charge_on_statement": 0.0008124664971491121,
-            "UNKNOWN": 0.0007005925878062387
+            "card_arrival": 0.0006043771051745086,
+            "change_pin": 0.0006043771051745086,
+            "top_up_failed": 0.0006043771051745086,
+            "lost_or_stolen_card": 0.0006043771051745086,
+            "transfer_fee_charged": 0.9961028126928383,
+            "extra_charge_on_statement": 0.0008753017812890697,
+            "UNKNOWN": 0.0006043771051745086
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1004.5199394226074
+          "latency_ms": 761.9762420654297
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "transfer_fee_charged",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1071.009635925293
+          "latency_ms": 501.8730163574219
         }
       }
     },
@@ -1020,14 +1020,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 5543.386459350586
+          "latency_ms": 1655.9181213378906
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "transfer_fee_charged",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 648.533821105957
+          "latency_ms": 833.7583541870117
         }
       }
     },
@@ -1063,14 +1063,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1705.5866718292236
+          "latency_ms": 888.8263702392578
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "transfer_fee_charged",
           "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 995.5494403839111
+          "latency_ms": 1120.250940322876
         }
       }
     },
@@ -1106,14 +1106,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 3816.5295124053955
+          "latency_ms": 1113.0766868591309
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "transfer_fee_charged",
-          "confidence": 0.95,
+          "confidence": 0.98,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1515.8159732818604
+          "latency_ms": 557.5437545776367
         }
       }
     },
@@ -1149,14 +1149,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1723.9410877227783
+          "latency_ms": 1285.658836364746
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "top_up_failed",
-          "confidence": 0.98,
+          "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1230.1888465881348
+          "latency_ms": 526.5154838562012
         }
       }
     },
@@ -1192,14 +1192,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1728.6148071289062
+          "latency_ms": 775.5129337310791
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1083.848476409912
+          "latency_ms": 631.3869953155518
         }
       }
     },
@@ -1235,14 +1235,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1409.752607345581
+          "latency_ms": 720.7059860229492
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 1010.94651222229
+          "latency_ms": 979.0987968444824
         }
       }
     },
@@ -1278,14 +1278,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 1203.402042388916
+          "latency_ms": 1245.0122833251953
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 517.9989337921143
+          "latency_ms": 592.4184322357178
         }
       }
     },
@@ -1321,14 +1321,14 @@
           },
           "abstained": false,
           "tentative_value": null,
-          "latency_ms": 777.6963710784912
+          "latency_ms": 1054.6462535858154
         },
         "Direct LLM (gemma4:cloud + JSON)": {
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {},
           "abstained": false,
-          "latency_ms": 960.5545997619629
+          "latency_ms": 544.6200370788574
         }
       }
     },
@@ -1364,14 +1364,14 @@
           },
           "abstained": true,
           "tentative_value": null,
-          "latency_ms": 1788.3963584899902
+          "latency_ms": 928.8275241851807
         },
         "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.0,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {},
-          "abstained": false,
-          "latency_ms": 561.9986057281494
+          "abstained": true,
+          "latency_ms": 1985.5294227600098
         }
       }
     },
@@ -1407,14 +1407,14 @@
           },
           "abstained": true,
           "tentative_value": null,
-          "latency_ms": 1082.082748413086
+          "latency_ms": 1496.269702911377
         },
         "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.0,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {},
-          "abstained": false,
-          "latency_ms": 1002.5920867919922
+          "abstained": true,
+          "latency_ms": 536.8654727935791
         }
       }
     },
@@ -1450,14 +1450,14 @@
           },
           "abstained": true,
           "tentative_value": null,
-          "latency_ms": 1715.6460285186768
+          "latency_ms": 709.4271183013916
         },
         "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.1,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {},
-          "abstained": false,
-          "latency_ms": 512.6464366912842
+          "abstained": true,
+          "latency_ms": 569.5862770080566
         }
       }
     },
@@ -1493,14 +1493,14 @@
           },
           "abstained": true,
           "tentative_value": null,
-          "latency_ms": 1120.8794116973877
+          "latency_ms": 732.0044040679932
         },
         "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.1,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {},
-          "abstained": false,
-          "latency_ms": 593.8467979431152
+          "abstained": true,
+          "latency_ms": 1081.6717147827148
         }
       }
     },
@@ -1536,14 +1536,14 @@
           },
           "abstained": true,
           "tentative_value": null,
-          "latency_ms": 746.7606067657471
+          "latency_ms": 1228.7302017211914
         },
         "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.01,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {},
-          "abstained": false,
-          "latency_ms": 685.1527690887451
+          "abstained": true,
+          "latency_ms": 576.8568515777588
         }
       }
     },
@@ -1579,14 +1579,14 @@
           },
           "abstained": true,
           "tentative_value": null,
-          "latency_ms": 717.9703712463379
+          "latency_ms": 1207.7245712280273
         },
         "Direct LLM (gemma4:cloud + JSON)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.01,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {},
-          "abstained": false,
-          "latency_ms": 752.9146671295166
+          "abstained": true,
+          "latency_ms": 620.3856468200684
         }
       }
     }

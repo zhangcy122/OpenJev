@@ -68,6 +68,39 @@ class TestHarnessAndClient(unittest.TestCase):
             self.assertTrue(res["abstained"])
             self.assertEqual(res["choice"], "UNKNOWN")
 
+    def test_direct_structured_engine_symmetric_abstain(self):
+        """DirectStructuredEngine must inject UNKNOWN into criteria and prompt when allow_abstain=True."""
+        from openjevpro.harness import DirectStructuredEngine
+        engine = DirectStructuredEngine(base_url="http://mock:11434", model="test-model")
+        original_criteria = {
+            "card_arrival": "Delivery status of cards",
+            "change_pin": "Change security PIN"
+        }
+
+        mock_response = MagicMock()
+        mock_response.json.return_value = {
+            "message": {
+                "content": '{"choice": "UNKNOWN", "confidence": 0.95}'
+            }
+        }
+        mock_response.raise_for_status = MagicMock()
+
+        with patch("requests.post", return_value=mock_response) as mock_post:
+            res = engine.evaluate_choice(
+                state={"query": "what is Python"},
+                candidates=["card_arrival", "change_pin"],
+                criteria=original_criteria,
+                allow_abstain=True
+            )
+            # Verify UNKNOWN was injected into prompt sent to model
+            sent_prompt = mock_post.call_args[1]["json"]["messages"][0]["content"]
+            self.assertIn("- UNKNOWN:", sent_prompt)
+            # Verify original criteria was not mutated
+            self.assertNotIn("UNKNOWN", original_criteria)
+            # Verify result fields
+            self.assertTrue(res["abstained"])
+            self.assertEqual(res["choice"], "UNKNOWN")
+
     def test_compute_ece(self):
         """Verify automated ECE calculation on synthetic records."""
         records = [

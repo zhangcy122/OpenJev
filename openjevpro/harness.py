@@ -24,6 +24,7 @@ class BaseDecisionEngine:
         state: Dict[str, Any],
         candidates: List[str],
         criteria: Dict[str, str],
+        allow_abstain: bool = True,
     ) -> Dict[str, Any]:
         raise NotImplementedError
 
@@ -91,13 +92,14 @@ class OpenJevProEngine(BaseDecisionEngine):
         state: Dict[str, Any],
         candidates: List[str],
         criteria: Dict[str, str],
+        allow_abstain: bool = True,
     ) -> Dict[str, Any]:
         t0 = time.time()
         decision: ChoiceDecision = self.client.decide_choice(
             state=state,
             candidates=candidates,
             criteria=criteria,
-            allow_abstain=True
+            allow_abstain=allow_abstain
         )
         latency_ms = (time.time() - t0) * 1000
         return {
@@ -105,6 +107,7 @@ class OpenJevProEngine(BaseDecisionEngine):
             "confidence": decision.confidence,
             "probabilities": decision.probabilities,
             "abstained": decision.abstained,
+            "tentative_value": decision.tentative_value,
             "latency_ms": latency_ms,
         }
 
@@ -120,10 +123,15 @@ class DirectStructuredEngine(BaseDecisionEngine):
         state: Dict[str, Any],
         candidates: List[str],
         criteria: Dict[str, str],
+        allow_abstain: bool = True,
     ) -> Dict[str, Any]:
         import requests
         t0 = time.time()
-        crit_text = "\n".join([f"- {k}: {v}" for k, v in criteria.items()])
+        crit = dict(criteria)
+        if allow_abstain and "UNKNOWN" not in crit:
+            crit["UNKNOWN"] = "None of the other categories apply, or query is out-of-scope/unrelated."
+
+        crit_text = "\n".join([f"- {k}: {v}" for k, v in crit.items()])
         prompt = (
             f"Classify the following query into exactly one of the allowed categories:\n\n"
             f"Input: {json.dumps(state, ensure_ascii=False)}\n\n"
@@ -155,11 +163,13 @@ class DirectStructuredEngine(BaseDecisionEngine):
                     content = p_clean
                     break
         parsed = json.loads(content)
+        choice_val = parsed.get("choice") or parsed.get("intent", "").strip()
+        is_abstained = (choice_val == "UNKNOWN")
         return {
-            "choice": parsed.get("choice") or parsed.get("intent", "").strip(),
+            "choice": choice_val,
             "confidence": float(parsed.get("confidence", 0.5)),
             "probabilities": {},
-            "abstained": False,
+            "abstained": is_abstained,
             "latency_ms": latency_ms,
         }
 
@@ -174,6 +184,7 @@ class OpenJevProHarness:
         item: Dict[str, Any],
         candidates: List[str],
         criteria: Dict[str, str],
+        allow_abstain: bool = True,
     ) -> Dict[str, Any]:
         query = item.get("text") or item.get("query")
         gt = item.get("category") or item.get("ground_truth")
@@ -188,7 +199,7 @@ class OpenJevProHarness:
         # Evaluate engines concurrently
         with ThreadPoolExecutor(max_workers=len(self.engines)) as executor:
             future_to_engine = {
-                executor.submit(eng.evaluate_choice, state, candidates, criteria): name
+                executor.submit(eng.evaluate_choice, state, candidates, criteria, allow_abstain): name
                 for name, eng in self.engines.items()
             }
             for fut in future_to_engine:
@@ -214,6 +225,7 @@ class OpenJevProHarness:
         criteria: Dict[str, str],
         checkpoint_file: Optional[str] = None,
         max_workers: int = 4,
+        allow_abstain: bool = True,
     ) -> Dict[str, Any]:
         """Runs the benchmark across all items and compiles metric statistics."""
         records = []
@@ -237,7 +249,7 @@ class OpenJevProHarness:
 
         start_time = time.time()
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            futures = [executor.submit(self.evaluate_item, item, candidates, criteria) for item in remaining]
+            futures = [executor.submit(self.evaluate_item, item, candidates, criteria, allow_abstain) for item in remaining]
             for i, fut in enumerate(futures, start=len(records) + 1):
                 res = fut.result()
                 records.append(res)
