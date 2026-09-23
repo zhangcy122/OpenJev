@@ -115,11 +115,15 @@ class OpenJevProClient:
         if (allow_abstain and best_choice == "UNKNOWN") or confidence < self.abstain_threshold:
             abstained = True
 
+        final_value = "UNKNOWN" if abstained else best_choice
+        tentative_val = best_choice if (abstained and best_choice != "UNKNOWN") else None
+
         return ChoiceDecision(
-            value=best_choice,
+            value=final_value,
             probabilities=calibrated_probs,
             confidence=confidence,
             abstained=abstained,
+            tentative_value=tentative_val,
             raw_logits=extracted_logits,
         )
 
@@ -178,11 +182,15 @@ class OpenJevProClient:
         if (allow_abstain and best_choice == "UNKNOWN") or confidence < self.abstain_threshold:
             abstained = True
 
+        final_value = "UNKNOWN" if abstained else best_choice
+        tentative_val = best_choice if (abstained and best_choice != "UNKNOWN") else None
+
         return ChoiceDecision(
-            value=best_choice,
+            value=final_value,
             probabilities=calibrated_probs,
             confidence=confidence,
             abstained=abstained,
+            tentative_value=tentative_val,
             raw_logits=extracted_logits,
         )
 

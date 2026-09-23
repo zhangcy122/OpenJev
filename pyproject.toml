@@ -41,9 +41,13 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://openjev.pro"
-Repository = "https://github.com/zhangcy122/OpenJevPro"
-Issues = "https://github.com/zhangcy122/OpenJevPro/issues"
+Repository = "https://github.com/zhangcy122/OpenJev"
+Issues = "https://github.com/zhangcy122/OpenJev/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["openjevpro*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

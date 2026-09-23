@@ -40,11 +40,17 @@ class TypeSafeJevEngine(BaseDecisionEngine):
         state: Dict[str, Any],
         candidates: List[str],
         criteria: Dict[str, str],
+        allow_abstain: bool = True,
     ) -> Dict[str, Any]:
         import requests
         t0 = time.time()
         # State can be a dict or string
         state_repr = state.get("query") if isinstance(state, dict) and "query" in state else json.dumps(state, ensure_ascii=False)
+        
+        crit = dict(criteria)
+        if allow_abstain and "UNKNOWN" not in crit:
+            crit["UNKNOWN"] = "None of the other categories apply, or query is out-of-scope/unrelated."
+
         payload = {
             "model": self.model,
             "state": state_repr,
@@ -52,7 +58,7 @@ class TypeSafeJevEngine(BaseDecisionEngine):
                 "decision": {
                     "type": "choice",
                     "instructions": "Select the single best category matching the state context.",
-                    "criteria": criteria,
+                    "criteria": crit,
                 }
             }
         }
@@ -65,11 +71,12 @@ class TypeSafeJevEngine(BaseDecisionEngine):
         resp.raise_for_status()
         data = resp.json()
         ans = data["answers"]["decision"]
+        choice_val = ans["choice"]
         return {
-            "choice": ans["choice"],
+            "choice": choice_val,
             "confidence": ans.get("confidence", 1.0),
             "probabilities": ans.get("probabilities", {}),
-            "abstained": ans.get("choice") == "UNKNOWN",
+            "abstained": choice_val == "UNKNOWN",
             "latency_ms": latency_ms,
         }
 
@@ -256,6 +263,33 @@ class OpenJevProHarness:
 
         return final_output
 
+    @staticmethod
+    def compute_ece(records: List[Dict[str, Any]], engine_name: str, n_bins: int = 10) -> float:
+        """Computes Expected Calibration Error (ECE) over equal-width confidence bins."""
+        bin_boundaries = [i / n_bins for i in range(n_bins + 1)]
+        confidences = []
+        accuracies = []
+        for r in records:
+            res = r["engine_results"].get(engine_name, {})
+            conf = float(res.get("confidence", 0.0))
+            is_corr = 1.0 if (res.get("choice") == r["ground_truth"] or (res.get("abstained") and r["ground_truth"] == "UNKNOWN")) else 0.0
+            confidences.append(conf)
+            accuracies.append(is_corr)
+
+        ece = 0.0
+        total = len(confidences)
+        if total == 0:
+            return 0.0
+        for i in range(n_bins):
+            low, high = bin_boundaries[i], bin_boundaries[i + 1]
+            bin_indices = [idx for idx, c in enumerate(confidences) if (low <= c < high if i < n_bins - 1 else low <= c <= high)]
+            if not bin_indices:
+                continue
+            bin_acc = sum(accuracies[idx] for idx in bin_indices) / len(bin_indices)
+            bin_conf = sum(confidences[idx] for idx in bin_indices) / len(bin_indices)
+            ece += (len(bin_indices) / total) * abs(bin_acc - bin_conf)
+        return round(ece, 4)
+
     def _compute_summary(self, records: List[Dict[str, Any]]) -> Dict[str, Any]:
         total = len(records)
         if total == 0:
@@ -304,6 +338,7 @@ class OpenJevProHarness:
                 "jev_agreement_rate": round((agreed_with_jev / total) * 100, 2),
                 "abstained_count": abstained_cnt,
                 "abstained_rate": round((abstained_cnt / total) * 100, 2),
+                "ece": self.compute_ece(records, name),
                 "mean_latency_ms": round(mean_lat, 1),
                 "p50_latency_ms": round(p50, 1),
                 "p95_latency_ms": round(p95, 1),

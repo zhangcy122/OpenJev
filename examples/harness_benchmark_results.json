@@ -10,7 +10,8 @@
         "abstained_rate": 0.0,
         "mean_latency_ms": 777.2,
         "p50_latency_ms": 771.9,
-        "p95_latency_ms": 915.3
+        "p95_latency_ms": 915.3,
+        "ece": 0.075
       },
       "OpenJevPro (Calibrated)": {
         "accuracy": 100.0,
@@ -20,7 +21,8 @@
         "abstained_rate": 16.67,
         "mean_latency_ms": 5081.3,
         "p50_latency_ms": 4979.0,
-        "p95_latency_ms": 8463.6
+        "p95_latency_ms": 8463.6,
+        "ece": 0.0042
       },
       "Direct LLM (gpt-oss:20b-cloud + JSON)": {
         "accuracy": 80.56,
@@ -30,7 +32,8 @@
         "abstained_rate": 0.0,
         "mean_latency_ms": 5047.8,
         "p50_latency_ms": 4724.1,
-        "p95_latency_ms": 11460.6
+        "p95_latency_ms": 11460.6,
+        "ece": 0.0278
       }
     },
     "total_duration_sec": 12.302883386611938

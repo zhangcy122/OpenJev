@@ -2,11 +2,17 @@ from typing import Dict, Any, Optional, List
 from pydantic import BaseModel, Field
 
 class ChoiceDecision(BaseModel):
-    """Result of a categorical decision over a discrete set of options."""
-    value: str = Field(description="Selected choice value or abstention signal")
+    """Result of a categorical decision over a discrete set of options.
+    
+    When `abstained` is True, `value` is normalized to 'UNKNOWN' to prevent callers
+    from executing uncalibrated actions, while the raw argmax option is preserved in
+    `tentative_value`.
+    """
+    value: str = Field(description="Selected choice value, or 'UNKNOWN' if abstained")
     probabilities: Dict[str, float] = Field(description="Calibrated probability distribution across options")
     confidence: float = Field(ge=0.0, le=1.0, description="Calibrated posterior confidence")
     abstained: bool = Field(default=False, description="Whether the model abstained due to uncertainty")
+    tentative_value: Optional[str] = Field(default=None, description="Tentative winning option prior to abstention")
     raw_logits: Optional[Dict[str, float]] = None
 
 class NoulDecision(BaseModel):

@@ -52,39 +52,40 @@ All primitives incorporate first-class **Abstention & Fallback Options** (`UNKNO
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **GPT-5.6 Luna** | Cloud API (Low-inference) | **97.1%** | Fixed baseline | ~300–600ms | Proprietary Cloud |
 | **TypeSafe Jev (1.13.0)** | Compact Dedicated (RLCD) | **96.3%** | Reference Jev | **~25–45ms** | Proprietary Commercial |
-| **OpenJevPro (`openjev-sglang`)** | **Qwen3.6-35B-A3B (MoE)** | **95.5%** | **Overlaps with Jev** | **~45–75ms** | **Open Source / Zero-Shot** |
+| **OpenJevPro (via [`openjev-sglang`](https://github.com/ekzhang/openjev-sglang))** | **Qwen3.6-35B-A3B (MoE)** | **95.5%** | **Overlaps with Jev** | **~45–75ms** | **Open Source / Zero-Shot** |
 | **OpenJevPro (Edge)** | **Qwen3-4B / Gemma 4** | ~93.8% | Compact tier | < 35ms | 100% Free / Single GPU |
 
-> **Key Takeaway**: Across 242 decision cases in [JevBench v1](https://benchmarkheaven.com/jev-models), `openjev-sglang` (95.5%) and Jev 1.13.0 (96.3%) exhibit overlapping 95% confidence intervals, proving that representation capacity of modern open MoE models combined with lexical grammar masking achieves decision parity without requiring proprietary model training.
+> **Key Takeaway**: Across 242 decision cases in [JevBench v1](https://benchmarkheaven.com/jev-models), [`openjev-sglang`](https://github.com/ekzhang/openjev-sglang) by @ekzhang (95.5%) and Jev 1.13.0 (96.3%) exhibit overlapping 95% confidence intervals, proving that representation capacity of modern open MoE models combined with lexical grammar masking achieves decision parity without requiring proprietary model training.
 
 ### 🧪 Fresh Empirical Replication: OpenJevPro Harness vs TypeSafe Jev (Banking77 Benchmark)
 
-To independently verify performance and reliability on official production endpoints, we implemented the standardized [OpenJevPro Benchmark Harness](openjevpro/harness.py) and ran a head-to-head comparison on the **PolyAI Banking77** dataset (30 in-domain queries across 6 financial categories + 6 out-of-scope/adversarial queries):
+To independently verify performance and reliability on official production endpoints, we implemented the standardized [OpenJevPro Benchmark Harness](openjevpro/harness.py) and ran a head-to-head comparison on the **PolyAI Banking77** dataset (30 in-domain queries across 6 financial categories + 6 out-of-scope queries):
 
-| Decision Engine | Overall Accuracy | In-Domain Accuracy | Out-of-Scope Rejection | Latency (P50/Cloud) | Calibration Error (ECE) | Architecture & Reliability |
+| Decision Engine | Overall Accuracy | In-Domain Accuracy | Out-of-Scope Rejection | Latency (P50 / Mean) | Calibration Error (ECE) | Architecture & Reliability |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **OpenJevPro Harness (Ours)** | **100.0%** | **100.0%** (29/29) | **100.0% (Safe Abstain)** | **~508 ms** *(Cloud 248ms)* | **0.089** *(Calibrated)* | **Temperature Calibrated + Selective Abstention + Auto-repair JSON** |
-| **TypeSafe Jev (1.13.0)** | 80.56% | **100.0%** (29/29) | 0.0% (Forced Pick) | ~777 ms *(Cloud ~710ms)* | 0.284 *(Proprietary)* | Proprietary System 1 / RLCD (Closed-set) |
-| **Direct Open LLM (JSON)** | 80.56% | **100.0%** (29/29) | 0.0% (Hallucinated) | ~508–757 ms | 0.312 *(Overconfident)* | Raw JSON Schema (No rejection layer) |
+| **OpenJevPro Harness (Ours)** | **100.0%** (36/36) | **100.0%** (30/30) | **100.0% (Safe Abstain)** | **4,979 ms** *(Mean 5,081ms)* | **0.004** *(Calibrated)* | **Temperature Calibrated + Selective Abstention + Auto-repair JSON** |
+| **TypeSafe Jev (1.13.0)** | 80.56% (29/36) | 96.67% (29/30) | 0.0% (Forced Pick)* | **772 ms** *(Mean 777ms)* | 0.075 *(Proprietary)* | Proprietary System 1 / RLCD (Closed-set) |
+| **Direct Open LLM (JSON)** | 80.56% (29/36) | **100.0%** (30/30) | 0.0% (Hallucinated) | 4,724 ms *(Mean 5,048ms)* | 0.028 *(Overconfident)* | Raw JSON Schema (No rejection layer) |
 
-*\*Note: In-domain decision agreement is 100%. OpenJevPro achieves 100% precision on out-of-scope rejection where closed-set models hallucinate in-domain labels, while achieving faster end-to-end response times (~508ms vs ~777ms).*
+*\*Note: In-domain accuracy is 30/30 for OpenJevPro vs 29/30 for TypeSafe Jev (Jev classified 'How do I locate my card?' as lost_or_stolen_card against card_arrival). In the committed test run, TypeSafe Jev was evaluated without 'UNKNOWN' in its criteria dictionary (causing forced selection); symmetric criteria injection is supported via `allow_abstain=True`. Latency reflects an unoptimized remote cloud chat testbed (`gpt-oss:20b-cloud` over HTTP, ~5s) vs Jev's dedicated API (~772ms); collocated vLLM/SGLang deployments achieve sub-100ms.*
 
 #### 💡 Critical Findings:
-1. **Sub-Second Low Latency**: Equipped with cloud-accelerated lightweight backends (such as `gemma4:31b-cloud` or `gpt-oss:120b-cloud`), OpenJevPro achieves **~508ms end-to-end latency** (pure cloud inference ~248ms), outperforming commercial TypeSafe Jev API (~777ms).
-2. **Zero-Training Decision Parity**: On in-domain classification, OpenJevPro matched TypeSafe Jev with **100% agreement and accuracy** without requiring proprietary fine-tuning.
-3. **The Out-of-Scope Fallback Advantage (100% OOS)**: Plain structured output and closed Jev schemas suffer from *forced closed-set classification* (e.g. classifying Python coding requests into banking fee disputes). OpenJevPro's **`TemperatureCalibrator` + Selective Abstention Layer** safely identified all 6 out-of-scope cases as `UNKNOWN` (100% rejection rate).
-4. **Reliable Confidence (ECE 0.089)**: Uncalibrated open LLMs exhibit severe overconfidence (ECE > 0.30). OpenJevPro's post-hoc temperature calibration reduces ECE to 0.089, producing honest posterior probabilities for risk-sensitive gating.
+1. **Honest Latency & Deployment Profiles**: In this unoptimized remote cloud testbed (`gpt-oss:20b-cloud` via standard HTTP completions without speculative decoding or prefix caching), OpenJevPro recorded **~4,979ms P50 latency** (mean 5,081ms) compared to commercial TypeSafe Jev API's dedicated **~772ms P50**. Sub-100ms latency is attained in collocated vLLM/SGLang deployments (see JevBench v1 benchmark above).
+2. **Zero-Training In-Domain Parity**: On in-domain classification, OpenJevPro achieved **30/30 (100.0%)** while TypeSafe Jev achieved **29/30 (96.7%)**.
+3. **The Out-of-Scope Fallback Advantage (100% OOS)**: OpenJevPro's **`TemperatureCalibrator` + Selective Abstention Layer** safely identified all 6 out-of-scope cases as `UNKNOWN` (100% rejection rate). Symmetrically injecting `UNKNOWN` into TypeSafe Jev allows testing both closed-set and open-set rejection parity.
+4. **Reliable Confidence (ECE 0.004)**: Standardized 10-bin equal-width ECE computed on the physical records confirms OpenJevPro's temperature calibration reduces ECE to **0.0042**, compared to 0.0750 for TypeSafe Jev and 0.0278 for raw JSON.
 5. **Reproducibility**: Run the benchmark suite locally anytime via:
    ```bash
    python examples/run_harness_benchmark.py
-   # Full raw records generated in examples/harness_benchmark_results.json
+   # Full raw records and ECE summary generated in examples/harness_benchmark_results.json
    ```
 
 ### External Citations & Research
 1. 📈 **[JevBench v1](https://benchmarkheaven.com/jev-models)**: 242-case cross-comparison of Jev vs general LLMs vs openjev-sglang showing statistical parity.
-2. 🔬 **[iammrduncan/typesafe-ai-benchmark](https://github.com/iammrduncan/typesafe-ai-benchmark)**: Open reproducibility study testing Qwen 3.8 27B / Cerebras schema-constrained structured output vs Jev.
-3. ⚖️ **[mameli/jev-vs-luna](https://github.com/mameli/jev-vs-luna)**: 100 reviews × 3 runs analyzing fixture accuracy versus execution latency and cost trade-offs.
-4. 📑 **[TypeSafe: Introducing System One Models & Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev)**: Original technical definition of typed probabilistic decision primitives and RLCD calibration.
+2. 🚀 **[ekzhang/openjev-sglang](https://github.com/ekzhang/openjev-sglang)**: Open implementation of SGLang constrained-grammar decoding replication against Jev.
+3. 🔬 **[iammrduncan/typesafe-ai-benchmark](https://github.com/iammrduncan/typesafe-ai-benchmark)**: Open reproducibility study testing Qwen 3.8 27B / Cerebras schema-constrained structured output vs Jev.
+4. ⚖️ **[mameli/jev-vs-luna](https://github.com/mameli/jev-vs-luna)**: 100 reviews × 3 runs analyzing fixture accuracy versus execution latency and cost trade-offs.
+5. 📑 **[TypeSafe: Introducing System One Models & Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev)**: Original technical definition of typed probabilistic decision primitives and RLCD calibration.
 
 ---
 
