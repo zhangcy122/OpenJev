@@ -91,15 +91,16 @@ def main():
 
     # Initialize Engines
     jev_engine = TypeSafeJevEngine(api_key=jev_api_key)
+    model_name = os.environ.get("OLLAMA_MODEL", "gemma4:cloud")
     openjev_client = OpenJevProClient(
         base_url="http://localhost:11434",
-        model="gpt-oss:20b-cloud",
+        model=model_name,
         temperature_scaling=1.35,
         abstain_threshold=0.40,
         backend="ollama",
     )
-    openjev_engine = OpenJevProEngine(client=openjev_client, name="OpenJevPro (Calibrated)")
-    direct_engine = DirectStructuredEngine(base_url="http://localhost:11434", model="gpt-oss:20b-cloud")
+    openjev_engine = OpenJevProEngine(client=openjev_client, name=f"OpenJevPro (Calibrated {model_name})")
+    direct_engine = DirectStructuredEngine(base_url="http://localhost:11434", model=model_name)
 
     harness = OpenJevProHarness(engines=[jev_engine, openjev_engine, direct_engine])
 

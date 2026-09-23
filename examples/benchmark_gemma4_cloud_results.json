@@ -1,0 +1,1594 @@
+{
+  "summary": {
+    "total_samples": 36,
+    "total_duration_sec": 21.1785945892334,
+    "engine_metrics": {
+      "TypeSafe Jev (Commercial)": {
+        "overall_accuracy": 80.56,
+        "correct_count": 29,
+        "in_domain_accuracy": 96.67,
+        "in_domain_count": "29/30",
+        "oos_recall": 0.0,
+        "oos_count": "0/6",
+        "mean_latency_ms": 777.2,
+        "p50_latency_ms": 766.8,
+        "p95_latency_ms": 915.3,
+        "ece": 0.075
+      },
+      "OpenJevPro (gemma4:cloud)": {
+        "overall_accuracy": 94.44,
+        "correct_count": 34,
+        "in_domain_accuracy": 93.33,
+        "in_domain_count": "28/30",
+        "oos_recall": 100.0,
+        "oos_count": "6/6",
+        "mean_latency_ms": 1448.5,
+        "p50_latency_ms": 1281.5,
+        "p95_latency_ms": 3816.5,
+        "ece": 0.0352
+      },
+      "Direct LLM (gemma4:cloud + JSON)": {
+        "overall_accuracy": 80.56,
+        "correct_count": 29,
+        "in_domain_accuracy": 96.67,
+        "in_domain_count": "29/30",
+        "oos_recall": 0.0,
+        "oos_count": "0/6",
+        "mean_latency_ms": 835.2,
+        "p50_latency_ms": 812.6,
+        "p95_latency_ms": 1386.9,
+        "ece": 0.0336
+      }
+    }
+  },
+  "records": [
+    {
+      "text": "How do I locate my card?",
+      "ground_truth": "card_arrival",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.86,
+          "probabilities": {
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.88,
+            "top_up_failed": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "change_pin": 0.0,
+            "card_arrival": 0.12
+          },
+          "abstained": false,
+          "latency_ms": 778.7277698516846
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.548040984218233,
+          "probabilities": {
+            "card_arrival": 0.3784105443850538,
+            "change_pin": 0.013499415242922575,
+            "top_up_failed": 0.013499415242922575,
+            "lost_or_stolen_card": 0.548040984218233,
+            "transfer_fee_charged": 0.013499415242922575,
+            "extra_charge_on_statement": 0.013499415242922575,
+            "UNKNOWN": 0.019550810425022908
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 704.7207355499268
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.85,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1386.904239654541
+        }
+      }
+    },
+    {
+      "text": "I still have not received my new card, I ordered over a week ago.",
+      "ground_truth": "card_arrival",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {
+            "card_arrival": 1.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0,
+            "top_up_failed": 0.0,
+            "extra_charge_on_statement": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 794.8718070983887
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "card_arrival",
+          "confidence": 0.9963264443328732,
+          "probabilities": {
+            "card_arrival": 0.9963264443328732,
+            "change_pin": 0.0006045127918139874,
+            "top_up_failed": 0.0006045127918139874,
+            "lost_or_stolen_card": 0.0006509917080568836,
+            "transfer_fee_charged": 0.0006045127918139874,
+            "extra_charge_on_statement": 0.0006045127918139874,
+            "UNKNOWN": 0.0006045127918139874
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1689.8679733276367
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 566.4525032043457
+        }
+      }
+    },
+    {
+      "text": "I ordered a card but it has not arrived. Help please!",
+      "ground_truth": "card_arrival",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {
+            "card_arrival": 1.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0,
+            "top_up_failed": 0.0,
+            "extra_charge_on_statement": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 826.3018131256104
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "card_arrival",
+          "confidence": 0.9963264443328732,
+          "probabilities": {
+            "card_arrival": 0.9963264443328732,
+            "change_pin": 0.0006045127918139874,
+            "top_up_failed": 0.0006045127918139874,
+            "lost_or_stolen_card": 0.0006509917080568836,
+            "transfer_fee_charged": 0.0006045127918139874,
+            "extra_charge_on_statement": 0.0006045127918139874,
+            "UNKNOWN": 0.0006045127918139874
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1769.343614578247
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1021.0766792297363
+        }
+      }
+    },
+    {
+      "text": "Is there a way to know when my card will arrive?",
+      "ground_truth": "card_arrival",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {
+            "top_up_failed": 0.0,
+            "transfer_fee_charged": 0.0,
+            "card_arrival": 1.0,
+            "extra_charge_on_statement": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 833.4052562713623
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "card_arrival",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.9963727546586836,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1694.4503784179688
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 545.5911159515381
+        }
+      }
+    },
+    {
+      "text": "My card has not arrived yet.",
+      "ground_truth": "card_arrival",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {
+            "lost_or_stolen_card": 0.0,
+            "card_arrival": 1.0,
+            "top_up_failed": 0.0,
+            "transfer_fee_charged": 0.0,
+            "change_pin": 0.0,
+            "extra_charge_on_statement": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 711.9243144989014
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "card_arrival",
+          "confidence": 0.9961028126928383,
+          "probabilities": {
+            "card_arrival": 0.9961028126928383,
+            "change_pin": 0.0006043771051745086,
+            "top_up_failed": 0.0006043771051745086,
+            "lost_or_stolen_card": 0.0008753017812890697,
+            "transfer_fee_charged": 0.0006043771051745086,
+            "extra_charge_on_statement": 0.0006043771051745086,
+            "UNKNOWN": 0.0006043771051745086
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 919.929027557373
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "card_arrival",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 591.6814804077148
+        }
+      }
+    },
+    {
+      "text": "My statement has a dollar I have been charged showing up on it.",
+      "ground_truth": "extra_charge_on_statement",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.99,
+          "probabilities": {
+            "transfer_fee_charged": 0.01,
+            "top_up_failed": 0.0,
+            "extra_charge_on_statement": 0.99,
+            "card_arrival": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 761.6286277770996
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.9944001872366129,
+          "probabilities": {
+            "card_arrival": 0.0008738056394493801,
+            "change_pin": 0.0008738056394493801,
+            "top_up_failed": 0.0008738056394493801,
+            "lost_or_stolen_card": 0.0008738056394493801,
+            "transfer_fee_charged": 0.0010133390210358935,
+            "extra_charge_on_statement": 0.9944001872366129,
+            "UNKNOWN": 0.0010912511845536503
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 782.4442386627197
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 947.1664428710938
+        }
+      }
+    },
+    {
+      "text": "Why is there a fee for an extra pound in my statement?",
+      "ground_truth": "extra_charge_on_statement",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.92,
+          "probabilities": {
+            "top_up_failed": 0.0,
+            "change_pin": 0.0,
+            "transfer_fee_charged": 0.06,
+            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "extra_charge_on_statement": 0.9400000000000001
+          },
+          "abstained": false,
+          "latency_ms": 716.7015075683594
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "UNKNOWN",
+          "confidence": 0.22698175756125374,
+          "probabilities": {
+            "card_arrival": 0.12549639819182157,
+            "change_pin": 0.12549639819182157,
+            "top_up_failed": 0.12549639819182157,
+            "lost_or_stolen_card": 0.12549639819182157,
+            "transfer_fee_charged": 0.14553625147963847,
+            "extra_charge_on_statement": 0.22698175756125374,
+            "UNKNOWN": 0.12549639819182157
+          },
+          "abstained": true,
+          "tentative_value": "extra_charge_on_statement",
+          "latency_ms": 1136.2781524658203
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 872.2078800201416
+        }
+      }
+    },
+    {
+      "text": "I'm not okay with this fee on my statement.",
+      "ground_truth": "extra_charge_on_statement",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.91,
+          "probabilities": {
+            "extra_charge_on_statement": 0.92,
+            "transfer_fee_charged": 0.08,
+            "card_arrival": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "top_up_failed": 0.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 726.5300750732422
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.6402866820016935,
+          "probabilities": {
+            "card_arrival": 0.010889967391762099,
+            "change_pin": 0.010889967391762099,
+            "top_up_failed": 0.010889967391762099,
+            "lost_or_stolen_card": 0.010889967391762099,
+            "transfer_fee_charged": 0.30526348103949613,
+            "extra_charge_on_statement": 0.6402866820016935,
+            "UNKNOWN": 0.010889967391762099
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 982.170820236206
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.95,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 629.4419765472412
+        }
+      }
+    },
+    {
+      "text": "Why is there an extra dollar charged to my account?",
+      "ground_truth": "extra_charge_on_statement",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 1.0,
+          "probabilities": {
+            "extra_charge_on_statement": 1.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "top_up_failed": 0.0,
+            "change_pin": 0.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 785.0828170776367
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.9925836023508079,
+          "probabilities": {
+            "card_arrival": 0.0010892576708416445,
+            "change_pin": 0.0010892576708416445,
+            "top_up_failed": 0.0010892576708416445,
+            "lost_or_stolen_card": 0.0010892576708416445,
+            "transfer_fee_charged": 0.0019701092949839477,
+            "extra_charge_on_statement": 0.9925836023508079,
+            "UNKNOWN": 0.0010892576708416445
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1390.6278610229492
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 580.4569721221924
+        }
+      }
+    },
+    {
+      "text": "There is a fee I don't recognize on my statement.",
+      "ground_truth": "extra_charge_on_statement",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 1.0,
+          "probabilities": {
+            "top_up_failed": 0.0,
+            "change_pin": 0.0,
+            "extra_charge_on_statement": 1.0,
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 961.4677429199219
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.9952965976571352,
+          "probabilities": {
+            "card_arrival": 0.0007541647719970713,
+            "change_pin": 0.0007541647719970713,
+            "top_up_failed": 0.0007541647719970713,
+            "lost_or_stolen_card": 0.0007541647719970713,
+            "transfer_fee_charged": 0.0008745933388995283,
+            "extra_charge_on_statement": 0.9952965976571352,
+            "UNKNOWN": 0.0008121499159769208
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1359.6539497375488
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 752.7899742126465
+        }
+      }
+    },
+    {
+      "text": "My entire gym bag, including my wallet, was stolen out of my locker today. Everything in my wallet is gone - how do I block the card to make it can't be used?",
+      "ground_truth": "lost_or_stolen_card",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {
+            "card_arrival": 0.0,
+            "top_up_failed": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "lost_or_stolen_card": 1.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 726.1693477630615
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.9963727546586836,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 776.6537666320801
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1142.838478088379
+        }
+      }
+    },
+    {
+      "text": "I can't find my card and think it may have been stolen.",
+      "ground_truth": "lost_or_stolen_card",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {
+            "lost_or_stolen_card": 1.0,
+            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 0.0,
+            "transfer_fee_charged": 0.0,
+            "change_pin": 0.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 806.1213493347168
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.9963727546586836,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1683.4065914154053
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 592.5581455230713
+        }
+      }
+    },
+    {
+      "text": "Someone stole my card. I need to report it stolen. I made a police report already, but how do I report it with you?",
+      "ground_truth": "lost_or_stolen_card",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {
+            "change_pin": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 0.0,
+            "lost_or_stolen_card": 1.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 771.9104290008545
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.9963727546586836,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1598.6137390136719
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 664.3953323364258
+        }
+      }
+    },
+    {
+      "text": "I cant find my card, it's gone.",
+      "ground_truth": "lost_or_stolen_card",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {
+            "extra_charge_on_statement": 0.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 1.0,
+            "change_pin": 0.0,
+            "top_up_failed": 0.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 694.5137977600098
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.9956886942927509,
+          "probabilities": {
+            "card_arrival": 0.0007544618748611776,
+            "change_pin": 0.0007005954893817062,
+            "top_up_failed": 0.0007005954893817062,
+            "lost_or_stolen_card": 0.9956886942927509,
+            "transfer_fee_charged": 0.0007005954893817062,
+            "extra_charge_on_statement": 0.0007005954893817062,
+            "UNKNOWN": 0.0007544618748611776
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 768.1598663330078
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 905.0462245941162
+        }
+      }
+    },
+    {
+      "text": "My card is lost! What can I do?",
+      "ground_truth": "lost_or_stolen_card",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {
+            "top_up_failed": 0.0,
+            "change_pin": 0.0,
+            "card_arrival": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "lost_or_stolen_card": 1.0,
+            "transfer_fee_charged": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 819.8196887969971
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.9963727546586836,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1081.3004970550537
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "lost_or_stolen_card",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 874.4876384735107
+        }
+      }
+    },
+    {
+      "text": "What kind of cash machines would allow me to change my PIN?",
+      "ground_truth": "change_pin",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {
+            "transfer_fee_charged": 0.0,
+            "card_arrival": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 1.0
+          },
+          "abstained": false,
+          "latency_ms": 854.4490337371826
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "change_pin",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.9963727546586836,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1031.390905380249
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 564.0103816986084
+        }
+      }
+    },
+    {
+      "text": "Where do I change my PIN?",
+      "ground_truth": "change_pin",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {
+            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 0.0,
+            "change_pin": 1.0
+          },
+          "abstained": false,
+          "latency_ms": 846.1167812347412
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "change_pin",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.9963727546586836,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 784.773588180542
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1328.989028930664
+        }
+      }
+    },
+    {
+      "text": "Is the bank the only place I can change my PIN>",
+      "ground_truth": "change_pin",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "top_up_failed": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "change_pin": 1.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 844.2592620849609
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "change_pin",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.9963727546586836,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1513.4317874908447
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 951.4856338500977
+        }
+      }
+    },
+    {
+      "text": "If I am overseas, how do I change my pin?",
+      "ground_truth": "change_pin",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {
+            "change_pin": 1.0,
+            "card_arrival": 0.0,
+            "top_up_failed": 0.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 826.5821933746338
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "change_pin",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.9963727546586836,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1666.5010452270508
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 502.0599365234375
+        }
+      }
+    },
+    {
+      "text": "Can i change my PIN at the ATM?",
+      "ground_truth": "change_pin",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {
+            "change_pin": 1.0,
+            "top_up_failed": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 882.3919296264648
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "change_pin",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.9963727546586836,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1574.4273662567139
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "change_pin",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 536.3185405731201
+        }
+      }
+    },
+    {
+      "text": "When I made a transfer, there was a fee.  Why?",
+      "ground_truth": "transfer_fee_charged",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {
+            "transfer_fee_charged": 1.0,
+            "top_up_failed": 0.0,
+            "card_arrival": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "change_pin": 0.0,
+            "lost_or_stolen_card": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 744.6706295013428
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.9961028126928383,
+          "probabilities": {
+            "card_arrival": 0.0006043771051745086,
+            "change_pin": 0.0006043771051745086,
+            "top_up_failed": 0.0006043771051745086,
+            "lost_or_stolen_card": 0.0006043771051745086,
+            "transfer_fee_charged": 0.9961028126928383,
+            "extra_charge_on_statement": 0.0008753017812890697,
+            "UNKNOWN": 0.0006043771051745086
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1153.3455848693848
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 966.2010669708252
+        }
+      }
+    },
+    {
+      "text": "I was charged a fee for my transfer.",
+      "ground_truth": "transfer_fee_charged",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {
+            "extra_charge_on_statement": 0.0,
+            "transfer_fee_charged": 1.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0,
+            "top_up_failed": 0.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 750.8926391601562
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.9956845705638196,
+          "probabilities": {
+            "card_arrival": 0.0007005925878062387,
+            "change_pin": 0.0007005925878062387,
+            "top_up_failed": 0.0007005925878062387,
+            "lost_or_stolen_card": 0.0007005925878062387,
+            "transfer_fee_charged": 0.9956845705638196,
+            "extra_charge_on_statement": 0.0008124664971491121,
+            "UNKNOWN": 0.0007005925878062387
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1004.5199394226074
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1071.009635925293
+        }
+      }
+    },
+    {
+      "text": "Is there a reason I was charged a fee to transfer?",
+      "ground_truth": "transfer_fee_charged",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "transfer_fee_charged": 1.0,
+            "card_arrival": 0.0,
+            "top_up_failed": 0.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 707.089900970459
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.9961028126928383,
+          "probabilities": {
+            "card_arrival": 0.0006043771051745086,
+            "change_pin": 0.0006043771051745086,
+            "top_up_failed": 0.0006043771051745086,
+            "lost_or_stolen_card": 0.0006043771051745086,
+            "transfer_fee_charged": 0.9961028126928383,
+            "extra_charge_on_statement": 0.0008753017812890697,
+            "UNKNOWN": 0.0006043771051745086
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 5543.386459350586
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 648.533821105957
+        }
+      }
+    },
+    {
+      "text": "Why was a charged just for transferring?",
+      "ground_truth": "transfer_fee_charged",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {
+            "card_arrival": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "transfer_fee_charged": 1.0,
+            "top_up_failed": 0.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 675.839900970459
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.9956845705638196,
+          "probabilities": {
+            "card_arrival": 0.0007005925878062387,
+            "change_pin": 0.0007005925878062387,
+            "top_up_failed": 0.0007005925878062387,
+            "lost_or_stolen_card": 0.0007005925878062387,
+            "transfer_fee_charged": 0.9956845705638196,
+            "extra_charge_on_statement": 0.0008124664971491121,
+            "UNKNOWN": 0.0007005925878062387
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1705.5866718292236
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.98,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 995.5494403839111
+        }
+      }
+    },
+    {
+      "text": "I had to pay in order to do a transfer",
+      "ground_truth": "transfer_fee_charged",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 1.0,
+          "probabilities": {
+            "change_pin": 0.0,
+            "top_up_failed": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "transfer_fee_charged": 1.0,
+            "extra_charge_on_statement": 0.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 675.9829521179199
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.9956845705638196,
+          "probabilities": {
+            "card_arrival": 0.0007005925878062387,
+            "change_pin": 0.0007005925878062387,
+            "top_up_failed": 0.0007005925878062387,
+            "lost_or_stolen_card": 0.0007005925878062387,
+            "transfer_fee_charged": 0.9956845705638196,
+            "extra_charge_on_statement": 0.0008124664971491121,
+            "UNKNOWN": 0.0007005925878062387
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 3816.5295124053955
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.95,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1515.8159732818604
+        }
+      }
+    },
+    {
+      "text": "The app denied my topped up.",
+      "ground_truth": "top_up_failed",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {
+            "extra_charge_on_statement": 0.0,
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "top_up_failed": 1.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 740.5176162719727
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "top_up_failed",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.9963727546586836,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1723.9410877227783
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "top_up_failed",
+          "confidence": 0.98,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1230.1888465881348
+        }
+      }
+    },
+    {
+      "text": "Heyy I tried to top up with my card today but it failed! I just got the couple days before but it has worked last time. What's going on, can you double check please?",
+      "ground_truth": "top_up_failed",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {
+            "change_pin": 0.0,
+            "top_up_failed": 1.0,
+            "lost_or_stolen_card": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "card_arrival": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 730.9603691101074
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "top_up_failed",
+          "confidence": 0.9956886942927509,
+          "probabilities": {
+            "card_arrival": 0.0007544618748611776,
+            "change_pin": 0.0007005954893817062,
+            "top_up_failed": 0.9956886942927509,
+            "lost_or_stolen_card": 0.0007005954893817062,
+            "transfer_fee_charged": 0.0007005954893817062,
+            "extra_charge_on_statement": 0.0007005954893817062,
+            "UNKNOWN": 0.0007544618748611776
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1728.6148071289062
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1083.848476409912
+        }
+      }
+    },
+    {
+      "text": "I have a top up that didn't go through.  Why?",
+      "ground_truth": "top_up_failed",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {
+            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 1.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 720.4101085662842
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "top_up_failed",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.9963727546586836,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1409.752607345581
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1010.94651222229
+        }
+      }
+    },
+    {
+      "text": "So, I tried topping up my card for the today. Unfortunately, it failed. A couple of days back I used it and it works fine. Can you double check and tell me what's going on?",
+      "ground_truth": "top_up_failed",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {
+            "card_arrival": 0.0,
+            "top_up_failed": 1.0,
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 698.7314224243164
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "top_up_failed",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.9963727546586836,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 1203.402042388916
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 517.9989337921143
+        }
+      }
+    },
+    {
+      "text": "Why did the app deny my top up?",
+      "ground_truth": "top_up_failed",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "transfer_fee_charged": 0.0,
+            "card_arrival": 0.0,
+            "top_up_failed": 1.0,
+            "change_pin": 0.0
+          },
+          "abstained": false,
+          "latency_ms": 692.5418376922607
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "top_up_failed",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.9963727546586836,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.0006045408902193892
+          },
+          "abstained": false,
+          "tentative_value": null,
+          "latency_ms": 777.6963710784912
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "top_up_failed",
+          "confidence": 1.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 960.5545997619629
+        }
+      }
+    },
+    {
+      "text": "Write a python script to calculate the Fibonacci series.",
+      "ground_truth": "UNKNOWN",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.08,
+          "probabilities": {
+            "change_pin": 0.14,
+            "top_up_failed": 0.21,
+            "lost_or_stolen_card": 0.09,
+            "transfer_fee_charged": 0.12,
+            "extra_charge_on_statement": 0.22,
+            "card_arrival": 0.22
+          },
+          "abstained": false,
+          "latency_ms": 788.0213260650635
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "UNKNOWN",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.9963727546586836
+          },
+          "abstained": true,
+          "tentative_value": null,
+          "latency_ms": 1788.3963584899902
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 561.9986057281494
+        }
+      }
+    },
+    {
+      "text": "What is the weather like in Tokyo right now?",
+      "ground_truth": "UNKNOWN",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "card_arrival",
+          "confidence": 0.35,
+          "probabilities": {
+            "lost_or_stolen_card": 0.09,
+            "extra_charge_on_statement": 0.21,
+            "transfer_fee_charged": 0.11,
+            "card_arrival": 0.45,
+            "top_up_failed": 0.1,
+            "change_pin": 0.04
+          },
+          "abstained": false,
+          "latency_ms": 786.3690853118896
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "UNKNOWN",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.9963727546586836
+          },
+          "abstained": true,
+          "tentative_value": null,
+          "latency_ms": 1082.082748413086
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.0,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 1002.5920867919922
+        }
+      }
+    },
+    {
+      "text": "Thank you so much, your team was super helpful today!",
+      "ground_truth": "UNKNOWN",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "card_arrival",
+          "confidence": 0.31,
+          "probabilities": {
+            "top_up_failed": 0.09,
+            "lost_or_stolen_card": 0.05,
+            "change_pin": 0.21,
+            "card_arrival": 0.43,
+            "transfer_fee_charged": 0.14,
+            "extra_charge_on_statement": 0.08
+          },
+          "abstained": false,
+          "latency_ms": 735.3878021240234
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "UNKNOWN",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.9963727546586836
+          },
+          "abstained": true,
+          "tentative_value": null,
+          "latency_ms": 1715.6460285186768
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.1,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 512.6464366912842
+        }
+      }
+    },
+    {
+      "text": "Can I trade Bitcoin and Ethereum on your mobile app?",
+      "ground_truth": "UNKNOWN",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "transfer_fee_charged",
+          "confidence": 0.42,
+          "probabilities": {
+            "card_arrival": 0.02,
+            "top_up_failed": 0.37,
+            "change_pin": 0.02,
+            "extra_charge_on_statement": 0.06,
+            "lost_or_stolen_card": 0.01,
+            "transfer_fee_charged": 0.52
+          },
+          "abstained": false,
+          "latency_ms": 887.932538986206
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "UNKNOWN",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.9963727546586836
+          },
+          "abstained": true,
+          "tentative_value": null,
+          "latency_ms": 1120.8794116973877
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.1,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 593.8467979431152
+        }
+      }
+    },
+    {
+      "text": "How many employees work at the company headquarters?",
+      "ground_truth": "UNKNOWN",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "card_arrival",
+          "confidence": 0.17,
+          "probabilities": {
+            "card_arrival": 0.31,
+            "extra_charge_on_statement": 0.24,
+            "change_pin": 0.04,
+            "lost_or_stolen_card": 0.04,
+            "top_up_failed": 0.07,
+            "transfer_fee_charged": 0.3
+          },
+          "abstained": false,
+          "latency_ms": 915.2805805206299
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "UNKNOWN",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.9963727546586836
+          },
+          "abstained": true,
+          "tentative_value": null,
+          "latency_ms": 746.7606067657471
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.01,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 685.1527690887451
+        }
+      }
+    },
+    {
+      "text": "Please book a table for four at the Italian bistro tonight.",
+      "ground_truth": "UNKNOWN",
+      "engine_results": {
+        "TypeSafe Jev (Commercial)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.33,
+          "probabilities": {
+            "transfer_fee_charged": 0.1,
+            "top_up_failed": 0.13,
+            "extra_charge_on_statement": 0.44,
+            "lost_or_stolen_card": 0.07,
+            "card_arrival": 0.21,
+            "change_pin": 0.05
+          },
+          "abstained": false,
+          "latency_ms": 760.723352432251
+        },
+        "OpenJevPro (gemma4:cloud)": {
+          "choice": "UNKNOWN",
+          "confidence": 0.9963727546586836,
+          "probabilities": {
+            "card_arrival": 0.0006045408902193892,
+            "change_pin": 0.0006045408902193892,
+            "top_up_failed": 0.0006045408902193892,
+            "lost_or_stolen_card": 0.0006045408902193892,
+            "transfer_fee_charged": 0.0006045408902193892,
+            "extra_charge_on_statement": 0.0006045408902193892,
+            "UNKNOWN": 0.9963727546586836
+          },
+          "abstained": true,
+          "tentative_value": null,
+          "latency_ms": 717.9703712463379
+        },
+        "Direct LLM (gemma4:cloud + JSON)": {
+          "choice": "extra_charge_on_statement",
+          "confidence": 0.01,
+          "probabilities": {},
+          "abstained": false,
+          "latency_ms": 752.9146671295166
+        }
+      }
+    }
+  ]
+}
