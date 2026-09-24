@@ -9,6 +9,7 @@ Standardized evaluation harness comparing:
 import os
 import json
 import time
+import statistics
 from typing import Dict, List, Any, Optional, Callable
 from concurrent.futures import ThreadPoolExecutor
 
@@ -307,8 +308,8 @@ class OpenJevProHarness:
         if total == 0:
             return {}
 
-        engine_names = list(self.engines.keys())
-        jev_name = next((name for name in engine_names if "Jev" in name and "Open" not in name), engine_names[0])
+        engine_names = list(self.engines.keys()) if self.engines else list(records[0].get("engine_results", {}).keys())
+        jev_name = next((name for name in engine_names if "Jev" in name and "Open" not in name), engine_names[0] if engine_names else "")
 
         summary = {
             "total_samples": total,
@@ -319,17 +320,29 @@ class OpenJevProHarness:
             correct = 0
             agreed_with_jev = 0
             abstained_cnt = 0
+            answered = 0
+            answered_correct = 0
+            tentative_correct = 0
             latencies = []
 
             for r in records:
                 e_res = r["engine_results"].get(name, {})
                 choice = e_res.get("choice")
                 gt = r["ground_truth"]
+                is_abstained = bool(e_res.get("abstained"))
 
                 if choice == gt:
                     correct += 1
-                if e_res.get("abstained"):
+                if is_abstained:
                     abstained_cnt += 1
+                else:
+                    answered += 1
+                    if choice == gt:
+                        answered_correct += 1
+
+                tentative_val = e_res.get("tentative_value") or choice
+                if tentative_val == gt:
+                    tentative_correct += 1
 
                 jev_choice = r["engine_results"].get(jev_name, {}).get("choice")
                 if choice == jev_choice:
@@ -339,14 +352,17 @@ class OpenJevProHarness:
                 if lat > 0:
                     latencies.append(lat)
 
+            p50 = statistics.median(latencies) if latencies else 0.0
             sorted_lat = sorted(latencies) if latencies else [0.0]
-            p50 = sorted_lat[int(0.50 * len(sorted_lat))]
             p95 = sorted_lat[int(0.95 * len(sorted_lat))]
-            mean_lat = sum(latencies) / len(latencies) if latencies else 0.0
+            mean_lat = statistics.mean(latencies) if latencies else 0.0
 
             summary["engine_metrics"][name] = {
                 "accuracy": round((correct / total) * 100, 2),
                 "correct_count": correct,
+                "selective_accuracy": round((answered_correct / max(answered, 1)) * 100, 2),
+                "tentative_accuracy": round((tentative_correct / total) * 100, 2),
+                "coverage_rate": round((answered / total) * 100, 2),
                 "jev_agreement_rate": round((agreed_with_jev / total) * 100, 2),
                 "abstained_count": abstained_cnt,
                 "abstained_rate": round((abstained_cnt / total) * 100, 2),

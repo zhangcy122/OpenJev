@@ -92,11 +92,17 @@ def main():
     # Initialize Engines
     jev_engine = TypeSafeJevEngine(api_key=jev_api_key)
     model_name = os.environ.get("OLLAMA_MODEL", "gemma4:cloud")
+    thresh_env = os.environ.get("OPENJEV_ABSTAIN_THRESHOLD", "0.40")
+    try:
+        abstain_thresh = float(thresh_env)
+    except ValueError:
+        abstain_thresh = thresh_env
+
     openjev_client = OpenJevProClient(
         base_url="http://localhost:11434",
         model=model_name,
         temperature_scaling=1.35,
-        abstain_threshold=0.40,
+        abstain_threshold=abstain_thresh,
         backend="ollama",
     )
     openjev_engine = OpenJevProEngine(client=openjev_client, name=f"OpenJevPro (Calibrated {model_name})")
@@ -124,22 +130,22 @@ def main():
     summary = results["summary"]
     engine_metrics = summary["engine_metrics"]
 
-    print("\n" + "=" * 75)
+    print("\n" + "=" * 90)
     print("📊 OPENJEVPRO HARNESS BENCHMARK RESULTS")
-    print("=" * 75)
-    header = f"{'Engine':<28} | {'Accuracy':<10} | {'Jev Agree':<10} | {'Abstained':<10} | {'Mean Latency':<12} | {'P95 Latency':<12}"
+    print("=" * 90)
+    header = f"{'Engine':<28} | {'Naive Acc':<10} | {'Selective':<10} | {'Tentative':<10} | {'Abstained':<10} | {'P50 Latency':<12}"
     print(header)
-    print("-" * 75)
+    print("-" * 90)
 
     for eng_name, m in engine_metrics.items():
         acc_str = f"{m['accuracy']}%"
-        agree_str = f"{m['jev_agreement_rate']}%"
+        sel_str = f"{m.get('selective_accuracy', m['accuracy'])}%"
+        tent_str = f"{m.get('tentative_accuracy', m['accuracy'])}%"
         abst_str = f"{m['abstained_count']} ({m['abstained_rate']}%)"
-        mean_lat = f"{m['mean_latency_ms']} ms"
-        p95_lat = f"{m['p95_latency_ms']} ms"
-        print(f"{eng_name:<28} | {acc_str:<10} | {agree_str:<10} | {abst_str:<10} | {mean_lat:<12} | {p95_lat:<12}")
+        p50_lat = f"{m['p50_latency_ms']} ms"
+        print(f"{eng_name:<28} | {acc_str:<10} | {sel_str:<10} | {tent_str:<10} | {abst_str:<10} | {p50_lat:<12}")
 
-    print("-" * 75)
+    print("-" * 90)
 
     # Detailed OOS analysis
     print("\n🛡️ OUT-OF-SCOPE & ABSTENTION BEHAVIOR (Selective Prediction)")

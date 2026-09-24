@@ -16,7 +16,7 @@ class OpenJevProClient:
         api_key: str = "EMPTY",
         model: str = "Qwen/Qwen3-4B-Instruct",
         temperature_scaling: float = 1.25,
-        abstain_threshold: float = 0.45,
+        abstain_threshold: Union[float, str] = 0.45,
         backend: str = "auto",
     ):
         self.base_url = base_url.rstrip("/")
@@ -32,6 +32,14 @@ class OpenJevProClient:
                 self.backend = "openai"
         else:
             self.backend = backend.lower()
+
+    def _get_effective_threshold(self, n_options: int) -> float:
+        """Computes the effective confidence threshold for abstention.
+        If abstain_threshold is 'auto', scales inversely with candidate count (1.25 / n_options).
+        """
+        if isinstance(self.abstain_threshold, str) and self.abstain_threshold.lower() == "auto":
+            return 1.25 / max(n_options, 1)
+        return float(self.abstain_threshold)
 
     def decide_choice(
         self,
@@ -111,8 +119,9 @@ class OpenJevProClient:
         best_choice = max(calibrated_probs, key=calibrated_probs.get)
         confidence = calibrated_probs[best_choice]
 
+        effective_thresh = self._get_effective_threshold(len(options))
         abstained = False
-        if (allow_abstain and best_choice == "UNKNOWN") or confidence < self.abstain_threshold:
+        if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
             abstained = True
 
         final_value = "UNKNOWN" if abstained else best_choice
@@ -178,8 +187,9 @@ class OpenJevProClient:
         best_choice = max(calibrated_probs, key=calibrated_probs.get)
         confidence = calibrated_probs[best_choice]
 
+        effective_thresh = self._get_effective_threshold(len(options))
         abstained = False
-        if (allow_abstain and best_choice == "UNKNOWN") or confidence < self.abstain_threshold:
+        if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
             abstained = True
 
         final_value = "UNKNOWN" if abstained else best_choice

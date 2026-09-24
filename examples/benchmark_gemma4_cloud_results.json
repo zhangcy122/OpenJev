@@ -1,45 +1,66 @@
 {
   "summary": {
     "total_samples": 36,
-    "total_duration_sec": 17.67019820213318,
     "engine_metrics": {
       "TypeSafe Jev (Commercial)": {
-        "overall_accuracy": 97.22,
+        "accuracy": 97.22,
         "correct_count": 35,
-        "in_domain_accuracy": 96.67,
-        "in_domain_count": "29/30",
-        "oos_recall": 100.0,
-        "oos_count": "6/6",
+        "selective_accuracy": 96.67,
+        "tentative_accuracy": 97.22,
+        "coverage_rate": 83.33,
+        "jev_agreement_rate": 100.0,
+        "abstained_count": 6,
+        "abstained_rate": 16.67,
+        "ece": 0.0258,
         "mean_latency_ms": 750.3,
         "p50_latency_ms": 740.4,
         "p95_latency_ms": 862.7,
-        "ece": 0.0258
-      },
-      "OpenJevPro (gemma4:cloud)": {
-        "overall_accuracy": 94.44,
-        "correct_count": 34,
-        "in_domain_accuracy": 93.33,
-        "in_domain_count": "28/30",
-        "oos_recall": 100.0,
-        "oos_count": "6/6",
-        "mean_latency_ms": 1092.6,
-        "p50_latency_ms": 1083.9,
-        "p95_latency_ms": 1731.1,
-        "ece": 0.0253
-      },
-      "Direct LLM (gemma4:cloud + JSON)": {
         "overall_accuracy": 97.22,
-        "correct_count": 35,
         "in_domain_accuracy": 96.67,
         "in_domain_count": "29/30",
         "oos_recall": 100.0,
-        "oos_count": "6/6",
+        "oos_count": "6/6"
+      },
+      "OpenJevPro (gemma4:cloud)": {
+        "accuracy": 94.44,
+        "correct_count": 34,
+        "selective_accuracy": 100.0,
+        "tentative_accuracy": 100.0,
+        "coverage_rate": 77.78,
+        "jev_agreement_rate": 94.44,
+        "abstained_count": 8,
+        "abstained_rate": 22.22,
+        "ece": 0.0253,
+        "mean_latency_ms": 1092.6,
+        "p50_latency_ms": 1083.9,
+        "p95_latency_ms": 1731.1,
+        "overall_accuracy": 94.44,
+        "in_domain_accuracy": 93.33,
+        "in_domain_count": "28/30",
+        "oos_recall": 100.0,
+        "oos_count": "6/6"
+      },
+      "Direct LLM (gemma4:cloud + JSON)": {
+        "accuracy": 97.22,
+        "correct_count": 35,
+        "selective_accuracy": 96.67,
+        "tentative_accuracy": 97.22,
+        "coverage_rate": 83.33,
+        "jev_agreement_rate": 100.0,
+        "abstained_count": 6,
+        "abstained_rate": 16.67,
+        "ece": 0.0289,
         "mean_latency_ms": 771.5,
         "p50_latency_ms": 630.3,
         "p95_latency_ms": 1372.0,
-        "ece": 0.0289
+        "overall_accuracy": 97.22,
+        "in_domain_accuracy": 96.67,
+        "in_domain_count": "29/30",
+        "oos_recall": 100.0,
+        "oos_count": "6/6"
       }
-    }
+    },
+    "total_duration_sec": 17.67019820213318
   },
   "records": [
     {

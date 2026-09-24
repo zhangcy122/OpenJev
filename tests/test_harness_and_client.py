@@ -121,5 +121,49 @@ class TestHarnessAndClient(unittest.TestCase):
         self.assertIsInstance(ece, float)
         self.assertGreaterEqual(ece, 0.0)
 
+    def test_auto_abstain_threshold(self):
+        """When abstain_threshold='auto', effective threshold scales inversely with candidate count."""
+        client = OpenJevProClient(base_url="http://mock:11434", abstain_threshold="auto")
+        # 10 options -> 1.25 / 10 = 0.125
+        self.assertAlmostEqual(client._get_effective_threshold(10), 0.125)
+        # 5 options -> 1.25 / 5 = 0.25
+        self.assertAlmostEqual(client._get_effective_threshold(5), 0.25)
+
+    def test_harness_selective_and_tentative_metrics(self):
+        """Verify selective_accuracy and tentative_accuracy computation."""
+        records = [
+            {
+                "ground_truth": "card_arrival",
+                "engine_results": {
+                    "TestEngine": {
+                        "choice": "UNKNOWN",
+                        "tentative_value": "card_arrival",
+                        "abstained": True,
+                        "confidence": 0.25,
+                        "latency_ms": 100.0
+                    }
+                }
+            },
+            {
+                "ground_truth": "change_pin",
+                "engine_results": {
+                    "TestEngine": {
+                        "choice": "change_pin",
+                        "tentative_value": None,
+                        "abstained": False,
+                        "confidence": 0.95,
+                        "latency_ms": 100.0
+                    }
+                }
+            }
+        ]
+        harness = OpenJevProHarness(engines=[])
+        summary = harness._compute_summary(records)
+        metrics = summary["engine_metrics"]["TestEngine"]
+        self.assertEqual(metrics["accuracy"], 50.0)  # 1/2
+        self.assertEqual(metrics["selective_accuracy"], 100.0)  # 1/1 on answered
+        self.assertEqual(metrics["tentative_accuracy"], 100.0)  # 2/2 on tentative
+        self.assertEqual(metrics["coverage_rate"], 50.0)  # 1/2 answered
+
 if __name__ == "__main__":
     unittest.main()
