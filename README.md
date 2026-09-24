@@ -1,6 +1,6 @@
 # OpenJevPro
 
-> **Production-Grade Open Alternative to TypeSafe Jev**  
+> **Production-Grade Source-Available Alternative to TypeSafe Jev**  
 > Transform modern open-weight LLMs (Qwen3, DeepSeek-V4.1, Gemma 4, gpt-oss) into high-throughput, typed probabilistic decision services (System 1 Decisions).  
 > 🌐 **Official Website**: [https://openjev.pro](https://openjev.pro)
 
@@ -52,10 +52,11 @@ All primitives incorporate first-class **Abstention & Fallback Options** (`UNKNO
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **GPT-5.6 Luna** | Cloud API (Low-inference) | **97.1%** | Fixed baseline | ~300–600ms | Proprietary Cloud |
 | **TypeSafe Jev (1.13.0)** | Compact Dedicated (RLCD) | **96.3%** | Reference Jev | **~25–45ms** | Proprietary Commercial |
-| **OpenJevPro (via [`openjev-sglang`](https://github.com/ekzhang/openjev-sglang))** | **Qwen3.6-35B-A3B (MoE)** | **95.5%** | **Overlaps with Jev** | **~45–75ms** | **Open Source / Zero-Shot** |
-| **OpenJevPro (Edge)** | **Qwen3-4B / Gemma 4** | ~93.8% | Compact tier | < 35ms | 100% Free / Single GPU |
+| **Independent Reference: [`openjev-sglang`](https://github.com/ekzhang/openjev-sglang) (@ekzhang)** | **Qwen3.6-35B-A3B (MoE)** | **95.5%** | **Overlaps with Jev** | **~45–75ms** | **Standalone Open SGLang Implementation** |
+| **OpenJevPro (Edge / Non-Commercial)** | **Qwen3-4B / Gemma 4** | ~93.8% | Compact tier | < 35ms | Source-Available / Non-Commercial |
 
-> **Key Takeaway**: Across 242 decision cases in [JevBench v1](https://benchmarkheaven.com/jev-models), [`openjev-sglang`](https://github.com/ekzhang/openjev-sglang) by @ekzhang (95.5%) and Jev 1.13.0 (96.3%) exhibit overlapping 95% confidence intervals, proving that representation capacity of modern open MoE models combined with lexical grammar masking achieves decision parity without requiring proprietary model training.
+> **Key Takeaway**: Across 242 decision cases in [JevBench v1](https://benchmarkheaven.com/jev-models), external independent reference [`openjev-sglang`](https://github.com/ekzhang/openjev-sglang) by @ekzhang (95.5%) and Jev 1.13.0 (96.3%) exhibit overlapping 95% confidence intervals, proving that representation capacity of modern open MoE models combined with lexical grammar masking achieves decision parity without requiring proprietary model training.
+
 
 ### 🧪 Fresh Empirical Replication: OpenJevPro Harness vs TypeSafe Jev (Banking77 Benchmark)
 
@@ -82,11 +83,16 @@ To independently verify performance and reliability on official production endpo
    - **Maximum Raw Coverage**: Set `abstain_threshold=0.0` or `abstain_threshold="auto"` (which dynamically scales threshold to $1.25 / K$) in `OpenJevProClient` to achieve **100.0% raw accuracy**.
    - **Zero-Tolerance Human-in-the-Loop**: Set `abstain_threshold=0.40` to ensure that any uncertain query is safely routed to human operators.
 
-4. **Latency Analysis**:
+4. **Latency Analysis & Percentile Conventions**:
    - **Direct LLM**: Generates ~20 tokens (`{"choice": "...", "confidence": ...}`), recording **630 ms P50**.
    - **OpenJevPro**: In Ollama Cloud, generates full 7-candidate likelihood vectors (`{"scores": {...}}`, ~120 tokens) for rigorous mathematical temperature calibration, recording **1,084 ms P50**. In collocated local vLLM/SGLang deployments, sub-100ms latency is attained via single-token logits.
+   - **P95 Latency Convention Note**: Following standard rank indexing, P95 is calculated as $\text{sorted}(L)[\lfloor 0.95 \cdot N \rfloor]$ (rank index 34 for $N=36$ samples, the second-largest value: OpenJevPro 1,731.1ms, Direct LLM 1,372.0ms, TypeSafe Jev 862.7ms). For cross-benchmark comparisons, nearest-rank (index 33) yields: OpenJevPro 1,655.9ms, Direct LLM 1,120.3ms, TypeSafe Jev 805.5ms; linear interpolation yields: OpenJevPro 1,674.7ms, Direct LLM 1,183.2ms, TypeSafe Jev 819.8ms.
 
-5. **Reproducibility**: Run the benchmark suite anytime via:
+5. **Temperature Calibration & Dynamic Fitting**:
+   - `OpenJevProClient` uses `TemperatureCalibrator` with an empirical prior of $T=1.25$ (or $1.35$ for multi-candidate tasks).
+   - For empirical data-driven calibration on labeled validation sets, `TemperatureCalibrator.fit(logits_list, targets)` optimizes temperature $T > 0$ via bounded negative log-likelihood (NLL) minimization.
+
+6. **Reproducibility**: Run the benchmark suite anytime via:
    ```bash
    python examples/run_harness_benchmark.py
    # Full raw records and ECE summary generated in examples/harness_benchmark_results.json
