@@ -4,16 +4,16 @@
     "total_duration_sec": 17.67019820213318,
     "engine_metrics": {
       "TypeSafe Jev (Commercial)": {
-        "overall_accuracy": 80.56,
-        "correct_count": 29,
+        "overall_accuracy": 97.22,
+        "correct_count": 35,
         "in_domain_accuracy": 96.67,
         "in_domain_count": "29/30",
-        "oos_recall": 0.0,
-        "oos_count": "0/6",
-        "mean_latency_ms": 777.2,
-        "p50_latency_ms": 766.8,
-        "p95_latency_ms": 915.3,
-        "ece": 0.075
+        "oos_recall": 100.0,
+        "oos_count": "6/6",
+        "mean_latency_ms": 750.3,
+        "p50_latency_ms": 740.4,
+        "p95_latency_ms": 862.7,
+        "ece": 0.0258
       },
       "OpenJevPro (gemma4:cloud)": {
         "overall_accuracy": 94.44,
@@ -48,17 +48,18 @@
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
           "choice": "lost_or_stolen_card",
-          "confidence": 0.86,
+          "confidence": 0.75,
           "probabilities": {
-            "transfer_fee_charged": 0.0,
-            "lost_or_stolen_card": 0.88,
             "top_up_failed": 0.0,
+            "card_arrival": 0.1,
             "extra_charge_on_statement": 0.0,
             "change_pin": 0.0,
-            "card_arrival": 0.12
+            "UNKNOWN": 0.11,
+            "lost_or_stolen_card": 0.79,
+            "transfer_fee_charged": 0.0
           },
           "abstained": false,
-          "latency_ms": 778.7277698516846
+          "latency_ms": 724.2007255554199
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
@@ -93,15 +94,16 @@
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {
-            "card_arrival": 1.0,
-            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
             "lost_or_stolen_card": 0.0,
             "change_pin": 0.0,
             "top_up_failed": 0.0,
-            "extra_charge_on_statement": 0.0
+            "UNKNOWN": 0.0,
+            "transfer_fee_charged": 0.0,
+            "card_arrival": 1.0
           },
           "abstained": false,
-          "latency_ms": 794.8718070983887
+          "latency_ms": 774.716854095459
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "card_arrival",
@@ -136,15 +138,16 @@
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {
-            "card_arrival": 1.0,
-            "transfer_fee_charged": 0.0,
-            "lost_or_stolen_card": 0.0,
-            "change_pin": 0.0,
             "top_up_failed": 0.0,
-            "extra_charge_on_statement": 0.0
+            "UNKNOWN": 0.0,
+            "card_arrival": 1.0,
+            "change_pin": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "transfer_fee_charged": 0.0
           },
           "abstained": false,
-          "latency_ms": 826.3018131256104
+          "latency_ms": 744.9009418487549
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "card_arrival",
@@ -179,15 +182,16 @@
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {
+            "change_pin": 0.0,
             "top_up_failed": 0.0,
-            "transfer_fee_charged": 0.0,
+            "UNKNOWN": 0.0,
             "card_arrival": 1.0,
-            "extra_charge_on_statement": 0.0,
+            "transfer_fee_charged": 0.0,
             "lost_or_stolen_card": 0.0,
-            "change_pin": 0.0
+            "extra_charge_on_statement": 0.0
           },
           "abstained": false,
-          "latency_ms": 833.4052562713623
+          "latency_ms": 712.4783992767334
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "card_arrival",
@@ -222,15 +226,16 @@
           "choice": "card_arrival",
           "confidence": 1.0,
           "probabilities": {
-            "lost_or_stolen_card": 0.0,
-            "card_arrival": 1.0,
-            "top_up_failed": 0.0,
             "transfer_fee_charged": 0.0,
             "change_pin": 0.0,
-            "extra_charge_on_statement": 0.0
+            "top_up_failed": 0.0,
+            "card_arrival": 1.0,
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "UNKNOWN": 0.0
           },
           "abstained": false,
-          "latency_ms": 711.9243144989014
+          "latency_ms": 722.2490310668945
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "card_arrival",
@@ -263,17 +268,18 @@
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.99,
+          "confidence": 0.98,
           "probabilities": {
-            "transfer_fee_charged": 0.01,
-            "top_up_failed": 0.0,
-            "extra_charge_on_statement": 0.99,
-            "card_arrival": 0.0,
+            "change_pin": 0.0,
+            "UNKNOWN": 0.01,
             "lost_or_stolen_card": 0.0,
-            "change_pin": 0.0
+            "card_arrival": 0.0,
+            "top_up_failed": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.99
           },
           "abstained": false,
-          "latency_ms": 761.6286277770996
+          "latency_ms": 738.6207580566406
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "extra_charge_on_statement",
@@ -306,17 +312,18 @@
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.92,
+          "confidence": 0.9,
           "probabilities": {
-            "top_up_failed": 0.0,
             "change_pin": 0.0,
-            "transfer_fee_charged": 0.06,
+            "transfer_fee_charged": 0.08,
+            "UNKNOWN": 0.01,
             "lost_or_stolen_card": 0.0,
             "card_arrival": 0.0,
-            "extra_charge_on_statement": 0.9400000000000001
+            "extra_charge_on_statement": 0.91,
+            "top_up_failed": 0.0
           },
           "abstained": false,
-          "latency_ms": 716.7015075683594
+          "latency_ms": 712.7501964569092
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
@@ -349,17 +356,18 @@
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
           "choice": "extra_charge_on_statement",
-          "confidence": 0.91,
+          "confidence": 0.94,
           "probabilities": {
-            "extra_charge_on_statement": 0.92,
-            "transfer_fee_charged": 0.08,
-            "card_arrival": 0.0,
-            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0,
+            "UNKNOWN": 0.0,
             "top_up_failed": 0.0,
-            "change_pin": 0.0
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.05,
+            "extra_charge_on_statement": 0.95,
+            "lost_or_stolen_card": 0.0
           },
           "abstained": false,
-          "latency_ms": 726.5300750732422
+          "latency_ms": 743.4942722320557
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "extra_charge_on_statement",
@@ -395,14 +403,15 @@
           "confidence": 1.0,
           "probabilities": {
             "extra_charge_on_statement": 1.0,
-            "transfer_fee_charged": 0.0,
-            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
             "top_up_failed": 0.0,
+            "UNKNOWN": 0.0,
             "change_pin": 0.0,
-            "card_arrival": 0.0
+            "lost_or_stolen_card": 0.0,
+            "transfer_fee_charged": 0.0
           },
           "abstained": false,
-          "latency_ms": 785.0828170776367
+          "latency_ms": 772.3579406738281
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "extra_charge_on_statement",
@@ -437,15 +446,16 @@
           "choice": "extra_charge_on_statement",
           "confidence": 1.0,
           "probabilities": {
-            "top_up_failed": 0.0,
             "change_pin": 0.0,
-            "extra_charge_on_statement": 1.0,
+            "UNKNOWN": 0.0,
+            "lost_or_stolen_card": 0.0,
             "card_arrival": 0.0,
-            "transfer_fee_charged": 0.0,
-            "lost_or_stolen_card": 0.0
+            "top_up_failed": 0.0,
+            "extra_charge_on_statement": 1.0,
+            "transfer_fee_charged": 0.0
           },
           "abstained": false,
-          "latency_ms": 961.4677429199219
+          "latency_ms": 737.3189926147461
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "extra_charge_on_statement",
@@ -480,15 +490,16 @@
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {
+            "change_pin": 0.0,
+            "UNKNOWN": 0.0,
+            "lost_or_stolen_card": 1.0,
             "card_arrival": 0.0,
             "top_up_failed": 0.0,
-            "transfer_fee_charged": 0.0,
             "extra_charge_on_statement": 0.0,
-            "lost_or_stolen_card": 1.0,
-            "change_pin": 0.0
+            "transfer_fee_charged": 0.0
           },
           "abstained": false,
-          "latency_ms": 726.1693477630615
+          "latency_ms": 769.5407867431641
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "lost_or_stolen_card",
@@ -523,15 +534,16 @@
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {
+            "UNKNOWN": 0.0,
             "lost_or_stolen_card": 1.0,
-            "extra_charge_on_statement": 0.0,
-            "top_up_failed": 0.0,
-            "transfer_fee_charged": 0.0,
             "change_pin": 0.0,
-            "card_arrival": 0.0
+            "transfer_fee_charged": 0.0,
+            "card_arrival": 0.0,
+            "top_up_failed": 0.0,
+            "extra_charge_on_statement": 0.0
           },
           "abstained": false,
-          "latency_ms": 806.1213493347168
+          "latency_ms": 797.8200912475586
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "lost_or_stolen_card",
@@ -566,15 +578,16 @@
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {
-            "change_pin": 0.0,
             "transfer_fee_charged": 0.0,
-            "extra_charge_on_statement": 0.0,
+            "change_pin": 0.0,
+            "card_arrival": 0.0,
             "top_up_failed": 0.0,
-            "lost_or_stolen_card": 1.0,
-            "card_arrival": 0.0
+            "extra_charge_on_statement": 0.0,
+            "UNKNOWN": 0.0,
+            "lost_or_stolen_card": 1.0
           },
           "abstained": false,
-          "latency_ms": 771.9104290008545
+          "latency_ms": 717.1435356140137
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "lost_or_stolen_card",
@@ -611,13 +624,14 @@
           "probabilities": {
             "extra_charge_on_statement": 0.0,
             "transfer_fee_charged": 0.0,
-            "lost_or_stolen_card": 1.0,
+            "UNKNOWN": 0.0,
+            "card_arrival": 0.0,
             "change_pin": 0.0,
-            "top_up_failed": 0.0,
-            "card_arrival": 0.0
+            "lost_or_stolen_card": 1.0,
+            "top_up_failed": 0.0
           },
           "abstained": false,
-          "latency_ms": 694.5137977600098
+          "latency_ms": 734.3990802764893
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "lost_or_stolen_card",
@@ -652,15 +666,16 @@
           "choice": "lost_or_stolen_card",
           "confidence": 1.0,
           "probabilities": {
-            "top_up_failed": 0.0,
             "change_pin": 0.0,
-            "card_arrival": 0.0,
-            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 0.0,
+            "UNKNOWN": 0.0,
+            "transfer_fee_charged": 0.0,
             "lost_or_stolen_card": 1.0,
-            "transfer_fee_charged": 0.0
+            "extra_charge_on_statement": 0.0,
+            "card_arrival": 0.0
           },
           "abstained": false,
-          "latency_ms": 819.8196887969971
+          "latency_ms": 750.7717609405518
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "lost_or_stolen_card",
@@ -695,15 +710,16 @@
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {
-            "transfer_fee_charged": 0.0,
-            "card_arrival": 0.0,
             "extra_charge_on_statement": 0.0,
-            "top_up_failed": 0.0,
             "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "top_up_failed": 0.0,
+            "transfer_fee_charged": 0.0,
+            "UNKNOWN": 0.0,
             "change_pin": 1.0
           },
           "abstained": false,
-          "latency_ms": 854.4490337371826
+          "latency_ms": 735.92209815979
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "change_pin",
@@ -739,14 +755,15 @@
           "confidence": 1.0,
           "probabilities": {
             "lost_or_stolen_card": 0.0,
-            "card_arrival": 0.0,
-            "transfer_fee_charged": 0.0,
             "extra_charge_on_statement": 0.0,
-            "top_up_failed": 0.0,
-            "change_pin": 1.0
+            "UNKNOWN": 0.0,
+            "card_arrival": 0.0,
+            "change_pin": 1.0,
+            "transfer_fee_charged": 0.0,
+            "top_up_failed": 0.0
           },
           "abstained": false,
-          "latency_ms": 846.1167812347412
+          "latency_ms": 742.2547340393066
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "change_pin",
@@ -781,15 +798,16 @@
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {
-            "transfer_fee_charged": 0.0,
+            "change_pin": 1.0,
+            "UNKNOWN": 0.0,
             "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
             "top_up_failed": 0.0,
             "extra_charge_on_statement": 0.0,
-            "change_pin": 1.0,
-            "card_arrival": 0.0
+            "transfer_fee_charged": 0.0
           },
           "abstained": false,
-          "latency_ms": 844.2592620849609
+          "latency_ms": 720.7698822021484
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "change_pin",
@@ -824,15 +842,16 @@
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {
-            "change_pin": 1.0,
-            "card_arrival": 0.0,
-            "top_up_failed": 0.0,
-            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
             "lost_or_stolen_card": 0.0,
-            "extra_charge_on_statement": 0.0
+            "top_up_failed": 0.0,
+            "change_pin": 1.0,
+            "transfer_fee_charged": 0.0,
+            "UNKNOWN": 0.0,
+            "card_arrival": 0.0
           },
           "abstained": false,
-          "latency_ms": 826.5821933746338
+          "latency_ms": 764.9552822113037
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "change_pin",
@@ -867,15 +886,16 @@
           "choice": "change_pin",
           "confidence": 1.0,
           "probabilities": {
-            "change_pin": 1.0,
-            "top_up_failed": 0.0,
             "lost_or_stolen_card": 0.0,
-            "transfer_fee_charged": 0.0,
             "extra_charge_on_statement": 0.0,
-            "card_arrival": 0.0
+            "top_up_failed": 0.0,
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.0,
+            "change_pin": 1.0,
+            "UNKNOWN": 0.0
           },
           "abstained": false,
-          "latency_ms": 882.3919296264648
+          "latency_ms": 877.0298957824707
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "change_pin",
@@ -911,14 +931,15 @@
           "confidence": 1.0,
           "probabilities": {
             "transfer_fee_charged": 1.0,
-            "top_up_failed": 0.0,
-            "card_arrival": 0.0,
-            "extra_charge_on_statement": 0.0,
             "change_pin": 0.0,
-            "lost_or_stolen_card": 0.0
+            "top_up_failed": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "UNKNOWN": 0.0,
+            "extra_charge_on_statement": 0.0
           },
           "abstained": false,
-          "latency_ms": 744.6706295013428
+          "latency_ms": 773.6177444458008
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "transfer_fee_charged",
@@ -953,15 +974,16 @@
           "choice": "transfer_fee_charged",
           "confidence": 1.0,
           "probabilities": {
-            "extra_charge_on_statement": 0.0,
-            "transfer_fee_charged": 1.0,
-            "lost_or_stolen_card": 0.0,
             "change_pin": 0.0,
-            "top_up_failed": 0.0,
-            "card_arrival": 0.0
+            "transfer_fee_charged": 1.0,
+            "UNKNOWN": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 0.0
           },
           "abstained": false,
-          "latency_ms": 750.8926391601562
+          "latency_ms": 774.7659683227539
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "transfer_fee_charged",
@@ -996,15 +1018,16 @@
           "choice": "transfer_fee_charged",
           "confidence": 1.0,
           "probabilities": {
-            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0,
             "extra_charge_on_statement": 0.0,
-            "transfer_fee_charged": 1.0,
-            "card_arrival": 0.0,
             "top_up_failed": 0.0,
-            "change_pin": 0.0
+            "card_arrival": 0.0,
+            "UNKNOWN": 0.0,
+            "transfer_fee_charged": 1.0,
+            "lost_or_stolen_card": 0.0
           },
           "abstained": false,
-          "latency_ms": 707.089900970459
+          "latency_ms": 717.2634601593018
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "transfer_fee_charged",
@@ -1039,15 +1062,16 @@
           "choice": "transfer_fee_charged",
           "confidence": 1.0,
           "probabilities": {
-            "card_arrival": 0.0,
-            "lost_or_stolen_card": 0.0,
-            "extra_charge_on_statement": 0.0,
             "transfer_fee_charged": 1.0,
             "top_up_failed": 0.0,
-            "change_pin": 0.0
+            "extra_charge_on_statement": 0.0,
+            "card_arrival": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0,
+            "UNKNOWN": 0.0
           },
           "abstained": false,
-          "latency_ms": 675.839900970459
+          "latency_ms": 742.3732280731201
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "transfer_fee_charged",
@@ -1084,13 +1108,14 @@
           "probabilities": {
             "change_pin": 0.0,
             "top_up_failed": 0.0,
-            "lost_or_stolen_card": 0.0,
-            "transfer_fee_charged": 1.0,
             "extra_charge_on_statement": 0.0,
-            "card_arrival": 0.0
+            "transfer_fee_charged": 1.0,
+            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "UNKNOWN": 0.0
           },
           "abstained": false,
-          "latency_ms": 675.9829521179199
+          "latency_ms": 805.5434226989746
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "transfer_fee_charged",
@@ -1125,15 +1150,16 @@
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {
-            "extra_charge_on_statement": 0.0,
+            "top_up_failed": 1.0,
+            "UNKNOWN": 0.0,
+            "change_pin": 0.0,
+            "lost_or_stolen_card": 0.0,
             "card_arrival": 0.0,
             "transfer_fee_charged": 0.0,
-            "lost_or_stolen_card": 0.0,
-            "top_up_failed": 1.0,
-            "change_pin": 0.0
+            "extra_charge_on_statement": 0.0
           },
           "abstained": false,
-          "latency_ms": 740.5176162719727
+          "latency_ms": 697.8318691253662
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "top_up_failed",
@@ -1168,15 +1194,16 @@
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {
-            "change_pin": 0.0,
-            "top_up_failed": 1.0,
-            "lost_or_stolen_card": 0.0,
+            "card_arrival": 0.0,
+            "UNKNOWN": 0.0,
             "transfer_fee_charged": 0.0,
-            "extra_charge_on_statement": 0.0,
-            "card_arrival": 0.0
+            "top_up_failed": 1.0,
+            "change_pin": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0
           },
           "abstained": false,
-          "latency_ms": 730.9603691101074
+          "latency_ms": 738.1598949432373
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "top_up_failed",
@@ -1211,15 +1238,16 @@
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {
-            "lost_or_stolen_card": 0.0,
-            "card_arrival": 0.0,
-            "transfer_fee_charged": 0.0,
-            "extra_charge_on_statement": 0.0,
             "top_up_failed": 1.0,
-            "change_pin": 0.0
+            "UNKNOWN": 0.0,
+            "change_pin": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "transfer_fee_charged": 0.0,
+            "card_arrival": 0.0,
+            "extra_charge_on_statement": 0.0
           },
           "abstained": false,
-          "latency_ms": 720.4101085662842
+          "latency_ms": 746.7072010040283
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "top_up_failed",
@@ -1254,15 +1282,16 @@
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {
+            "extra_charge_on_statement": 0.0,
             "card_arrival": 0.0,
             "top_up_failed": 1.0,
-            "transfer_fee_charged": 0.0,
+            "change_pin": 0.0,
+            "UNKNOWN": 0.0,
             "lost_or_stolen_card": 0.0,
-            "extra_charge_on_statement": 0.0,
-            "change_pin": 0.0
+            "transfer_fee_charged": 0.0
           },
           "abstained": false,
-          "latency_ms": 698.7314224243164
+          "latency_ms": 754.8465728759766
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "top_up_failed",
@@ -1297,15 +1326,16 @@
           "choice": "top_up_failed",
           "confidence": 1.0,
           "probabilities": {
-            "lost_or_stolen_card": 0.0,
-            "extra_charge_on_statement": 0.0,
-            "transfer_fee_charged": 0.0,
+            "change_pin": 0.0,
             "card_arrival": 0.0,
+            "extra_charge_on_statement": 0.0,
             "top_up_failed": 1.0,
-            "change_pin": 0.0
+            "transfer_fee_charged": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "UNKNOWN": 0.0
           },
           "abstained": false,
-          "latency_ms": 692.5418376922607
+          "latency_ms": 732.7568531036377
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "top_up_failed",
@@ -1337,18 +1367,19 @@
       "ground_truth": "UNKNOWN",
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.08,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {
-            "change_pin": 0.14,
-            "top_up_failed": 0.21,
-            "lost_or_stolen_card": 0.09,
-            "transfer_fee_charged": 0.12,
-            "extra_charge_on_statement": 0.22,
-            "card_arrival": 0.22
+            "transfer_fee_charged": 0.0,
+            "change_pin": 0.0,
+            "top_up_failed": 0.0,
+            "card_arrival": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "UNKNOWN": 1.0
           },
-          "abstained": false,
-          "latency_ms": 788.0213260650635
+          "abstained": true,
+          "latency_ms": 725.430965423584
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
@@ -1380,18 +1411,19 @@
       "ground_truth": "UNKNOWN",
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
-          "choice": "card_arrival",
-          "confidence": 0.35,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {
-            "lost_or_stolen_card": 0.09,
-            "extra_charge_on_statement": 0.21,
-            "transfer_fee_charged": 0.11,
-            "card_arrival": 0.45,
-            "top_up_failed": 0.1,
-            "change_pin": 0.04
+            "top_up_failed": 0.0,
+            "UNKNOWN": 1.0,
+            "card_arrival": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "change_pin": 0.0,
+            "transfer_fee_charged": 0.0
           },
-          "abstained": false,
-          "latency_ms": 786.3690853118896
+          "abstained": true,
+          "latency_ms": 862.6842498779297
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
@@ -1423,18 +1455,19 @@
       "ground_truth": "UNKNOWN",
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
-          "choice": "card_arrival",
-          "confidence": 0.31,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {
-            "top_up_failed": 0.09,
-            "lost_or_stolen_card": 0.05,
-            "change_pin": 0.21,
-            "card_arrival": 0.43,
-            "transfer_fee_charged": 0.14,
-            "extra_charge_on_statement": 0.08
+            "change_pin": 0.0,
+            "UNKNOWN": 1.0,
+            "top_up_failed": 0.0,
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "lost_or_stolen_card": 0.0
           },
-          "abstained": false,
-          "latency_ms": 735.3878021240234
+          "abstained": true,
+          "latency_ms": 730.1821708679199
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
@@ -1466,18 +1499,19 @@
       "ground_truth": "UNKNOWN",
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
-          "choice": "transfer_fee_charged",
-          "confidence": 0.42,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {
-            "card_arrival": 0.02,
-            "top_up_failed": 0.37,
-            "change_pin": 0.02,
-            "extra_charge_on_statement": 0.06,
-            "lost_or_stolen_card": 0.01,
-            "transfer_fee_charged": 0.52
+            "card_arrival": 0.0,
+            "top_up_failed": 0.0,
+            "change_pin": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "UNKNOWN": 1.0,
+            "transfer_fee_charged": 0.0
           },
-          "abstained": false,
-          "latency_ms": 887.932538986206
+          "abstained": true,
+          "latency_ms": 698.6398696899414
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
@@ -1509,18 +1543,19 @@
       "ground_truth": "UNKNOWN",
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
-          "choice": "card_arrival",
-          "confidence": 0.17,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {
-            "card_arrival": 0.31,
-            "extra_charge_on_statement": 0.24,
-            "change_pin": 0.04,
-            "lost_or_stolen_card": 0.04,
-            "top_up_failed": 0.07,
-            "transfer_fee_charged": 0.3
+            "card_arrival": 0.0,
+            "change_pin": 0.0,
+            "top_up_failed": 0.0,
+            "UNKNOWN": 1.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0,
+            "lost_or_stolen_card": 0.0
           },
-          "abstained": false,
-          "latency_ms": 915.2805805206299
+          "abstained": true,
+          "latency_ms": 718.2104587554932
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
@@ -1552,18 +1587,19 @@
       "ground_truth": "UNKNOWN",
       "engine_results": {
         "TypeSafe Jev (Commercial)": {
-          "choice": "extra_charge_on_statement",
-          "confidence": 0.33,
+          "choice": "UNKNOWN",
+          "confidence": 1.0,
           "probabilities": {
-            "transfer_fee_charged": 0.1,
-            "top_up_failed": 0.13,
-            "extra_charge_on_statement": 0.44,
-            "lost_or_stolen_card": 0.07,
-            "card_arrival": 0.21,
-            "change_pin": 0.05
+            "UNKNOWN": 1.0,
+            "top_up_failed": 0.0,
+            "lost_or_stolen_card": 0.0,
+            "change_pin": 0.0,
+            "card_arrival": 0.0,
+            "transfer_fee_charged": 0.0,
+            "extra_charge_on_statement": 0.0
           },
-          "abstained": false,
-          "latency_ms": 760.723352432251
+          "abstained": true,
+          "latency_ms": 798.6578941345215
         },
         "OpenJevPro (gemma4:cloud)": {
           "choice": "UNKNOWN",
