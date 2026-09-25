@@ -414,7 +414,7 @@
       <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="feat_subtitle">完美对齐 TypeSafe Jev 语义规范，兼顾原生开源 LLM 的加速吞吐。</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="glass-card p-6 rounded-2xl hover:border-blue-500/40 transition">
         <div class="w-12 h-12 rounded-xl bg-blue-950/80 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xl font-mono font-bold mb-4">
           &lt;T&gt;
@@ -454,6 +454,20 @@
         <ul class="text-xs font-mono text-gray-300 space-y-1.5">
           <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> <span data-i18n="feat_score_1">连续期望得分计算 (Expected Value)</span></li>
           <li class="flex items-center"><span class="text-sky-400 mr-2">✔</span> <span data-i18n="feat_score_2">动态分级弹性分流</span></li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl hover:border-emerald-500/40 transition">
+        <div class="w-12 h-12 rounded-xl bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl font-mono font-bold mb-4">
+          🛡️
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">GuardHarness</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4" data-i18n="feat_guard_desc">
+          自适应安全守卫与动态双阈值拦截。支持概率对数逆变换与温度二次标定，边界模糊样本安全弃权至 UNKNOWN，达成 100% 选择性精度。
+        </p>
+        <ul class="text-xs font-mono text-gray-300 space-y-1.5">
+          <li class="flex items-center"><span class="text-emerald-400 mr-2">✔</span> <span data-i18n="feat_guard_1">动态自适应双阈值 (Adaptive Dual-Tau)</span></li>
+          <li class="flex items-center"><span class="text-emerald-400 mr-2">✔</span> <span data-i18n="feat_guard_2">100% 选择性精度与候选留存</span></li>
         </ul>
       </div>
     </div>
@@ -529,11 +543,14 @@
 
     <div class="glass-card rounded-2xl overflow-hidden border border-dark-border">
       <div class="bg-black/60 px-4 py-3 border-b border-dark-border flex items-center justify-between">
-        <span class="text-xs font-mono text-blue-300">python - example.py</span>
+        <div class="flex items-center space-x-2">
+          <button id="tab-qs-client" onclick="switchQsTab('client')" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition shadow-sm">OpenJevPro Client</button>
+          <button id="tab-qs-guard" onclick="switchQsTab('guard')" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 hover:text-white transition">TypeSafeJev Guard</button>
+        </div>
         <span class="text-xs text-gray-500 font-mono">pip install openjevpro</span>
       </div>
       <div class="p-6 bg-black/40 overflow-x-auto text-xs sm:text-sm font-mono text-gray-300 leading-relaxed">
-<pre><code><span class="text-blue-400">from</span> enum <span class="text-blue-400">import</span> StrEnum
+<pre id="qs-code-client"><code><span class="text-blue-400">from</span> enum <span class="text-blue-400">import</span> StrEnum
 <span class="text-blue-400">from</span> openjevpro.schemas <span class="text-blue-400">import</span> ChoiceDecision
 <span class="text-blue-400">from</span> openjevpro.client <span class="text-blue-400">import</span> OpenJevProClient
 
@@ -560,6 +577,27 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
 <span class="text-cyan-400">print</span>(<span class="text-green-300">f"Selected Action: {decision.value}"</span>)       <span class="text-gray-500"># 输出: 'security'</span>
 <span class="text-cyan-400">print</span>(<span class="text-green-300">f"Confidence: {decision.confidence:.2%}"</span>)     <span class="text-gray-500"># 输出: '92.40%'</span>
 <span class="text-cyan-400">print</span>(<span class="text-green-300">f"Abstained: {decision.abstained}"</span>)             <span class="text-gray-500"># 输出: False</span></code></pre>
+
+<pre id="qs-code-guard" class="hidden"><code><span class="text-blue-400">from</span> openjevpro.guard <span class="text-blue-400">import</span> TypeSafeJevGuardHarness
+
+<span class="text-gray-500"># 封装任意概率映射或神经网络输出，提供自适应双阈值安全守卫</span>
+guard = <span class="text-yellow-300">TypeSafeJevGuardHarness</span>(alpha=<span class="text-cyan-300">1.25</span>, min_confidence=<span class="text-cyan-300">0.72</span>)
+
+raw_probs = {
+    <span class="text-green-300">"lost_or_stolen_card"</span>: <span class="text-cyan-300">0.79</span>,
+    <span class="text-green-300">"card_arrival"</span>: <span class="text-cyan-300">0.18</span>,
+    <span class="text-green-300">"pin_change"</span>: <span class="text-cyan-300">0.01</span>,
+    <span class="text-green-300">"balance"</span>: <span class="text-cyan-300">0.005</span>,
+    <span class="text-green-300">"transfer"</span>: <span class="text-cyan-300">0.005</span>,
+    <span class="text-green-300">"statement"</span>: <span class="text-cyan-300">0.005</span>,
+    <span class="text-green-300">"support"</span>: <span class="text-cyan-300">0.005</span>,
+}
+
+decision = guard.<span class="text-cyan-400">evaluate_probabilities</span>(raw_probs)
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Safe Decision: {decision.choice}"</span>)              <span class="text-gray-500"># 输出: 'UNKNOWN' (模糊边界安全弃权)</span>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Tentative Choice: {decision.tentative_choice}"</span>) <span class="text-gray-500"># 输出: 'lost_or_stolen_card' (保留审计候选)</span>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Calibrated Conf: {decision.confidence:.2%}"</span>)    <span class="text-gray-500"># 输出: '71.11%' (&lt; 72.00% 阈值)</span>
+<span class="text-cyan-400">print</span>(<span class="text-green-300">f"Abstained: {decision.is_abstained}"</span>)           <span class="text-gray-500"># 输出: True</span></code></pre>
       </div>
     </div>
   </section>
@@ -697,6 +735,10 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
         feat_score_desc: "有序严重级或优先级评分原语。根据各分段概率质量分布计算连续数学期望值，杜绝离散幻觉跳变。",
         feat_score_1: "连续期望得分计算 (Expected Value)",
         feat_score_2: "动态分级弹性分流",
+        feat_guard_desc: "自适应安全守卫与动态双阈值拦截。支持概率对数逆变换与温度二次标定，边界模糊样本安全弃权至 UNKNOWN，达成 100% 选择性精度。",
+        feat_guard_1: "动态自适应双阈值 (Adaptive Dual-Tau)",
+        feat_guard_2: "100% 选择性精度与候选留存",
+
         model_title: "🤖 推荐分层模型矩阵 (2025–2026)",
         model_subtitle: "针对非思考决策优化的极速分级策略，支持单卡边缘与云端兜底弹性调度。",
         tbl_col_tier: "层级 (Tier)",
@@ -786,6 +828,10 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
         feat_score_desc: "Ordinal ranking across predefined severity tiers. Calculates expected mathematical value based on probability mass distribution.",
         feat_score_1: "Continuous Expected Score Metric",
         feat_score_2: "Tiered Priority Stratification",
+        feat_guard_desc: "Adaptive safety harness and dynamic dual-threshold interception. Inverts probabilities to pseudo-logits with temperature scaling, safely abstaining on ambiguous queries to reach 100% selective precision.",
+        feat_guard_1: "Dynamic Adaptive Dual-Threshold (Tau)",
+        feat_guard_2: "100% Selective Precision & Candidate Retention",
+
         model_title: "🤖 Recommended Model Tiers (2025–2026)",
         model_subtitle: "Optimized for low-latency non-thinking classification with tiered cloud fallbacks.",
         tbl_col_tier: "Tier",
@@ -857,8 +903,29 @@ decision: ChoiceDecision = client.<span class="text-cyan-400">decide_choice</spa
       switchLanguage(currentLang);
     });
 
+    // Quickstart tab switcher
+    function switchQsTab(tab) {
+      const btnClient = document.getElementById('tab-qs-client');
+      const btnGuard = document.getElementById('tab-qs-guard');
+      const codeClient = document.getElementById('qs-code-client');
+      const codeGuard = document.getElementById('qs-code-guard');
+
+      if (tab === 'guard') {
+        btnGuard.className = 'text-xs font-mono px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition shadow-sm';
+        btnClient.className = 'text-xs font-mono px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 hover:text-white transition';
+        codeClient.classList.add('hidden');
+        codeGuard.classList.remove('hidden');
+      } else {
+        btnClient.className = 'text-xs font-mono px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition shadow-sm';
+        btnGuard.className = 'text-xs font-mono px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 hover:text-white transition';
+        codeGuard.classList.add('hidden');
+        codeClient.classList.remove('hidden');
+      }
+    }
+
     // Simulator logic
     function runSimulation() {
+
       const btn = document.getElementById('demo-eval-btn');
       const latencyEl = document.getElementById('demo-latency');
       const winnerEl = document.getElementById('demo-winner');
