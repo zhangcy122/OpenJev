@@ -454,6 +454,33 @@
         </div>
       </div>
 
+      <!-- 5. HybridJevGateway & Fallback Circuit Breaker (Spans full 3 cols on lg) -->
+      <div class="panel p-6 rounded-2xl lg:col-span-3 flex flex-col justify-between border border-cyan-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-cyan-950/20">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/30">RESILIENT GATEWAY</span>
+            <span class="text-xs font-mono text-emerald-400">60%+ Cloud Cost Cut · 99.99% Fallback SLA</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">HybridJevGateway & Fallback Circuit Breaker</h3>
+          <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="feat_gateway_desc">
+            Two-tier cost-arbitraged hybrid router with finite-state circuit breaker. High-confidence head intents (70%+) resolve on the local edge engine (&lt;20ms, $0 cloud cost), while ambiguous queries seamlessly escalate to cloud APIs. In event of cloud timeouts or provider outages, the gateway automatically falls back to calibrated local decisions, guaranteeing zero uncaught crashes and continuous enterprise availability.
+          </p>
+        </div>
+
+        <div class="bg-surface-50 border border-white/[0.08] rounded-xl p-4 font-mono text-xs text-neutral-300 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center space-x-2 text-[11px]">
+            <span class="text-neutral-400">Traffic Routing:</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Tier 1 Edge (70% @ $0)</span>
+            <span class="text-neutral-500">→</span>
+            <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Tier 2 Cloud (Escalate)</span>
+          </div>
+          <div class="flex items-center space-x-2 text-[11px]">
+            <span class="text-neutral-400">Resilience:</span>
+            <span class="text-cyan-300">CircuitBreaker [CLOSED ↔ OPEN ↔ HALF_OPEN]</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -660,6 +687,9 @@
           <button id="tab-qs-guard" onclick="switchQsTab('guard')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition">
             Guard Harness
           </button>
+          <button id="tab-qs-gateway" onclick="switchQsTab('gateway')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition">
+            Hybrid Gateway
+          </button>
         </div>
 
         <div class="flex items-center space-x-3">
@@ -720,6 +750,32 @@ print(f"Decision: {decision.choice}")          <span class="text-neutral-500"># 
 print(f"Tentative: {decision.tentative_choice}") <span class="text-neutral-500"># 'lost_or_stolen_card' (auditable)</span>
 print(f"Confidence: {decision.confidence:.2%}") <span class="text-neutral-500"># '71.11%' (&lt; 72.00% threshold)</span>
 print(f"Abstained: {decision.is_abstained}")       <span class="text-neutral-500"># True</span></code></pre>
+
+<pre id="qs-code-gateway" class="hidden"><code><span class="text-neutral-500">from</span> openjevpro.gateway <span class="text-neutral-500">import</span> HybridJevGateway, CircuitBreaker
+<span class="text-neutral-500">from</span> openjevpro.client <span class="text-neutral-500">import</span> OpenJevProClient
+<span class="text-neutral-500">from</span> openjevpro.harness <span class="text-neutral-500">import</span> TypeSafeJevEngine
+
+<span class="text-neutral-500"># Tier 1 Local Edge Engine (&lt;20ms, $0 cost) + Tier 2 Commercial Cloud Engine</span>
+local_client = <span class="text-white font-semibold">OpenJevProClient</span>(base_url=<span class="text-cyan-300">"http://localhost:8000/v1"</span>)
+cloud_engine = <span class="text-white font-semibold">TypeSafeJevEngine</span>(api_key=<span class="text-cyan-300">"your-typesafe-api-key"</span>)
+
+<span class="text-neutral-500"># Circuit breaker trips after 3 consecutive cloud failures, 10s cooldown</span>
+gateway = <span class="text-white font-semibold">HybridJevGateway</span>(
+    local_engine=local_client,
+    cloud_engine=cloud_engine,
+    local_tau=<span class="text-neutral-300">0.75</span>,
+    circuit_breaker=<span class="text-white font-semibold">CircuitBreaker</span>(failure_threshold=<span class="text-neutral-300">3</span>, recovery_timeout=<span class="text-neutral-300">10.0</span>)
+)
+
+decision = gateway.<span class="text-white">decide_choice</span>(
+    state={<span class="text-cyan-300">"query"</span>: <span class="text-cyan-300">"How do I check my pending credit card balance?"</span>},
+    candidates=[<span class="text-cyan-300">"card_balance"</span>, <span class="text-cyan-300">"card_lost"</span>, <span class="text-cyan-300">"transfer"</span>, <span class="text-cyan-300">"UNKNOWN"</span>]
+)
+
+print(f"Decision: {decision.choice}")       <span class="text-neutral-500"># 'card_balance'</span>
+print(f"Routed Tier: {decision.tier}")       <span class="text-neutral-500"># 'Tier1_Local' (60%+ Cloud Cost Saved)</span>
+print(f"Degraded: {decision.degraded}")       <span class="text-neutral-500"># False (True on cloud outage fallback)</span>
+print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0</span></code></pre>
       </div>
     </div>
   </section>
@@ -863,6 +919,7 @@ print(f"Abstained: {decision.is_abstained}")       <span class="text-neutral-500
         feat_noul_desc: "二元断言判断器（$P_{true}, P_{false}$），提供严谨的置信区间与不确定度量，专用于智能体策略门控与内容合规护栏。",
         feat_score_desc: "有序严重级或优先级评分原语。根据各分段概率质量分布计算连续数学期望值，杜绝离散幻觉跳变。",
         feat_guard_desc: "自适应运行期标定与动态双阈值拦截（$\\tau = \\max(\\tau_{\\min}, \\alpha / K)$）。将概率逆变换为对数似然并施加温度缩放，边界模糊样本安全弃权至 UNKNOWN，达成 100% 选择性精度。",
+        feat_gateway_desc: "高并发双层成本套利与熔断降级网关。70%+ 高频头部意图在本地边缘引擎极速决断（&lt;20ms，云端成本 $0），边缘模糊请求经置信度门控安全穿透至商业云端。当云端超时或网络中断时自动触发熔断降级，保障 99.99% 系统可用性 SLA。",
         bench_title: "开源大模型能否逼近 Jev？",
         bench_subtitle: "在 PolyAI Banking77 基准上的实测复现表明：开源模型配合语法解码在统计学置信区间上已与专用商业 Jev 模型重叠。",
         bench_luna_desc: "通用前沿巨模型上限。单次调用成本较高，300~600ms 延迟，依赖闭源云厂商。",
@@ -950,6 +1007,7 @@ print(f"Abstained: {decision.is_abstained}")       <span class="text-neutral-500
         feat_noul_desc: "Binary assertion evaluator ($P_{true}, P_{false}$) providing calibrated confidence with formal uncertainty margins for policy gates and content guardrails.",
         feat_score_desc: "Ordinal ranking across predefined severity tiers. Calculates expected mathematical value based on probability mass distribution rather than discrete hallucinations.",
         feat_guard_desc: "Adaptive runtime calibration and dynamic dual-threshold interception (tau = max(tau_min, alpha/K)). Inverts output probabilities into pseudo-logits for temperature calibration, safely abstaining on ambiguous queries to reach 100% selective precision while retaining tentative candidates.",
+        feat_gateway_desc: "Two-tier cost-arbitraged hybrid router with finite-state circuit breaker. High-confidence head intents (70%+) resolve on the local edge engine (&lt;20ms, $0 cloud cost), while ambiguous queries seamlessly escalate to cloud APIs. In event of cloud timeouts or provider outages, the gateway automatically falls back to calibrated local decisions, guaranteeing zero uncaught crashes and continuous enterprise availability.",
         bench_title: "Can Open LLMs Match Jev?",
         bench_subtitle: "Empirical validation on PolyAI Banking77 confirms that open models with grammar decoding achieve statistical parity with dedicated Jev models.",
         bench_luna_desc: "General frontier model ceiling. Expensive per-call pricing, 300~600ms latency, proprietary cloud lock-in.",
@@ -1051,25 +1109,40 @@ print(f"Abstained: {decision.is_abstained}")       <span class="text-neutral-500
     function switchQsTab(tab) {
       const btnClient = document.getElementById('tab-qs-client');
       const btnGuard = document.getElementById('tab-qs-guard');
+      const btnGateway = document.getElementById('tab-qs-gateway');
       const codeClient = document.getElementById('qs-code-client');
       const codeGuard = document.getElementById('qs-code-guard');
+      const codeGateway = document.getElementById('qs-code-gateway');
+
+      const inactiveBtn = 'text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition';
+      const activeBtn = 'text-xs font-mono px-3 py-1 rounded bg-white text-black font-semibold transition';
+
+      btnClient.className = inactiveBtn;
+      btnGuard.className = inactiveBtn;
+      btnGateway.className = inactiveBtn;
+      codeClient.classList.add('hidden');
+      codeGuard.classList.add('hidden');
+      codeGateway.classList.add('hidden');
 
       if (tab === 'guard') {
-        btnGuard.className = 'text-xs font-mono px-3 py-1 rounded bg-white text-black font-semibold transition';
-        btnClient.className = 'text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition';
-        codeClient.classList.add('hidden');
+        btnGuard.className = activeBtn;
         codeGuard.classList.remove('hidden');
+      } else if (tab === 'gateway') {
+        btnGateway.className = activeBtn;
+        codeGateway.classList.remove('hidden');
       } else {
-        btnClient.className = 'text-xs font-mono px-3 py-1 rounded bg-white text-black font-semibold transition';
-        btnGuard.className = 'text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition';
-        codeGuard.classList.add('hidden');
+        btnClient.className = activeBtn;
         codeClient.classList.remove('hidden');
       }
     }
 
     function copyActiveCode() {
-      const isGuard = !document.getElementById('qs-code-guard').classList.contains('hidden');
-      const activePre = isGuard ? document.getElementById('qs-code-guard') : document.getElementById('qs-code-client');
+      let activePre = document.getElementById('qs-code-client');
+      if (!document.getElementById('qs-code-guard').classList.contains('hidden')) {
+        activePre = document.getElementById('qs-code-guard');
+      } else if (!document.getElementById('qs-code-gateway').classList.contains('hidden')) {
+        activePre = document.getElementById('qs-code-gateway');
+      }
       const codeText = activePre.innerText;
       
       navigator.clipboard.writeText(codeText).then(() => {
