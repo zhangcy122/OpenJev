@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openjevpro"
-version = "0.1.0"
+version = "0.2.0"
 description = "High-Throughput Type-Safe AI Decision Engine (Source-Available Alternative to TypeSafe Jev)"
 readme = "README.md"
 requires-python = ">=3.10"
