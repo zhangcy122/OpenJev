@@ -35,6 +35,8 @@ class OpenJevProClient:
         if backend == "auto":
             if "11434" in self.base_url:
                 self.backend = "ollama"
+            elif "laya" in self.base_url.lower() or "8001" in self.base_url:
+                self.backend = "laya"
             else:
                 self.backend = "openai"
         else:
@@ -66,8 +68,59 @@ class OpenJevProClient:
 
         if self.backend == "ollama":
             return self._decide_choice_ollama(state, options, criteria, allow_abstain)
+        elif self.backend == "laya":
+            return self._decide_choice_laya(state, options, criteria, allow_abstain)
         else:
             return self._decide_choice_openai(state, options, criteria, allow_abstain)
+
+    def _decide_choice_laya(
+        self,
+        state: Dict[str, Any],
+        options: List[str],
+        criteria: Union[str, Dict[str, str]],
+        allow_abstain: bool
+    ) -> ChoiceDecision:
+        """Evaluates categorical choice via Laya (ModernBERT System 1) endpoint with temperature calibration."""
+        crit_dict = dict(criteria) if isinstance(criteria, dict) else {"criteria": str(criteria)}
+        if allow_abstain and "UNKNOWN" not in crit_dict:
+            crit_dict["UNKNOWN"] = "None of the other categories apply, or query is out-of-scope/unrelated."
+
+        payload = {
+            "model": self.model,
+            "state": state,
+            "candidates": options,
+            "criteria": crit_dict,
+        }
+
+        resp = requests.post(f"{self.base_url}/decision/choice", json=payload, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+
+        raw_probs = data.get("probabilities") or {opt: 1.0 / len(options) for opt in options}
+        extracted_logits = data.get("raw_logits")
+        if not extracted_logits:
+            extracted_logits = {k: math.log(max(float(v), 1e-6)) for k, v in raw_probs.items()}
+
+        calibrated_probs = self.calibrator.calibrate(extracted_logits)
+        best_choice = max(calibrated_probs, key=calibrated_probs.get)
+        confidence = calibrated_probs[best_choice]
+
+        effective_thresh = self._get_effective_threshold(len(options))
+        abstained = False
+        if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
+            abstained = True
+
+        final_value = "UNKNOWN" if abstained else best_choice
+        tentative_val = best_choice if (abstained and best_choice != "UNKNOWN") else None
+
+        return ChoiceDecision(
+            value=final_value,
+            probabilities=calibrated_probs,
+            confidence=confidence,
+            abstained=abstained,
+            tentative_value=tentative_val,
+            raw_logits=extracted_logits,
+        )
 
     def _decide_choice_ollama(
         self,

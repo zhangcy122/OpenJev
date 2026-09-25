@@ -291,6 +291,142 @@ class TestHarnessAndClient(unittest.TestCase):
             # Second call fell back to completions
             self.assertEqual(mock_post.call_args_list[1][0][0], "http://legacy-vllm:8000/v1/completions")
 
+    def test_laya_engine_client_fn(self):
+        """Test LayaEngine with custom client_fn callable."""
+        from openjevpro.harness import LayaEngine
+
+        def mock_client_fn(state, candidates, criteria):
+            self.assertIn("UNKNOWN", candidates)
+            return {
+                "choice": "refund_request",
+                "confidence": 0.98,
+                "probabilities": {"refund_request": 0.98, "check_balance": 0.02, "UNKNOWN": 0.0},
+            }
+
+        engine = LayaEngine(client_fn=mock_client_fn)
+        res = engine.evaluate_choice(
+            state={"query": "I want my money back"},
+            candidates=["refund_request", "check_balance"],
+            allow_abstain=True
+        )
+
+        self.assertEqual(res["choice"], "refund_request")
+        self.assertEqual(res["confidence"], 0.98)
+        self.assertFalse(res["abstained"])
+        self.assertGreater(res["latency_ms"], 0.0)
+
+    def test_laya_engine_http_mock(self):
+        """Test LayaEngine calling HTTP microservice endpoint /decision/choice."""
+        from openjevpro.harness import LayaEngine
+
+        engine = LayaEngine(endpoint="http://localhost:8001/v1", model="convai/laya-modernbert-large")
+
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = {
+            "choice": "UNKNOWN",
+            "confidence": 0.85,
+            "probabilities": {"refund_request": 0.1, "UNKNOWN": 0.85, "check_balance": 0.05},
+            "tentative_value": "refund_request"
+        }
+        mock_resp.raise_for_status = MagicMock()
+
+        with patch("requests.post", return_value=mock_resp) as mock_post:
+            res = engine.evaluate_choice(
+                state={"query": "weird input"},
+                candidates=["refund_request", "check_balance"],
+                criteria={"refund_request": "refunds", "check_balance": "balances"},
+                allow_abstain=True
+            )
+
+            self.assertEqual(res["choice"], "UNKNOWN")
+            self.assertTrue(res["abstained"])
+            self.assertEqual(res["tentative_value"], "refund_request")
+
+            # Check wire call
+            call_url = mock_post.call_args[0][0]
+            call_json = mock_post.call_args[1]["json"]
+            self.assertEqual(call_url, "http://localhost:8001/v1/decision/choice")
+            self.assertIn("UNKNOWN", call_json["candidates"])
+            self.assertIn("UNKNOWN", call_json["criteria"])
+            self.assertEqual(call_json["model"], "convai/laya-modernbert-large")
+
+    def test_openjevpro_client_backend_laya(self):
+        """Test OpenJevProClient auto-detecting laya backend and performing temperature calibration."""
+        client = OpenJevProClient(
+            base_url="http://localhost:8001/v1",
+            temperature_scaling=1.25,
+            abstain_threshold=0.5
+        )
+        self.assertEqual(client.backend, "laya")
+
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = {
+            "choice": "book_flight",
+            "probabilities": {"book_flight": 0.90, "cancel_flight": 0.10},
+        }
+        mock_resp.raise_for_status = MagicMock()
+
+        with patch("requests.post", return_value=mock_resp) as mock_post:
+            decision = client.decide_choice(
+                state={"query": "book flight to Tokyo"},
+                candidates=["book_flight", "cancel_flight"],
+                allow_abstain=True
+            )
+
+            self.assertEqual(decision.value, "book_flight")
+            self.assertFalse(decision.abstained)
+            self.assertIn("book_flight", decision.probabilities)
+            self.assertIn("cancel_flight", decision.probabilities)
+            # Logits reconstructed and calibrated
+            self.assertIsNotNone(decision.raw_logits)
+
+            call_url = mock_post.call_args[0][0]
+            self.assertEqual(call_url, "http://localhost:8001/v1/decision/choice")
+
+    def test_laya_with_typesafe_guard_and_gateway(self):
+        """Test LayaEngine integrated with TypeSafeJevGuardHarness and HybridJevGateway."""
+        from openjevpro.harness import LayaEngine
+        from openjevpro.guard import TypeSafeJevGuardHarness
+        from openjevpro.gateway import HybridJevGateway
+
+        # 1. Guard test
+        def mock_laya_fn(state, candidates, criteria):
+            return {
+                "choice": "opt_a",
+                "confidence": 0.95,
+                "probabilities": {"opt_a": 0.95, "opt_b": 0.05}
+            }
+
+        laya_engine = LayaEngine(client_fn=mock_laya_fn)
+        guarded_laya = TypeSafeJevGuardHarness(engine=laya_engine, min_confidence=0.70)
+
+        guard_res = guarded_laya.evaluate_choice(
+            state={"query": "test query"},
+            candidates=["opt_a", "opt_b"],
+        )
+        self.assertEqual(guard_res["choice"], "opt_a")
+        self.assertFalse(guard_res["abstained"])
+
+        # 2. Gateway test (Laya as Tier 1 local)
+        mock_cloud = MagicMock()
+        gateway = HybridJevGateway(
+            local_engine=laya_engine,
+            cloud_engine=mock_cloud,
+            local_tau=0.80
+        )
+        gw_decision = gateway.evaluate_choice(
+            state={"query": "fast local query"},
+            candidates=["opt_a", "opt_b"]
+        )
+        self.assertEqual(gw_decision.tier, "Tier1_Local")
+        self.assertEqual(gw_decision.cost_units, 0)
+        self.assertEqual(gw_decision.choice, "opt_a")
+        self.assertFalse(gw_decision.degraded)
+        mock_cloud.evaluate_choice.assert_not_called()
+
 if __name__ == "__main__":
     unittest.main()
+
 

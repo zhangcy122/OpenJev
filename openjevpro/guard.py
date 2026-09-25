@@ -210,7 +210,7 @@ class TypeSafeJevGuardHarness(BaseDecisionEngine):
         self,
         state: Dict[str, Any],
         candidates: List[str],
-        criteria: Dict[str, str],
+        criteria: Optional[Dict[str, str]] = None,
         allow_abstain: bool = True,
         min_confidence: Optional[float] = None,
         alpha: Optional[float] = None,
