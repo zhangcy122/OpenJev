@@ -14,6 +14,7 @@ from openjevpro.harness import (
     OpenJevProHarness,
     BaseDecisionEngine,
     TypeSafeJevEngine,
+    LayaEngine,
     OpenJevProEngine,
     DirectStructuredEngine
 )
@@ -24,6 +25,7 @@ __all__ = [
     "OpenJevProHarness",
     "BaseDecisionEngine",
     "TypeSafeJevEngine",
+    "LayaEngine",
     "OpenJevProEngine",
     "DirectStructuredEngine",
     "ChoiceDecision",

@@ -82,6 +82,80 @@ class TypeSafeJevEngine(BaseDecisionEngine):
             "latency_ms": latency_ms,
         }
 
+class LayaEngine(BaseDecisionEngine):
+    """Engine interacting with Laya (open-weights ModernBERT System 1 decision model).
+    
+    Supports local HTTP microservice endpoint (e.g. FastAPI / TEI serving Laya)
+    or custom client callable.
+    """
+    def __init__(
+        self,
+        endpoint: str = "http://localhost:8001/v1",
+        model: str = "convai/laya-modernbert-large",
+        client_fn: Optional[Callable] = None,
+    ):
+        self.name = f"Laya ({model})"
+        self.endpoint = endpoint.rstrip("/")
+        self.model = model
+        self.client_fn = client_fn
+
+    def evaluate_choice(
+        self,
+        state: Dict[str, Any],
+        candidates: List[str],
+        criteria: Optional[Dict[str, str]] = None,
+        allow_abstain: bool = True,
+    ) -> Dict[str, Any]:
+        options = list(candidates)
+        if allow_abstain and "UNKNOWN" not in options:
+            options.append("UNKNOWN")
+
+        t0 = time.time()
+        if self.client_fn:
+            ans = self.client_fn(state=state, candidates=options, criteria=criteria)
+            latency = (time.time() - t0) * 1000.0
+            return {
+                "choice": ans.get("choice", "UNKNOWN"),
+                "confidence": float(ans.get("confidence", 0.0)),
+                "probabilities": ans.get("probabilities", {}),
+                "abstained": ans.get("choice") == "UNKNOWN",
+                "tentative_value": ans.get("tentative_value") or ans.get("choice"),
+                "latency_ms": latency,
+                "raw": ans,
+            }
+
+        import requests
+        crit_dict = dict(criteria or {})
+        if allow_abstain and "UNKNOWN" not in crit_dict:
+            crit_dict["UNKNOWN"] = "None of the other categories apply, or query is out-of-scope/unrelated."
+
+        payload = {
+            "model": self.model,
+            "state": state,
+            "candidates": options,
+            "criteria": crit_dict,
+        }
+
+        resp = requests.post(f"{self.endpoint}/decision/choice", json=payload, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+        latency = (time.time() - t0) * 1000.0
+
+        choice = data.get("choice", "UNKNOWN")
+        confidence = float(data.get("confidence", 0.0))
+        probs = data.get("probabilities", {})
+        abstained = choice == "UNKNOWN"
+
+        return {
+            "choice": choice,
+            "confidence": confidence,
+            "probabilities": probs,
+            "abstained": abstained,
+            "tentative_value": data.get("tentative_value") or choice,
+            "latency_ms": latency,
+            "raw": data,
+        }
+
 class OpenJevProEngine(BaseDecisionEngine):
     """Engine using OpenJevProClient with temperature calibration and selective prediction."""
     def __init__(self, client: OpenJevProClient, name: str = "OpenJevPro (Calibrated)"):
