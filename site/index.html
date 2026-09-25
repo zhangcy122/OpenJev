@@ -228,9 +228,9 @@
           <span class="text-[11px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">MODE A · STANDALONE ALTERNATIVE</span>
           <span class="text-[11px] font-mono text-neutral-500">100% Open Weights</span>
         </div>
-        <h3 class="text-base font-bold text-white mb-1.5" data-i18n="dual_mode_a_title">完全开源独立替代</h3>
+        <h3 class="text-base font-bold text-white mb-1.5" data-i18n="dual_mode_a_title">开源独立运行 (Mode A)</h3>
         <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="dual_mode_a_desc">
-          基于 Qwen3 / Gemma 4 / DeepSeek 配合 vLLM / SGLang 语法掩码解码。0 商业 API 依赖，零语法解析错误，sub-50ms 本地私有化单 Token 极速决策。
+          配合 vLLM 或 SGLang 语法掩码解码，直接加载 Qwen3、Gemma 4 等开源模型；首 Token 提取候选对数似然，不走长文本自回归生成，端到端延迟控制在 50ms 以内。
         </p>
       </div>
 
@@ -239,9 +239,9 @@
           <span class="text-[11px] font-mono uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded">MODE B · PRODUCTION JEV HARNESS</span>
           <span class="text-[11px] font-mono text-cyan-400">Guard · Gateway · SLA</span>
         </div>
-        <h3 class="text-base font-bold text-white mb-1.5" data-i18n="dual_mode_b_title">商业 Jev 生产级增强与容灾线束</h3>
+        <h3 class="text-base font-bold text-white mb-1.5" data-i18n="dual_mode_b_title">商业 Jev 增强与容灾线束 (Mode B)</h3>
         <p class="text-xs text-neutral-300 leading-relaxed" data-i18n="dual_mode_b_desc">
-          直接封装官方 TypeSafe Jev 商业 API：通过 Guard 消除边界冒进错选（达成 100% 答题精度），通过网关本地初筛削减 60%+ 账单，提供断网自动熔断降级 SLA。
+          直接封装官方 TypeSafe Jev 商业接口：通过 Guard 拦截边缘歧义样本（答题精度达 100%），由本地引擎承接高频流量以削减调用成本，并在云端超时或限流时自动切换本地兜底。
         </p>
       </div>
     </div>
@@ -917,31 +917,31 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
   <script>
     const translations = {
       zh: {
-        page_title: "OpenJevPro — 超低延迟、类型安全的开源 AI 决策引擎",
+        page_title: "OpenJevPro — 类型安全概率决策引擎与生产级 Jev 线束",
         nav_features: "核心原语",
         nav_playground: "在线模拟",
         nav_benchmarks: "基准实测",
-        nav_models: "模型分层",
+        nav_models: "模型分级",
         nav_quickstart: "快速上手",
         nav_commercial: "授权协议",
         nav_faq: "常见疑问",
-        hero_pill_1: "双模架构：开源独立引擎",
+        hero_pill_1: "开源独立决策引擎",
         hero_pill_2: "生产级商业 Jev 增强线束",
         hero_title_prefix: "开源替代 · 商业 Jev 线束",
-        hero_title_suffix: "极速类型安全决策架构",
-        hero_desc: "既是 100% 开源独立的非自回归决策引擎（sub-50ms，单 Token 极速推理），亦可作为 TypeSafe Jev 商业版的安全守卫与套利网关：自适应双阈值达成 100% 选择性答题精度，本地初筛分流 70%+ 流量直接削减 60%+ 账单，并提供断网熔断 99.99% SLA。",
-        dual_mode_a_title: "完全开源独立替代 (Mode A)",
-        dual_mode_a_desc: "基于 Qwen3 / Gemma 4 / DeepSeek 配合 vLLM / SGLang 语法掩码解码。0 商业 API 依赖，零语法解析错误，sub-50ms 本地私有化单 Token 极速决策。",
-        dual_mode_b_title: "商业 Jev 生产级增强与容灾线束 (Mode B)",
-        dual_mode_b_desc: "直接封装官方 TypeSafe Jev 商业 API：通过 Guard 消除边界冒进错选（达成 100% 答题精度），通过网关本地初筛削减 60%+ 账单，提供断网自动熔断降级 SLA。",
-        hero_btn_repo: "在 GitHub 上开始使用 →",
+        hero_title_suffix: "类型安全概率决策引擎",
+        hero_desc: "可作为独立的非自回归决策引擎运行（sub-50ms，单 Token 概率提取），也可作为 TypeSafe Jev 商业 API 的生产包装层：利用动态阈值阻断低置信度误判（答题精度达 100%），通过本地分流减少 60%+ 商业调用成本，并在云端异常时自动降级。",
+        dual_mode_a_title: "开源独立运行 (Mode A)",
+        dual_mode_a_desc: "配合 vLLM 或 SGLang 语法掩码解码，直接在本地 GPU 加载 Qwen3、Gemma 4 等开源模型；首 Token 提取候选对数似然，不走自回归文本生成，端到端延迟控制在 50ms 以内。",
+        dual_mode_b_title: "商业 Jev 增强与容灾线束 (Mode B)",
+        dual_mode_b_desc: "直接封装官方 TypeSafe Jev 商业接口：通过 Guard 拦截边缘歧义样本（答题精度达 100%），由本地引擎承接高频流量以削减调用成本，云端超时或限流时自动切换本地兜底。",
+        hero_btn_repo: "在 GitHub 查看源码 →",
         hero_btn_demo: "打开决策模拟器",
         stat_latency: "端到端延迟 (P50)",
         stat_cost: "生成 Token 消耗",
         stat_safety: "语法类型安全性",
         stat_ece: "期望标定误差 (ECE)",
         demo_title: "实时决策演算沙盒",
-        demo_subtitle: "检视 OpenJevPro 如何瞬时提取合法候选词表的归一化后验概率分布。",
+        demo_subtitle: "检视 OpenJevPro 如何提取候选词表的归一化后验概率分布。",
         demo_input_label: "输入状态 / 业务上下文",
         demo_schema_label: "目标候选枚举 (Schema)",
         demo_model_label: "推理模型:",
@@ -950,16 +950,16 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         demo_choice_label: "选中候选决策",
         demo_conf_label: "标定置信度 P",
         feat_title: "决策原语与守卫架构",
-        feat_subtitle: "为高并发、低延迟智能体网关路由与策略门控设计的类型安全构建块。",
-        feat_choice_desc: "基于离散 Enum 类型的多分类路由决策。在词表层限制合法候选范围并计算条件序列对数似然，零语法解析错误。",
-        feat_noul_desc: "二元断言判断器（$P_{true}, P_{false}$），提供严谨的置信区间与不确定度量，专用于智能体策略门控与内容合规护栏。",
-        feat_score_desc: "有序严重级或优先级评分原语。根据各分段概率质量分布计算连续数学期望值，杜绝离散幻觉跳变。",
-        feat_guard_desc: "自适应运行期标定与动态双阈值拦截（$\\tau = \\max(\\tau_{\\min}, \\alpha / K)$）。将概率逆变换为对数似然并施加温度缩放，边界模糊样本安全弃权至 UNKNOWN，达成 100% 选择性精度。",
-        feat_gateway_desc: "高并发双层成本套利与熔断降级网关。70%+ 高频头部意图在本地边缘引擎极速决断（&lt;20ms，云端成本 $0），边缘模糊请求经置信度门控安全穿透至商业云端。当云端超时或网络中断时自动触发熔断降级，保障 99.99% 系统可用性 SLA。",
-        bench_title: "开源大模型能否逼近 Jev？",
-        bench_subtitle: "在 PolyAI Banking77 基准上的实测复现表明：开源模型配合语法解码在统计学置信区间上已与专用商业 Jev 模型重叠。",
-        bench_luna_desc: "通用前沿巨模型上限。单次调用成本较高，300~600ms 延迟，依赖闭源云厂商。",
-        bench_jev_desc: "专用微型决策模型。RLCD 标定，~25-45ms 极低延迟，但属于闭源商业付费产品。",
+        feat_subtitle: "用于智能体网关路由与策略门控的类型安全组件。",
+        feat_choice_desc: "针对离散 Enum 类型的多分类路由。通过词表掩码约束输出空间，直接计算各选项的条件对数似然，避免 JSON 解析异常。",
+        feat_noul_desc: "二元断言评估器（$P_{true}, P_{false}$），输出经标定的概率与不确定度区间，适用于工作流门控与安全检查。",
+        feat_score_desc: "有序档位与等级评分。依据各档位后验概率质量计算连续期望值，避免离散打分的不稳定抖动。",
+        feat_guard_desc: "运行期动态标定与阈值拦截（$\\tau = \\max(\\tau_{\\min}, \\alpha / K)$）。将输出概率反推为伪对数似然并进行温度缩放；置信度不足时主动输出 UNKNOWN 弃权，使有效回答准确率达 100%。",
+        feat_gateway_desc: "双层成本分流与熔断网关。70% 以上的高频意图直接由本地模型解析（&lt;20ms）；难以确定的边缘样本再转发至商业 API。遭遇云端超时或限流时自动熔断切回本地，避免上游调用发生未捕获异常。",
+        bench_title: "开源模型能否逼近 Jev？",
+        bench_subtitle: "在 PolyAI Banking77 基准上的实测复现显示：开源模型配合语法解码，准确率置信区间已与商业 Jev 模型重叠。",
+        bench_luna_desc: "通用前沿大模型。单次调用成本较高，延迟 300~600ms，依赖闭源云厂商接口。",
+        bench_jev_desc: "专用微型决策模型。RLCD 标定，~25-45ms 延迟，属于闭源商业付费产品。",
         bench_openjev_desc: "无需专项微调。基于 SGLang 语法掩码解码，与 Jev 处于重叠的 95% 置信区间。",
         bench_fresh_title: "PolyAI Banking77 基准复现实测",
         bf_col_engine: "决策引擎",
@@ -970,45 +970,45 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         bf_col_latency: "P50 延迟",
         bf_col_ece: "标定误差",
         bf_takeaway_h1: "1. 弃权惩罚机制",
-        bench_fresh_f1: "全量 36 样本中仅 1 条在域样本因多线索平滑触发弃权；传统计分判 0 分，但其底层首选候选准确率 100%。",
-        bf_takeaway_h2: "2. 零假阳性冒进",
-        bench_fresh_f2: "在歧义模糊样本（找卡查询）上，Direct LLM 与 Jev 均冒进错选，而 OpenJevPro 识别低置信度安全弃权（精度 100%）。",
+        bench_fresh_f1: "全量 36 样本中仅 1 条在域样本因置信度分散触发弃权；标准基准将其判为 0 分，但其首选候选准确率仍为 100%。",
+        bf_takeaway_h2: "2. 消除越界误判",
+        bench_fresh_f2: "在歧义模糊样本（如找卡查询）上，Direct LLM 与 Jev 均发生错误分类，而 OpenJevPro 识别低置信度并执行弃权（精度保持 100%）。",
         bf_takeaway_h3: "3. 部署延迟预期",
         bench_fresh_f3: "在云端计算 7 候选全分布耗时 1,084ms；在本地 L4 / RTX 4090 GPU 部署 vLLM/SGLang 即可实现 sub-100ms 延迟。",
-        model_title: "推荐模型分层工程矩阵 (2025–2026)",
-        model_subtitle: "针对非思考极速决策优化的分层部署架构，覆盖边缘高 QPS 与企业私有化场景。",
+        model_title: "推荐模型分级工程矩阵 (2025–2026)",
+        model_subtitle: "面向非思考模式优化的分级部署方案，兼顾高 QPS 边缘网关与私有化环境。",
         tbl_col_tier: "分层 (Tier)",
         tbl_col_arch: "模型架构",
         tbl_col_param: "激活参数量",
         tbl_col_lat: "典型延迟",
         tbl_col_workload: "推荐业务场景",
-        qs_title: "30 秒极速上手",
-        qs_subtitle: "开箱即用的 Python SDK，无缝兼容本地 vLLM、SGLang 及标准 OpenAI 协议端点。",
+        qs_title: "快速开始",
+        qs_subtitle: "提供 Python SDK，兼容本地 vLLM、SGLang 以及标准 OpenAI 兼容接口。",
         lic_title: "开源协议与商用授权",
-        lic_subtitle: "双轨授权设计：兼顾社区学术研究的自由开放与企业生产部署的合规保障。",
+        lic_subtitle: "面向个人学习与学术研究免费开放，企业生产环境使用需申请商业授权。",
         lic_comm_badge: "社区版本",
-        lic_comm_desc: "自由开放，专为个人学习、学术科研、非营利机构及非商业项目设计。",
+        lic_comm_desc: "适用于个人学习、学术科研、非营利机构及非商业项目。",
         lic_comm_1: "GitHub 完整源码开放",
         lic_comm_2: "Python SDK 与离线标定工具",
         lic_comm_3: "社区 Issue 交流支持",
         lic_comm_btn: "前往 GitHub 仓库 →",
         lic_ent_badge: "企业生产合规",
         lic_ent_title: "商业授权许可与 SLA",
-        lic_ent_desc: "适用于企业生产环境部署、商业 SaaS 嵌入、托管 API 运营或商业闭源分发。",
+        lic_ent_desc: "适用于企业生产环境、付费 SaaS 集成或闭源商业部署。",
         lic_ent_1: "企业生产商用授权许可",
         lic_ent_2: "定制模型尺寸匹配与专属温度标定",
         lic_ent_3: "SLA 服务保障与专家支持通道",
         lic_ent_btn: "申请商业使用授权 →",
         faq_title: "常见技术疑问解答",
-        faq_q1: "OpenJevPro 与传统 Prompt 生成 JSON 有何本质区别？",
-        faq_a1: "传统方式依赖大模型自由生成自然语言或自回归生成整个 JSON 文本（生成 20~100 Tokens），存在解析失败风险且概率未经标定；OpenJevPro 采用严格的语法词表掩码（Grammar Masking），仅抽取单 Token 决策对数似然进行温度标定，实现 0% 语法失败与数学级真实置信度。",
+        faq_q1: "与直接使用 Prompt 生成 JSON 相比，OpenJevPro 有什么不同？",
+        faq_a1: "常规 Prompt 依赖大模型自回归生成 20 到 100 个 Token，容易出现 JSON 语法解析错误，输出概率也未经标定。OpenJevPro 在首个 Token 处通过语法掩码提取离散选项的对数似然，再经温度缩放计算置信度，不产生语法解析异常，延迟控制在 100ms 以内。",
         faq_q2: "在本地私有 GPU 部署时，典型响应延迟是多少？",
-        faq_a2: "在搭载 vLLM 或 SGLang 的本地 GPU（如 A10G / L4 / RTX 4090）上配合 Qwen3-4B 或 Qwen3-30B-A3B，单次决策首字延迟（TTFT）通常稳定在 35ms ~ 90ms 之间，完全能够满足毫秒级生产网关路由需求。",
-        faq_q3: "遇到生僻或超出预设类别的输入时，系统如何防范幻觉？",
-        faq_a3: "所有决策原语均标配对称 UNKNOWN / HUMAN_REVIEW 弃权机制，并搭载 TypeSafeJevGuardHarness 动态自适应双阈值截断（$\\tau = \\max(\\tau_{\\min}, \\alpha / K)$），当置信度低于安全界限时自动转入安全弃权，避免冒进错选。",
-        faq_q4: "如果我已经购买了商业版 TypeSafe Jev，为什么还需要 OpenJev？",
-        faq_a4: "OpenJev 不仅是开源替代，更是专为商业 Jev 量身打造的生产级增强线束与网关：1) 置信度校准守卫（TypeSafeJevGuardHarness）消除商业 Jev 在模糊样本上的过自信错选，达成 100% 选择性精度；2) 混合路由网关（HybridJevGateway）在本地拦截 70%+ 常规高频流量，直接为企业削减 60%+ 商业 Jev API 费用；3) 具备熔断机制的断网兜底 SLA，在云端发生网络抖动、429 限流或 503 宕机时自动平滑切回本地决策，杜绝下游 Agent 发生雪崩崩溃。",
-        footer_license: "源码可用性遵循 <a href=\"https://github.com/zhangcy122/OpenJev/blob/main/LICENSE\" class=\"text-neutral-400 hover:text-white underline\">PolyForm Noncommercial 1.0.0</a>. 协议。企业商业生产需获得项目方授权。"
+        faq_a2: "在 A10G、L4 或 RTX 4090 等显卡上运行 vLLM / SGLang 时，配合 Qwen3-4B 或 Qwen3-30B-A3B，单次决策首字延迟（TTFT）通常在 35ms 至 90ms 之间，适合用作线上高频网关路由器。",
+        faq_q3: "遇到生僻或超出预设类别的输入时，系统如何处理？",
+        faq_a3: "所有决策原语均内置 UNKNOWN 与 HUMAN_REVIEW 弃权选项，并配合 TypeSafeJevGuardHarness 动态阈值截断（$\\tau = \\max(\\tau_{\\min}, \\alpha / K)$）。当候选最高概率低于阈值时自动输出弃权，避免强行猜测错误类别。",
+        faq_q4: "如果已有 TypeSafe Jev 商业订阅，OpenJevPro 能起到什么作用？",
+        faq_a4: "OpenJevPro 可直接用作商业 Jev 的前置增强与容灾层：第一，通过 TypeSafeJevGuardHarness 重新校准概率并拦截低置信度样本，避免在歧义样本上产生误判；第二，通过 HybridJevGateway 将 70% 以上的高频常规请求留在本地处理，降低商业 API 调用开销；第三，提供断网与限流自动熔断机制，在云端接口超时或报错时回退至本地模型，避免上游智能体发生级联崩溃。",
+        footer_license: "源码可用性遵循 <a href=\"https://github.com/zhangcy122/OpenJev/blob/main/LICENSE\" class=\"text-neutral-400 hover:text-white underline\">PolyForm Noncommercial 1.0.0</a> 协议。企业商业生产需获得项目方授权。"
       },
       en: {
         page_title: "OpenJevPro — Calibrated Type-Safe AI Decision Engine",
