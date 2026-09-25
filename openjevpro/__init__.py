@@ -2,6 +2,8 @@
 
 from openjevpro.schemas import ChoiceDecision, NoulDecision, ScoreDecision
 from openjevpro.client import OpenJevProClient
+from openjevpro.calibrator import TemperatureCalibrator
+from openjevpro.guard import TypeSafeJevGuardHarness, GuardDecision
 from openjevpro.harness import (
     OpenJevProHarness,
     BaseDecisionEngine,
@@ -21,4 +23,8 @@ __all__ = [
     "ChoiceDecision",
     "NoulDecision",
     "ScoreDecision",
+    "TemperatureCalibrator",
+    "TypeSafeJevGuardHarness",
+    "GuardDecision",
 ]
+
