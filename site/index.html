@@ -2,7 +2,8 @@
 <html lang="zh-CN" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base target="_self">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>OpenJevPro — Calibrated Type-Safe AI Decision Engine</title>
   <meta name="description" content="OpenJevPro turns open-weight LLMs into high-throughput, strictly typed, calibrated probabilistic System 1 decision primitives.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2338bdf8%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polygon points=%2213 2 3 14 12 14 11 22 21 10 12 10 13 2%22/></svg>">
@@ -51,36 +52,40 @@
     body {
       background-color: #060709;
       color: #ededed;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
     }
 
     /* Subtle Grid Background with Radial Mask */
     .bg-grid-pattern {
       background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
       background-size: 32px 32px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+      mask-image: radial-gradient(ellipse 75% 65% at 50% 0%, #000 60%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 0%, #000 60%, transparent 100%);
     }
 
     /* Refined Architectural Glass Cards */
     .panel {
-      background: rgba(17, 20, 26, 0.65);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(14, 17, 23, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .panel:hover {
-      border-color: rgba(255, 255, 255, 0.16);
-      box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.8), 0 0 24px -2px rgba(56, 189, 248, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
     }
     .panel-highlight {
-      border-color: rgba(56, 189, 248, 0.35);
-      background: radial-gradient(ellipse at 50% 0%, rgba(14, 165, 233, 0.08), transparent 75%), rgba(17, 20, 26, 0.75);
+      border-color: rgba(56, 189, 248, 0.45);
+      background: radial-gradient(ellipse at 50% 0%, rgba(14, 165, 233, 0.12), transparent 75%), rgba(14, 17, 23, 0.82);
+      box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.7), 0 0 20px -2px rgba(6, 182, 212, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
     }
     .panel-highlight:hover {
-      border-color: rgba(56, 189, 248, 0.55);
-      box-shadow: 0 16px 40px -4px rgba(6, 182, 212, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+      border-color: rgba(56, 189, 248, 0.65);
+      box-shadow: 0 16px 44px -4px rgba(6, 182, 212, 0.20), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
     }
 
     /* Silky Metallic Text Gradient */
@@ -88,6 +93,24 @@
       background: linear-gradient(180deg, #FFFFFF 15%, #94A3B8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+
+    .text-glow-cyan {
+      text-shadow: 0 0 24px rgba(56, 189, 248, 0.45);
+    }
+
+    /* Ambient Hero Glow Flare */
+    .hero-glow-flare {
+      background: radial-gradient(ellipse 70% 45% at 50% -10%, rgba(56, 189, 248, 0.18), rgba(99, 102, 241, 0.10), transparent 75%);
+    }
+
+    /* Keyframes for subtle live breathing */
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.82; transform: scale(1.02); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
     /* Code Block styling */
@@ -114,18 +137,18 @@
 </head>
 <body class="min-h-screen font-sans antialiased selection:bg-blue-600/30 selection:text-blue-200 relative overflow-x-hidden">
 
-  <!-- Subtle Top Atmospheric Horizon Light -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[450px] bg-[radial-gradient(ellipse_70%_40%_at_50%_-15%,rgba(56,189,248,0.12),transparent_70%)] pointer-events-none -z-10"></div>
+  <!-- Atmospheric Horizon Flare -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[550px] hero-glow-flare pointer-events-none -z-10 animate-pulse-subtle"></div>
   
   <!-- Subtle Grid Texture -->
-  <div class="absolute inset-0 bg-grid-pattern pointer-events-none -z-10 h-[1200px]"></div>
+  <div class="absolute inset-0 bg-grid-pattern pointer-events-none -z-10 h-[1400px]"></div>
 
   <!-- Navigation -->
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-surface-0/80 border-b border-white/[0.06]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
       
       <!-- Brand Logo -->
-      <a href="#" class="flex items-center space-x-2.5 group">
+      <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center space-x-2.5 group cursor-pointer text-left">
         <div class="w-6 h-6 rounded border border-white/20 bg-white/[0.04] flex items-center justify-center text-white group-hover:border-cyan-400/60 transition">
           <svg class="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
@@ -135,27 +158,27 @@
           <span class="font-bold text-sm tracking-tight text-white group-hover:text-cyan-200 transition">OpenJevPro</span>
           <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/[0.06] text-neutral-400 border border-white/10">v0.1</span>
         </div>
-      </a>
+      </button>
 
       <!-- Desktop Nav -->
       <nav class="hidden md:flex items-center space-x-7 text-xs font-medium text-neutral-400">
-        <a href="#primitives" data-i18n="nav_features" class="hover:text-white transition">Primitives</a>
-        <a href="#playground" data-i18n="nav_playground" class="hover:text-white transition">Playground</a>
-        <a href="#benchmarks" data-i18n="nav_benchmarks" class="hover:text-white transition">Benchmarks</a>
-        <a href="#models" data-i18n="nav_models" class="hover:text-white transition">Model Tiers</a>
-        <a href="#quickstart" data-i18n="nav_quickstart" class="hover:text-white transition">Quickstart</a>
-        <a href="#commercial" data-i18n="nav_commercial" class="hover:text-white transition">License</a>
-        <a href="#faq" data-i18n="nav_faq" class="hover:text-white transition">FAQ</a>
+        <button type="button" onclick="scrollToSection('primitives')" data-i18n="nav_features" class="hover:text-white transition cursor-pointer">Primitives</button>
+        <button type="button" onclick="scrollToSection('playground')" data-i18n="nav_playground" class="hover:text-white transition cursor-pointer">Playground</button>
+        <button type="button" onclick="scrollToSection('benchmarks')" data-i18n="nav_benchmarks" class="hover:text-white transition cursor-pointer">Benchmarks</button>
+        <button type="button" onclick="scrollToSection('models')" data-i18n="nav_models" class="hover:text-white transition cursor-pointer">Model Tiers</button>
+        <button type="button" onclick="scrollToSection('quickstart')" data-i18n="nav_quickstart" class="hover:text-white transition cursor-pointer">Quickstart</button>
+        <button type="button" onclick="scrollToSection('commercial')" data-i18n="nav_commercial" class="hover:text-white transition cursor-pointer">License</button>
+        <button type="button" onclick="scrollToSection('faq')" data-i18n="nav_faq" class="hover:text-white transition cursor-pointer">FAQ</button>
       </nav>
 
       <!-- Utility / Actions -->
       <div class="flex items-center space-x-3">
         <!-- Language Switcher Pill -->
         <div class="flex items-center rounded-md border border-white/10 p-0.5 bg-surface-50 text-[11px] font-mono">
-          <button id="btn-lang-zh" onclick="switchLanguage('zh')" class="px-2 py-0.5 rounded text-white bg-white/10 font-semibold transition">
+          <button id="btn-lang-zh" onclick="switchLanguage('zh')" class="px-2 py-0.5 rounded text-white bg-white/10 font-semibold transition cursor-pointer">
             ZH
           </button>
-          <button id="btn-lang-en" onclick="switchLanguage('en')" class="px-2 py-0.5 rounded text-neutral-400 hover:text-white transition">
+          <button id="btn-lang-en" onclick="switchLanguage('en')" class="px-2 py-0.5 rounded text-neutral-400 hover:text-white transition cursor-pointer">
             EN
           </button>
         </div>
@@ -168,7 +191,7 @@
         </a>
 
         <!-- Mobile Toggle -->
-        <button onclick="toggleMobileMenu()" class="md:hidden p-1.5 rounded text-neutral-400 hover:text-white border border-white/10" aria-label="Toggle menu">
+        <button onclick="toggleMobileMenu()" class="md:hidden p-1.5 rounded text-neutral-400 hover:text-white border border-white/10 cursor-pointer" aria-label="Toggle menu">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
@@ -176,70 +199,102 @@
 
     <!-- Mobile Drawer -->
     <div id="mobile-menu" class="hidden md:hidden px-4 pt-3 pb-5 space-y-2 border-t border-white/[0.06] bg-surface-50">
-      <a href="#primitives" onclick="toggleMobileMenu()" data-i18n="nav_features" class="block py-1.5 text-xs text-neutral-300 hover:text-white">Primitives</a>
-      <a href="#playground" onclick="toggleMobileMenu()" data-i18n="nav_playground" class="block py-1.5 text-xs text-neutral-300 hover:text-white">Playground</a>
-      <a href="#benchmarks" onclick="toggleMobileMenu()" data-i18n="nav_benchmarks" class="block py-1.5 text-xs text-neutral-300 hover:text-white">Benchmarks</a>
-      <a href="#models" onclick="toggleMobileMenu()" data-i18n="nav_models" class="block py-1.5 text-xs text-neutral-300 hover:text-white">Model Tiers</a>
-      <a href="#quickstart" onclick="toggleMobileMenu()" data-i18n="nav_quickstart" class="block py-1.5 text-xs text-neutral-300 hover:text-white">Quickstart</a>
-      <a href="#commercial" onclick="toggleMobileMenu()" data-i18n="nav_commercial" class="block py-1.5 text-xs text-neutral-300 hover:text-white">License</a>
-      <a href="#faq" onclick="toggleMobileMenu()" data-i18n="nav_faq" class="block py-1.5 text-xs text-neutral-300 hover:text-white">FAQ</a>
+      <button type="button" onclick="scrollToSection('primitives')" data-i18n="nav_features" class="block w-full text-left py-2 text-xs text-neutral-300 hover:text-white cursor-pointer">Primitives</button>
+      <button type="button" onclick="scrollToSection('playground')" data-i18n="nav_playground" class="block w-full text-left py-2 text-xs text-neutral-300 hover:text-white cursor-pointer">Playground</button>
+      <button type="button" onclick="scrollToSection('benchmarks')" data-i18n="nav_benchmarks" class="block w-full text-left py-2 text-xs text-neutral-300 hover:text-white cursor-pointer">Benchmarks</button>
+      <button type="button" onclick="scrollToSection('models')" data-i18n="nav_models" class="block w-full text-left py-2 text-xs text-neutral-300 hover:text-white cursor-pointer">Model Tiers</button>
+      <button type="button" onclick="scrollToSection('quickstart')" data-i18n="nav_quickstart" class="block w-full text-left py-2 text-xs text-neutral-300 hover:text-white cursor-pointer">Quickstart</button>
+      <button type="button" onclick="scrollToSection('commercial')" data-i18n="nav_commercial" class="block w-full text-left py-2 text-xs text-neutral-300 hover:text-white cursor-pointer">License</button>
+      <button type="button" onclick="scrollToSection('faq')" data-i18n="nav_faq" class="block w-full text-left py-2 text-xs text-neutral-300 hover:text-white cursor-pointer">FAQ</button>
     </div>
   </header>
 
   <!-- Hero Section -->
   <section class="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
     
-    <!-- Precision Technical Badge -->
-    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-mono bg-white/[0.04] border border-white/10 text-neutral-300 mb-8">
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-      <span data-i18n="hero_pill_1">Dual-Mode: Standalone Alternative</span>
+    <!-- Precision Technical Badge with Live Pulsing Dot -->
+    <div class="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full text-xs font-mono bg-white/[0.04] border border-white/10 text-neutral-300 mb-8 backdrop-blur-md shadow-inner">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      <span data-i18n="hero_pill_1">双模架构：开源独立引擎</span>
       <span class="text-neutral-600">/</span>
-      <span data-i18n="hero_pill_2" class="text-neutral-400">Production Jev Harness</span>
+      <span data-i18n="hero_pill_2" class="text-neutral-400">商业 Jev 生产线束</span>
     </div>
 
     <!-- Editorial Main Headline -->
     <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-[-0.035em] text-white leading-[1.08] mb-6">
-      <span class="text-metallic" data-i18n="hero_title_prefix">Open Alternative & Production</span>
+      <span class="text-metallic" data-i18n="hero_title_prefix">开源替代 · 商业 Jev 线束</span>
       <br>
-      <span class="text-neutral-100" data-i18n="hero_title_suffix">Jev Harness at Scale.</span>
+      <span class="text-neutral-100 text-glow-cyan" data-i18n="hero_title_suffix">类型安全概率决策引擎</span>
     </h1>
 
     <!-- Subtitle -->
     <p class="text-sm sm:text-base md:text-lg text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed font-normal" data-i18n-html="hero_desc">
-      Deploy as a 100% standalone open-source decision engine, or wrap commercial TypeSafe Jev with production safety guard, 60%+ cost-arbitrage routing, and 99.99% circuit-breaker fallback SLA.
+      可作为独立的非自回归决策引擎运行（sub-50ms，单 Token 概率提取），也可作为 TypeSafe Jev 商业 API 的生产包装层：利用动态阈值阻断低置信度误判（答题精度达 100%），通过本地分流减少 60%+ 商业调用成本，并在云端异常时自动降级。
     </p>
 
     <!-- CTAs -->
     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
       <a href="https://github.com/zhangcy122/OpenJev" target="_blank" rel="noopener noreferrer" 
-         class="w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-semibold bg-white text-black hover:bg-neutral-200 transition shadow-sm flex items-center justify-center space-x-2" data-i18n="hero_btn_repo">
-        <span>Get Started on GitHub</span>
+         class="w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-semibold bg-white text-black hover:bg-neutral-200 transition shadow-lg hover:shadow-cyan-500/20 flex items-center justify-center space-x-2" data-i18n="hero_btn_repo">
+        <span>在 GitHub 查看源码 →</span>
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a href="#playground" class="w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-medium bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 transition flex items-center justify-center space-x-2" data-i18n="hero_btn_demo">
-        <span>Open Simulator</span>
-      </a>
+      <button type="button" onclick="scrollToSection('playground')" class="w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-medium bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 hover:border-cyan-500/40 transition flex items-center justify-center space-x-2 cursor-pointer" data-i18n="hero_btn_demo">
+        <svg class="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>打开决策模拟器</span>
+      </button>
+    </div>
+
+    <!-- Visual Architectural Flow Diagram -->
+    <div class="mt-14 max-w-4xl mx-auto p-4 rounded-2xl bg-surface-50/70 border border-white/[0.07] backdrop-blur-xl">
+      <div class="flex items-center justify-between text-[11px] font-mono text-neutral-500 pb-3 border-b border-white/[0.06]">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          <span>PIPELINE FLOW: INFERENCE & HARNESS TOPOLOGY</span>
+        </div>
+        <span class="hidden sm:inline text-neutral-400">vLLM / SGLang · Single-Token Posterior</span>
+      </div>
+      <div class="py-4 grid grid-cols-1 md:grid-cols-3 gap-3 items-center text-xs font-mono">
+        <div class="p-3 rounded-xl bg-surface-100/80 border border-white/[0.06] text-left">
+          <div class="text-[10px] text-neutral-500 uppercase tracking-wider mb-1">Step 1: Input & Constraint</div>
+          <div class="text-white font-semibold">Incoming State + Query</div>
+          <div class="text-neutral-400 text-[11px] mt-1">Lexical Grammar Masking</div>
+        </div>
+        <div class="flex md:flex-col items-center justify-center text-neutral-500 py-1">
+          <svg class="w-5 h-5 text-cyan-400 md:rotate-90 hidden md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <span class="text-[10px] text-cyan-300 font-mono">Single-Token Logprobs</span>
+          <svg class="w-4 h-4 text-cyan-400 md:rotate-0 block md:hidden ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="p-3 rounded-xl bg-surface-100/80 border border-cyan-500/30 text-left bg-gradient-to-r from-surface-100 to-cyan-950/20">
+          <div class="text-[10px] text-cyan-400 uppercase tracking-wider mb-1">Step 2: Dual-Mode Routing</div>
+          <div class="text-cyan-200 font-semibold">Calibrated Decision Receipt</div>
+          <div class="text-neutral-300 text-[11px] mt-1">Local Edge (Mode A) ∥ Jev Guard (Mode B)</div>
+        </div>
+      </div>
     </div>
 
     <!-- Dual-Mode Architectural Showcase -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-14 max-w-4xl mx-auto text-left">
-      <div class="panel p-5 rounded-xl border border-white/10 relative overflow-hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-4xl mx-auto text-left">
+      <div class="panel p-5 rounded-xl border border-white/10 relative overflow-hidden group">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">MODE A · STANDALONE ALTERNATIVE</span>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">MODE A · STANDALONE</span>
           <span class="text-[11px] font-mono text-neutral-500">100% Open Weights</span>
         </div>
-        <h3 class="text-base font-bold text-white mb-1.5" data-i18n="dual_mode_a_title">开源独立运行 (Mode A)</h3>
+        <h3 class="text-base font-bold text-white mb-1.5 group-hover:text-emerald-300 transition" data-i18n="dual_mode_a_title">开源独立运行 (Mode A)</h3>
         <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="dual_mode_a_desc">
           配合 vLLM 或 SGLang 语法掩码解码，直接加载 Qwen3、Gemma 4 等开源模型；首 Token 提取候选对数似然，不走长文本自回归生成，端到端延迟控制在 50ms 以内。
         </p>
       </div>
 
-      <div class="panel p-5 rounded-xl border border-cyan-500/30 bg-gradient-to-br from-surface-100 to-cyan-950/20 relative overflow-hidden">
+      <div class="panel p-5 rounded-xl border border-cyan-500/30 bg-gradient-to-br from-surface-100 to-cyan-950/20 relative overflow-hidden group">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-mono uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded">MODE B · PRODUCTION JEV HARNESS</span>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded">MODE B · JEV HARNESS</span>
           <span class="text-[11px] font-mono text-cyan-400">Guard · Gateway · SLA</span>
         </div>
-        <h3 class="text-base font-bold text-white mb-1.5" data-i18n="dual_mode_b_title">商业 Jev 增强与容灾线束 (Mode B)</h3>
+        <h3 class="text-base font-bold text-white mb-1.5 group-hover:text-cyan-200 transition" data-i18n="dual_mode_b_title">商业 Jev 增强与容灾线束 (Mode B)</h3>
         <p class="text-xs text-neutral-300 leading-relaxed" data-i18n="dual_mode_b_desc">
           直接封装官方 TypeSafe Jev 商业接口：通过 Guard 拦截边缘歧义样本（答题精度达 100%），由本地引擎承接高频流量以削减调用成本，并在云端超时或限流时自动切换本地兜底。
         </p>
@@ -301,13 +356,27 @@
       <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Input Context -->
         <div class="space-y-4">
+          <!-- Preset Chips -->
           <div>
-            <label class="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5" data-i18n="demo_input_label">State / Query Context</label>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-[11px] font-mono uppercase tracking-wider text-neutral-400" data-i18n="demo_input_label">State / Query Context</label>
+              <div class="flex items-center space-x-1.5 overflow-x-auto">
+                <button type="button" onclick="setSimulatorPreset('security')" class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.05] hover:bg-cyan-500/20 text-neutral-300 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 transition cursor-pointer">
+                  🛡️ Security
+                </button>
+                <button type="button" onclick="setSimulatorPreset('banking')" class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.05] hover:bg-cyan-500/20 text-neutral-300 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 transition cursor-pointer">
+                  🏦 Banking
+                </button>
+                <button type="button" onclick="setSimulatorPreset('tool')" class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.05] hover:bg-cyan-500/20 text-neutral-300 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 transition cursor-pointer">
+                  ⚡ Tool
+                </button>
+              </div>
+            </div>
             <textarea id="demo-input" rows="4" class="w-full bg-surface-50 border border-white/10 rounded-lg p-3 text-xs text-neutral-200 focus:outline-none focus:border-cyan-400/60 font-mono transition resize-none leading-relaxed">User reports: "Unauthorized access detected from IP 198.51.100.44 attempting brute-force root login."</textarea>
           </div>
           <div>
             <label class="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5" data-i18n="demo_schema_label">Target Enum Schema</label>
-            <select id="demo-schema" class="w-full bg-surface-50 border border-white/10 rounded-lg p-2.5 text-xs text-neutral-200 focus:outline-none focus:border-cyan-400/60 font-mono transition">
+            <select id="demo-schema" onchange="runSimulation()" class="w-full bg-surface-50 border border-white/10 rounded-lg p-2.5 text-xs text-neutral-200 focus:outline-none focus:border-cyan-400/60 font-mono transition cursor-pointer">
               <option value="security">RouteCategory [billing, support, security, human_review]</option>
               <option value="risk">RiskLevel [low, medium, high, critical]</option>
               <option value="tool">ToolAction [search_kb, query_db, escalate_admin]</option>
@@ -315,7 +384,7 @@
           </div>
           <div class="flex items-center justify-between pt-1">
             <span class="text-[11px] text-neutral-500 font-mono"><span data-i18n="demo_model_label">Model:</span> <strong class="text-neutral-300 font-normal">Qwen3-4B-Instruct</strong></span>
-            <button id="demo-eval-btn" onclick="runSimulation()" class="px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition" data-i18n="demo_eval_btn">
+            <button id="demo-eval-btn" onclick="runSimulation()" class="px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition cursor-pointer shadow-md" data-i18n="demo_eval_btn">
               Evaluate Decision →
             </button>
           </div>
@@ -325,8 +394,16 @@
         <div class="bg-surface-50 border border-white/[0.06] rounded-xl p-4 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between pb-3 border-b border-white/[0.06]">
-              <span class="text-[11px] font-mono text-neutral-500 uppercase tracking-wider" data-i18n="demo_out_header">DECISION RECEIPT</span>
-              <span id="demo-latency" class="text-[11px] font-mono text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-2 py-0.5 rounded">48ms TTFT</span>
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] font-mono text-neutral-500 uppercase tracking-wider" data-i18n="demo_out_header">DECISION RECEIPT</span>
+                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-1.5 py-0.2 rounded">VERIFIED</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button type="button" id="btn-copy-receipt" onclick="copySimulatorReceipt()" class="text-[10px] font-mono text-neutral-400 hover:text-white px-2 py-0.5 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition cursor-pointer">
+                  Copy JSON
+                </button>
+                <span id="demo-latency" class="text-[11px] font-mono text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-2 py-0.5 rounded">48ms TTFT</span>
+              </div>
             </div>
 
             <div class="mt-4 flex items-baseline justify-between">
@@ -396,15 +473,20 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       
       <!-- 1. Choice<T> (Spans 2 cols on lg) -->
-      <div class="panel p-6 rounded-2xl lg:col-span-2 flex flex-col justify-between">
+      <div class="panel p-6 rounded-2xl lg:col-span-2 flex flex-col justify-between group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.06] text-neutral-300 border border-white/10">PRIMITIVE 01</span>
             <span class="text-xs font-mono text-neutral-500">100% Type-Safe</span>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">Choice&lt;T&gt;</h3>
+          <div class="flex items-center space-x-3 mb-2.5">
+            <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 shrink-0 shadow-sm group-hover:border-blue-500/50 transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white group-hover:text-blue-300 transition">Choice&lt;T&gt;</h3>
+          </div>
           <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="feat_choice_desc">
-            Multi-class categorical routing over discrete Enum sets. Enforces grammar constraints at the vocabulary layer to evaluate conditional log-likelihood across choices with zero parsing errors.
+            针对离散 Enum 类型的多分类路由。通过词表掩码约束输出空间，直接计算各选项的条件对数似然，避免 JSON 解析异常。
           </p>
         </div>
 
@@ -422,15 +504,20 @@
       </div>
 
       <!-- 2. Noul -->
-      <div class="panel p-6 rounded-2xl flex flex-col justify-between">
+      <div class="panel p-6 rounded-2xl flex flex-col justify-between group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.06] text-neutral-300 border border-white/10">PRIMITIVE 02</span>
             <span class="text-xs font-mono text-neutral-500">Binary Gate</span>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">Noul</h3>
+          <div class="flex items-center space-x-3 mb-2.5">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0 shadow-sm group-hover:border-emerald-500/50 transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition">Noul</h3>
+          </div>
           <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="feat_noul_desc">
-            Binary assertion evaluator ($P_{true}, P_{false}$) providing calibrated confidence with formal uncertainty margins for policy gates and content guardrails.
+            二元断言评估器（$P_{true}, P_{false}$），输出经标定的概率与不确定度区间，适用于工作流门控与安全检查。
           </p>
         </div>
         <div class="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-neutral-400">
@@ -440,15 +527,20 @@
       </div>
 
       <!-- 3. Score -->
-      <div class="panel p-6 rounded-2xl flex flex-col justify-between">
+      <div class="panel p-6 rounded-2xl flex flex-col justify-between group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.06] text-neutral-300 border border-white/10">PRIMITIVE 03</span>
             <span class="text-xs font-mono text-neutral-500">Expectation</span>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">Score</h3>
+          <div class="flex items-center space-x-3 mb-2.5">
+            <div class="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-sky-400 shrink-0 shadow-sm group-hover:border-sky-500/50 transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white group-hover:text-sky-300 transition">Score</h3>
+          </div>
           <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-4" data-i18n="feat_score_desc">
-            Ordinal ranking across predefined severity tiers. Calculates expected mathematical value based on probability mass distribution rather than discrete hallucinations.
+            有序档位与等级评分。依据各档位后验概率质量计算连续期望值，避免离散打分的不稳定抖动。
           </p>
         </div>
         <div class="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-neutral-400">
@@ -458,15 +550,20 @@
       </div>
 
       <!-- 4. GuardHarness (Spans 2 cols on lg) -->
-      <div class="panel panel-highlight p-6 rounded-2xl lg:col-span-2 flex flex-col justify-between">
+      <div class="panel panel-highlight p-6 rounded-2xl lg:col-span-2 flex flex-col justify-between group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/30">SAFETY LAYER</span>
             <span class="text-xs font-mono text-emerald-400">100% Selective Precision</span>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">TypeSafeJevGuardHarness</h3>
+          <div class="flex items-center space-x-3 mb-2.5">
+            <div class="w-9 h-9 rounded-xl bg-cyan-500/15 border border-cyan-500/35 flex items-center justify-center text-cyan-300 shrink-0 shadow-sm group-hover:border-cyan-400/60 transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white group-hover:text-cyan-200 transition">TypeSafeJevGuardHarness</h3>
+          </div>
           <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="feat_guard_desc">
-            Adaptive runtime calibration and dynamic dual-threshold interception ($\tau = \max(\tau_{\min}, \alpha / K)$). Inverts output probabilities into pseudo-logits for temperature calibration, safely abstaining on ambiguous queries to reach 100% selective precision while retaining tentative candidates.
+            运行期动态标定与阈值拦截（$\tau = \max(\tau_{\min}, \alpha / K)$）。将输出概率反推为伪对数似然并进行温度缩放；置信度不足时主动输出 UNKNOWN 弃权，使有效回答准确率达 100%。
           </p>
         </div>
 
@@ -480,15 +577,20 @@
       </div>
 
       <!-- 5. HybridJevGateway & Fallback Circuit Breaker (Spans full 3 cols on lg) -->
-      <div class="panel p-6 rounded-2xl lg:col-span-3 flex flex-col justify-between border border-cyan-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-cyan-950/20">
+      <div class="panel p-6 rounded-2xl lg:col-span-3 flex flex-col justify-between border border-cyan-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-cyan-950/20 group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/30">RESILIENT GATEWAY</span>
             <span class="text-xs font-mono text-emerald-400">60%+ Cloud Cost Cut · 99.99% Fallback SLA</span>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">HybridJevGateway & Fallback Circuit Breaker</h3>
+          <div class="flex items-center space-x-3 mb-2.5">
+            <div class="w-9 h-9 rounded-xl bg-cyan-500/15 border border-cyan-500/35 flex items-center justify-center text-cyan-300 shrink-0 shadow-sm group-hover:border-cyan-400/60 transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white group-hover:text-cyan-200 transition">HybridJevGateway & Fallback Circuit Breaker</h3>
+          </div>
           <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="feat_gateway_desc">
-            Two-tier cost-arbitraged hybrid router with finite-state circuit breaker. High-confidence head intents (70%+) resolve on the local edge engine (&lt;20ms, $0 cloud cost), while ambiguous queries seamlessly escalate to cloud APIs. In event of cloud timeouts or provider outages, the gateway automatically falls back to calibrated local decisions, guaranteeing zero uncaught crashes and continuous enterprise availability.
+            双层成本分流与熔断网关。70% 以上的高频意图直接由本地模型解析（&lt;20ms）；难以确定的边缘样本再转发至商业 API。遭遇云端超时或限流时自动熔断切回本地，避免上游调用发生未捕获异常。
           </p>
         </div>
 
@@ -576,19 +678,34 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-white/[0.04] text-neutral-300">
-            <tr class="bg-cyan-950/20 text-white font-medium">
-              <td class="py-3 px-4 flex items-center space-x-2 text-cyan-300">
-                <span>●</span>
+            <tr class="bg-cyan-950/20 text-white font-medium border-l-2 border-l-cyan-400">
+              <td class="py-3.5 px-4 flex items-center space-x-2 text-cyan-300">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
                 <span>OpenJevPro (gemma4:cloud)</span>
               </td>
-              <td class="py-3 px-4">94.4% <span class="text-neutral-500 font-normal text-[10px]">(34/36)</span></td>
-              <td class="py-3 px-4 text-emerald-400 font-semibold">100.0% <span class="text-neutral-500 font-normal text-[10px]">(28/28)</span></td>
-              <td class="py-3 px-4 text-emerald-400 font-semibold">100.0% <span class="text-neutral-500 font-normal text-[10px]">(36/36)</span></td>
-              <td class="py-3 px-4 text-emerald-400 font-semibold">100.0% <span class="text-neutral-500 font-normal text-[10px]">(6/6)</span></td>
-              <td class="py-3 px-4">1,084ms</td>
-              <td class="py-3 px-4 text-emerald-400">0.025</td>
+              <td class="py-3.5 px-4">94.4% <span class="text-neutral-500 font-normal text-[10px]">(34/36)</span></td>
+              <td class="py-3.5 px-4">
+                <div class="flex items-center space-x-2">
+                  <span class="text-emerald-400 font-semibold">100.0%</span>
+                  <div class="w-12 bg-white/[0.08] h-1.5 rounded-full overflow-hidden hidden sm:block"><div class="bg-emerald-400 h-full rounded-full" style="width: 100%"></div></div>
+                </div>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="flex items-center space-x-2">
+                  <span class="text-emerald-400 font-semibold">100.0%</span>
+                  <div class="w-12 bg-white/[0.08] h-1.5 rounded-full overflow-hidden hidden sm:block"><div class="bg-emerald-400 h-full rounded-full" style="width: 100%"></div></div>
+                </div>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="flex items-center space-x-2">
+                  <span class="text-emerald-400 font-semibold">100.0%</span>
+                  <div class="w-12 bg-white/[0.08] h-1.5 rounded-full overflow-hidden hidden sm:block"><div class="bg-emerald-400 h-full rounded-full" style="width: 100%"></div></div>
+                </div>
+              </td>
+              <td class="py-3.5 px-4 font-mono text-neutral-200">1,084ms</td>
+              <td class="py-3.5 px-4 font-mono text-emerald-400 font-semibold">0.025</td>
             </tr>
-            <tr class="hover:bg-white/[0.01]">
+            <tr class="hover:bg-white/[0.02] transition">
               <td class="py-3 px-4 text-neutral-300">Direct Open LLM (gemma4 + JSON)</td>
               <td class="py-3 px-4 text-neutral-200">97.2%</td>
               <td class="py-3 px-4 text-neutral-400">96.7%</td>
@@ -597,7 +714,7 @@
               <td class="py-3 px-4 text-neutral-400">630ms</td>
               <td class="py-3 px-4 text-neutral-400">0.029</td>
             </tr>
-            <tr class="hover:bg-white/[0.01]">
+            <tr class="hover:bg-white/[0.02] transition">
               <td class="py-3 px-4 text-neutral-300">TypeSafe Jev (1.13.0 Live API)</td>
               <td class="py-3 px-4 text-neutral-200">97.2%</td>
               <td class="py-3 px-4 text-neutral-400">96.7%</td>
@@ -705,21 +822,29 @@
     <div class="panel rounded-xl overflow-hidden border border-white/10">
       <!-- Tab Header -->
       <div class="bg-surface-50 px-4 py-2.5 border-b border-white/[0.06] flex items-center justify-between">
-        <div class="flex items-center space-x-1.5">
-          <button id="tab-qs-client" onclick="switchQsTab('client')" class="text-xs font-mono px-3 py-1 rounded bg-white text-black font-semibold transition">
-            Client SDK
-          </button>
-          <button id="tab-qs-guard" onclick="switchQsTab('guard')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition">
-            Guard Harness
-          </button>
-          <button id="tab-qs-gateway" onclick="switchQsTab('gateway')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition">
-            Hybrid Gateway
-          </button>
+        <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-1.5 mr-1 hidden sm:flex">
+            <span class="w-3 h-3 rounded-full bg-[#ff5f56]/80 inline-block border border-[#e0443e]/40"></span>
+            <span class="w-3 h-3 rounded-full bg-[#ffbd2e]/80 inline-block border border-[#dea123]/40"></span>
+            <span class="w-3 h-3 rounded-full bg-[#27c93f]/80 inline-block border border-[#1aab29]/40"></span>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            <button id="tab-qs-client" onclick="switchQsTab('client')" class="text-xs font-mono px-3 py-1 rounded bg-white text-black font-semibold transition cursor-pointer">
+              Client SDK
+            </button>
+            <button id="tab-qs-guard" onclick="switchQsTab('guard')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition cursor-pointer">
+              Guard Harness
+            </button>
+            <button id="tab-qs-gateway" onclick="switchQsTab('gateway')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition cursor-pointer">
+              Hybrid Gateway
+            </button>
+          </div>
         </div>
 
         <div class="flex items-center space-x-3">
+          <span id="active-file-label" class="text-[11px] font-mono text-cyan-400/80 bg-cyan-950/30 border border-cyan-500/20 px-2 py-0.5 rounded hidden md:inline">client_example.py</span>
           <span class="text-[11px] font-mono text-neutral-500 hidden sm:inline">pip install openjevpro</span>
-          <button id="btn-copy-code" onclick="copyActiveCode()" class="flex items-center space-x-1 text-xs font-mono px-2.5 py-1 rounded bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 border border-white/10 transition">
+          <button id="btn-copy-code" onclick="copyActiveCode()" class="flex items-center space-x-1 text-xs font-mono px-2.5 py-1 rounded bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 border border-white/10 transition cursor-pointer">
             <span id="copy-text">Copy</span>
           </button>
         </div>
@@ -1146,9 +1271,79 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
       menu.classList.toggle('hidden');
     }
 
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        const headerOffset = 64;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       switchLanguage(currentLang);
     });
+
+    function setSimulatorPreset(presetKey) {
+      const inputEl = document.getElementById('demo-input');
+      const schemaEl = document.getElementById('demo-schema');
+      if (presetKey === 'security') {
+        inputEl.value = 'User reports: "Unauthorized access detected from IP 198.51.100.44 attempting brute-force root login."';
+        schemaEl.value = 'security';
+      } else if (presetKey === 'banking') {
+        inputEl.value = 'Customer query: "Why is there an unverified recurring fee for $12.99 on my monthly credit card statement?"';
+        schemaEl.value = 'risk';
+      } else if (presetKey === 'tool') {
+        inputEl.value = 'Action request: "Locate enterprise customer account record for acct_id 88204 and query pending unbilled invoices."';
+        schemaEl.value = 'tool';
+      }
+      runSimulation();
+    }
+
+    function copySimulatorReceipt() {
+      const winner = document.getElementById('demo-winner').innerText;
+      const conf = document.getElementById('demo-confidence').innerText;
+      const latency = document.getElementById('demo-latency').innerText;
+      const schema = document.getElementById('demo-schema').value;
+      const query = document.getElementById('demo-input').value;
+
+      const receipt = {
+        framework: "OpenJevPro",
+        version: "0.1.0",
+        timestamp: new Date().toISOString(),
+        query: query,
+        schema: schema,
+        decision: {
+          choice: winner,
+          confidence: parseFloat(conf) / 100,
+          calibrated: true,
+          scaling_temperature: 1.30,
+          abstain_threshold: 0.45,
+          is_abstained: false
+        },
+        telemetry: {
+          ttft_latency: latency,
+          output_tokens: 1,
+          mode: "System1_Deterministic"
+        }
+      };
+
+      navigator.clipboard.writeText(JSON.stringify(receipt, null, 2)).then(() => {
+        const btn = document.getElementById('btn-copy-receipt');
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied!';
+        btn.classList.add('text-emerald-400', 'border-emerald-500/40');
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.classList.remove('text-emerald-400', 'border-emerald-500/40');
+        }, 1800);
+      });
+    }
 
     function switchQsTab(tab) {
       const btnClient = document.getElementById('tab-qs-client');
@@ -1157,9 +1352,10 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
       const codeClient = document.getElementById('qs-code-client');
       const codeGuard = document.getElementById('qs-code-guard');
       const codeGateway = document.getElementById('qs-code-gateway');
+      const fileLabel = document.getElementById('active-file-label');
 
-      const inactiveBtn = 'text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition';
-      const activeBtn = 'text-xs font-mono px-3 py-1 rounded bg-white text-black font-semibold transition';
+      const inactiveBtn = 'text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition cursor-pointer';
+      const activeBtn = 'text-xs font-mono px-3 py-1 rounded bg-white text-black font-semibold transition cursor-pointer';
 
       btnClient.className = inactiveBtn;
       btnGuard.className = inactiveBtn;
@@ -1171,12 +1367,15 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
       if (tab === 'guard') {
         btnGuard.className = activeBtn;
         codeGuard.classList.remove('hidden');
+        if (fileLabel) fileLabel.innerText = 'guard_harness.py';
       } else if (tab === 'gateway') {
         btnGateway.className = activeBtn;
         codeGateway.classList.remove('hidden');
+        if (fileLabel) fileLabel.innerText = 'hybrid_gateway.py';
       } else {
         btnClient.className = activeBtn;
         codeClient.classList.remove('hidden');
+        if (fileLabel) fileLabel.innerText = 'client_example.py';
       }
     }
 
