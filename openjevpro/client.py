@@ -227,5 +227,26 @@ class OpenJevProClient:
             abstained=decision.abstained
         )
 
+    def create_hybrid_gateway(
+        self,
+        cloud_engine: Any,
+        local_tau: Optional[float] = None,
+        alpha: float = 1.25,
+        min_confidence: float = 0.72,
+        failure_threshold: int = 3,
+        recovery_timeout: float = 10.0,
+    ) -> Any:
+        """Creates a resilient HybridJevGateway using this client as the Tier 1 Local Edge Engine."""
+        from openjevpro.gateway import HybridJevGateway, CircuitBreaker
+        cb = CircuitBreaker(failure_threshold=failure_threshold, recovery_timeout=recovery_timeout)
+        return HybridJevGateway(
+            local_engine=self,
+            cloud_engine=cloud_engine,
+            local_tau=local_tau,
+            alpha=alpha,
+            min_confidence=min_confidence,
+            circuit_breaker=cb,
+        )
+
 # Backward compatibility alias
 OpenJevClient = OpenJevProClient
