@@ -1,5 +1,9 @@
 # OpenJevPro
 
+<p align="left">
+  <b>English</b> | <a href="README_zh.md">简体中文</a>
+</p>
+
 > **Dual-Mode AI Decision Framework: Open Alternative & Production Harness for TypeSafe Jev**  
 > Deploy as a standalone, non-autoregressive decision engine using modern open-weight LLMs (Qwen3, Gemma 4, DeepSeek), **OR** wrap official TypeSafe Jev commercial APIs with adaptive calibration, 60%+ cost arbitrage, and 99.99% circuit-breaker fallback SLA.  
 > 🌐 **Official Website**: [https://openjev.pro](https://openjev.pro)
@@ -24,11 +28,11 @@ OpenJevPro is designed with a versatile dual-mode operational architecture:
    • Zero Vendor Lock-in & No API Bills            • Circuit Breaker: 99.99% Fallback SLA
 ```
 
-### 1. Mode A: Standalone Open Alternative (开源独立运行)
+### 1. Mode A: Standalone Open Alternative
 * **Zero Commercial API Dependency**: Run locally on NVIDIA RTX 4090, L4, or A10G GPUs with open-weight models (e.g. Qwen3-4B, Qwen3-30B-A3B MoE, Gemma 4).
 * **Deterministic Single-Token Speed**: Uses lexical grammar masking at decode-time to extract normalized posterior probability vectors in sub-50ms without autoregressive text generation.
 
-### 2. Mode B: Production Jev Harness & Gateway (商业 Jev 增强与容灾线束)
+### 2. Mode B: Production Jev Harness & Gateway
 If you already subscribe to commercial TypeSafe Jev, OpenJevPro acts as an indispensable production harness:
 * 🛡️ **Safety Guard Harness (`TypeSafeJevGuardHarness`)**: Fixes overconfident misclassifications on borderline samples (e.g. Sample 0 in Banking77) via pseudo-logit temperature scaling and dynamic dual-threshold cutoff $\tau = \max(\tau_{\min}, \alpha / K)$, lifting selective precision to **100.00%**.
 * 💰 **Two-Tier Cost Arbitrage Gateway (`HybridJevGateway`)**: Locally filters 70%+ of standard high-frequency intent queries (<20ms, $0 cloud cost), escalating only complex long-tail queries to commercial Jev APIs, slashing cloud bills by **60%+**.
