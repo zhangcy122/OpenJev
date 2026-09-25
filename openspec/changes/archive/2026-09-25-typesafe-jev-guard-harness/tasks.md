@@ -14,6 +14,6 @@
 
 - [x] 3.1 Execute Step 3 (`caw dev . --step 3`) to verify proposal and proof closure
 - [x] 3.2 Execute Step 4 (`caw dev . --step 4`) inside worktree sandbox
-- [ ] 3.3 Execute Step 5 (`caw dev . --step 5`) to confirm zero residual
-- [ ] 3.4 Execute Step 7 (`caw dev . --step 7`) to merge, commit, and reflect into CaW memory substrate
+- [x] 3.3 Execute Step 5 (`caw dev . --step 5`) to confirm zero residual
+- [x] 3.4 Execute Step 7 (`caw dev . --step 7`) to merge, commit, and reflect into CaW memory substrate
 
