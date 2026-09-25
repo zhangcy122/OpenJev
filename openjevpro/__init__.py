@@ -4,6 +4,12 @@ from openjevpro.schemas import ChoiceDecision, NoulDecision, ScoreDecision
 from openjevpro.client import OpenJevProClient
 from openjevpro.calibrator import TemperatureCalibrator
 from openjevpro.guard import TypeSafeJevGuardHarness, GuardDecision
+from openjevpro.gateway import (
+    HybridJevGateway,
+    CircuitBreaker,
+    CircuitState,
+    HybridGatewayDecision,
+)
 from openjevpro.harness import (
     OpenJevProHarness,
     BaseDecisionEngine,
@@ -26,5 +32,9 @@ __all__ = [
     "TemperatureCalibrator",
     "TypeSafeJevGuardHarness",
     "GuardDecision",
+    "HybridJevGateway",
+    "CircuitBreaker",
+    "CircuitState",
+    "HybridGatewayDecision",
 ]
 
