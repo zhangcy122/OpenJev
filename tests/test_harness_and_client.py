@@ -165,5 +165,132 @@ class TestHarnessAndClient(unittest.TestCase):
         self.assertEqual(metrics["tentative_accuracy"], 100.0)  # 2/2 on tentative
         self.assertEqual(metrics["coverage_rate"], 50.0)  # 1/2 answered
 
+    def test_extract_top_logprobs_legacy_and_modern(self):
+        """Test _extract_top_logprobs parses both legacy dict and modern content list structures."""
+        # 1. Legacy format
+        legacy_obj = {"top_logprobs": [{"A": -0.1, "B": -3.5, " C": -4.0}]}
+        res_legacy = OpenJevProClient._extract_top_logprobs(legacy_obj)
+        self.assertEqual(res_legacy.get("A"), -0.1)
+        self.assertEqual(res_legacy.get("B"), -3.5)
+
+        # 2. Modern chat completions format
+        modern_obj = {
+            "content": [{
+                "token": "A",
+                "logprob": -0.05,
+                "top_logprobs": [
+                    {"token": "A", "logprob": -0.05},
+                    {"token": "B", "logprob": -4.20},
+                    {"token": "C", "logprob": -6.80}
+                ]
+            }]
+        }
+        res_modern = OpenJevProClient._extract_top_logprobs(modern_obj)
+        self.assertEqual(res_modern.get("A"), -0.05)
+        self.assertEqual(res_modern.get("B"), -4.20)
+        self.assertEqual(res_modern.get("C"), -6.80)
+
+        # 3. Modern format single fallback token without nested top_logprobs
+        modern_single = {
+            "content": [{
+                "token": "A",
+                "logprob": -0.02
+            }]
+        }
+        res_single = OpenJevProClient._extract_top_logprobs(modern_single)
+        self.assertEqual(res_single.get("A"), -0.02)
+
+        # 4. Empty or malformed
+        self.assertEqual(OpenJevProClient._extract_top_logprobs(None), {})
+        self.assertEqual(OpenJevProClient._extract_top_logprobs({}), {})
+        self.assertEqual(OpenJevProClient._extract_top_logprobs({"content": []}), {})
+
+    def test_decide_choice_openai_chat_transport(self):
+        """Verify OpenJevProClient uses chat/completions transport with system prompt and logprobs."""
+        client = OpenJevProClient(
+            base_url="http://mock-vllm:8000/v1",
+            use_chat=True,
+            chat_template_kwargs={"enable_thinking": False}
+        )
+
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = {
+            "choices": [{
+                "index": 0,
+                "message": {"role": "assistant", "content": "A"},
+                "logprobs": {
+                    "content": [{
+                        "token": "A",
+                        "logprob": -0.02,
+                        "top_logprobs": [
+                            {"token": "A", "logprob": -0.02},
+                            {"token": "B", "logprob": -5.00}
+                        ]
+                    }]
+                }
+            }]
+        }
+        mock_resp.raise_for_status = MagicMock()
+
+        with patch("requests.post", return_value=mock_resp) as mock_post:
+            decision = client.decide_choice(
+                state={"text": "hello"},
+                candidates=["opt_a", "opt_b"],
+                criteria="Select option",
+                allow_abstain=False
+            )
+
+            self.assertEqual(decision.value, "opt_a")
+            self.assertFalse(decision.abstained)
+            self.assertGreater(decision.confidence, 0.90)
+
+            # Verify endpoint called and payload
+            call_args = mock_post.call_args
+            self.assertEqual(call_args[0][0], "http://mock-vllm:8000/v1/chat/completions")
+            payload = call_args[1]["json"]
+            self.assertTrue(payload["logprobs"])
+            self.assertEqual(payload["top_logprobs"], 20)
+            self.assertIn("extra_body", payload)
+            self.assertEqual(payload["extra_body"]["chat_template_kwargs"]["enable_thinking"], False)
+            self.assertEqual(len(payload["messages"]), 2)
+
+    def test_decide_choice_openai_chat_fallback_to_completions(self):
+        """When chat/completions returns 404, client should fall back gracefully to completions."""
+        client = OpenJevProClient(
+            base_url="http://legacy-vllm:8000/v1",
+            use_chat=True
+        )
+
+        resp_404 = MagicMock()
+        resp_404.status_code = 404
+
+        resp_completions = MagicMock()
+        resp_completions.status_code = 200
+        resp_completions.json.return_value = {
+            "choices": [{
+                "text": "A",
+                "logprobs": {
+                    "top_logprobs": [{"A": -0.01, "B": -6.0}]
+                }
+            }]
+        }
+        resp_completions.raise_for_status = MagicMock()
+
+        with patch("requests.post", side_effect=[resp_404, resp_completions]) as mock_post:
+            decision = client.decide_choice(
+                state={"text": "fallback test"},
+                candidates=["opt_a", "opt_b"],
+                allow_abstain=False
+            )
+
+            self.assertEqual(decision.value, "opt_a")
+            self.assertEqual(mock_post.call_count, 2)
+            # First call was to chat/completions
+            self.assertEqual(mock_post.call_args_list[0][0][0], "http://legacy-vllm:8000/v1/chat/completions")
+            # Second call fell back to completions
+            self.assertEqual(mock_post.call_args_list[1][0][0], "http://legacy-vllm:8000/v1/completions")
+
 if __name__ == "__main__":
     unittest.main()
+
