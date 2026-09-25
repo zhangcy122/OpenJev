@@ -1,11 +1,14 @@
 import json
 import math
+import logging
 from typing import Dict, Any, Type, Union, List, Optional
 from enum import Enum
 import requests
 
 from openjevpro.schemas import ChoiceDecision, NoulDecision
 from openjevpro.calibrator import TemperatureCalibrator
+
+logger = logging.getLogger("openjevpro.client")
 
 class OpenJevProClient:
     """Client for querying open-source LLM APIs with Jev-style typed probabilistic decisions."""
@@ -18,12 +21,16 @@ class OpenJevProClient:
         temperature_scaling: float = 1.25,
         abstain_threshold: Union[float, str] = 0.45,
         backend: str = "auto",
+        use_chat: bool = True,
+        chat_template_kwargs: Optional[Dict[str, Any]] = None,
     ):
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
         self.calibrator = TemperatureCalibrator(temperature=temperature_scaling)
         self.abstain_threshold = abstain_threshold
+        self.use_chat = use_chat
+        self.chat_template_kwargs = chat_template_kwargs or {}
 
         if backend == "auto":
             if "11434" in self.base_url:
@@ -136,6 +143,37 @@ class OpenJevProClient:
             raw_logits=extracted_logits,
         )
 
+    @staticmethod
+    def _extract_top_logprobs(logprobs_obj: Optional[Dict[str, Any]]) -> Dict[str, float]:
+        """Extracts candidate token logprobs from either legacy completions or modern chat completions format."""
+        if not logprobs_obj or not isinstance(logprobs_obj, dict):
+            return {}
+
+        # Format 1: Legacy completions format: {"top_logprobs": [{"A": -0.1, ...}]}
+        legacy = logprobs_obj.get("top_logprobs")
+        if isinstance(legacy, list) and legacy and isinstance(legacy[0], dict):
+            if all(isinstance(v, (int, float)) for v in legacy[0].values()):
+                return {str(k): float(v) for k, v in legacy[0].items()}
+
+        # Format 2: Modern chat completions format: {"content": [{"token": "A", "logprob": -0.1, "top_logprobs": [...]}]}
+        content = logprobs_obj.get("content")
+        if isinstance(content, list) and content:
+            out: Dict[str, float] = {}
+            first_token_data = content[0]
+            if isinstance(first_token_data, dict):
+                top_list = first_token_data.get("top_logprobs") or []
+                for item in top_list:
+                    if isinstance(item, dict):
+                        tok = item.get("token")
+                        if tok is not None and "logprob" in item:
+                            out.setdefault(str(tok), float(item["logprob"]))
+                if out:
+                    return out
+                if "token" in first_token_data and "logprob" in first_token_data:
+                    return {str(first_token_data["token"]): float(first_token_data["logprob"])}
+
+        return {}
+
     def _decide_choice_openai(
         self,
         state: Dict[str, Any],
@@ -143,7 +181,7 @@ class OpenJevProClient:
         criteria: Union[str, Dict[str, str]],
         allow_abstain: bool
     ) -> ChoiceDecision:
-        """Evaluates categorical choice via vLLM/OpenAI completions logprobs."""
+        """Evaluates categorical choice via vLLM/OpenAI completions or chat/completions logprobs."""
         letters = [chr(65 + i) for i in range(len(options))]
         option_map = {letter: opt for letter, opt in zip(letters, options)}
 
@@ -164,24 +202,83 @@ class OpenJevProClient:
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
-        payload = {
-            "model": self.model,
-            "prompt": prompt,
-            "max_tokens": 1,
-            "temperature": 0.0,
-            "logprobs": 20
-        }
 
-        resp = requests.post(f"{self.base_url}/completions", headers=headers, json=payload, timeout=30)
-        resp.raise_for_status()
-        data = resp.json()
+        data: Optional[Dict[str, Any]] = None
+        endpoint_used = ""
 
-        choice_logprobs = data["choices"][0].get("logprobs", {}).get("top_logprobs", [{}])[0]
+        if self.use_chat:
+            system_msg = "You are a precise, single-token categorical decision classifier. Reply with ONLY the option letter (e.g. A, B, C)."
+            chat_payload: Dict[str, Any] = {
+                "model": self.model,
+                "messages": [
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": prompt}
+                ],
+                "max_tokens": 1,
+                "temperature": 0.0,
+                "logprobs": True,
+                "top_logprobs": 20,
+            }
+            if self.chat_template_kwargs:
+                chat_payload["extra_body"] = {"chat_template_kwargs": self.chat_template_kwargs}
+
+            endpoint_used = f"{self.base_url}/chat/completions"
+            resp = requests.post(endpoint_used, headers=headers, json=chat_payload, timeout=30)
+            if resp.status_code in (404, 405):
+                # Fallback to legacy completions if chat endpoint is not supported by server
+                endpoint_used = f"{self.base_url}/completions"
+                comp_payload = {
+                    "model": self.model,
+                    "prompt": prompt,
+                    "max_tokens": 1,
+                    "temperature": 0.0,
+                    "logprobs": 20
+                }
+                resp = requests.post(endpoint_used, headers=headers, json=comp_payload, timeout=30)
+            resp.raise_for_status()
+            data = resp.json()
+        else:
+            endpoint_used = f"{self.base_url}/completions"
+            comp_payload = {
+                "model": self.model,
+                "prompt": prompt,
+                "max_tokens": 1,
+                "temperature": 0.0,
+                "logprobs": 20
+            }
+            resp = requests.post(endpoint_used, headers=headers, json=comp_payload, timeout=30)
+            resp.raise_for_status()
+            data = resp.json()
+
+        choice_data = data["choices"][0]
+        logprobs_data = choice_data.get("logprobs")
+        choice_logprobs = self._extract_top_logprobs(logprobs_data)
+
+        if not choice_logprobs:
+            logger.warning(
+                "Endpoint '%s' returned empty or unparseable logprobs. "
+                "Ensure logprobs are supported and enabled on the server.",
+                endpoint_used
+            )
 
         extracted_logits: Dict[str, float] = {}
+        matched_count = 0
         for letter, opt in option_map.items():
-            l_prob = choice_logprobs.get(letter) or choice_logprobs.get(f" {letter}") or -100.0
-            extracted_logits[opt] = float(l_prob)
+            l_prob = choice_logprobs.get(letter)
+            if l_prob is None:
+                l_prob = choice_logprobs.get(f" {letter}")
+            if l_prob is None:
+                extracted_logits[opt] = -100.0
+            else:
+                extracted_logits[opt] = float(l_prob)
+                matched_count += 1
+
+        if choice_logprobs and matched_count == 0:
+            logger.warning(
+                "None of the candidate letters %s appeared in top logprobs: %s",
+                list(option_map.keys()),
+                list(choice_logprobs.keys())
+            )
 
         calibrated_probs = self.calibrator.calibrate(extracted_logits)
         best_choice = max(calibrated_probs, key=calibrated_probs.get)
