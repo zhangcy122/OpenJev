@@ -218,23 +218,23 @@
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
       </span>
-      <span data-i18n="hero_pill_1">开源 LLM · Laya 编码器</span>
+      <span data-i18n="hero_pill_1">AI 智能体确定性决策底座</span>
       <span class="text-neutral-600">/</span>
-      <span data-i18n="hero_pill_2" class="text-neutral-400">商业 Jev 增强线束</span>
+      <span data-i18n="hero_pill_2" class="text-neutral-400">Sub-35ms · 100% 排序无关</span>
       <span class="text-neutral-600">/</span>
-      <span data-i18n="hero_pill_3" class="text-violet-400 font-semibold">自进化认知飞轮 & 排序无关</span>
+      <span data-i18n="hero_pill_3" class="text-violet-400 font-semibold">自进化认知飞轮</span>
     </div>
 
     <!-- Editorial Main Headline -->
     <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-[-0.035em] text-white leading-[1.08] mb-6">
-      <span class="text-metallic" data-i18n="hero_title_prefix">开源 LLM · 商业 Jev 线束 · 认知飞轮</span>
+      <span class="text-metallic" data-i18n="hero_title_prefix">面向 AI 智能体的确定性决策引擎</span>
       <br>
-      <span class="text-neutral-100 text-glow-cyan" data-i18n="hero_title_suffix">自进化类型安全概率决策引擎</span>
+      <span class="text-neutral-100 text-glow-cyan" data-i18n="hero_title_suffix">Sub-35ms 离散路由 · 100% 排序无关 · 自进化结晶</span>
     </h1>
 
     <!-- Subtitle -->
-    <p class="text-sm sm:text-base md:text-lg text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed font-normal" data-i18n-html="hero_desc">
-      首创「先探索、后结晶」双系统自进化决策架构：常规请求走子 35ms 的 System 1 极速直通；模糊与歧义样本自动触发 System 2 深思考推理，由结晶算子将因果证据链蒸馏为判别准则，使后续同类请求永久降维至快路径。同时具备 100% 严格数学级选项排序无关性，并提供开源 LLM/Laya 独立部署与商业 Jev 容灾增强线束。
+    <p class="text-sm sm:text-base md:text-lg text-neutral-400 max-w-2xl mx-auto mb-8 leading-relaxed font-normal" data-i18n-html="hero_desc">
+      抛弃昂贵不稳定的生成式路由。以单 Token 似然提取实现 &lt;35ms 极速判定，严格杜绝 JSON 解析破损；配备 100% 数学级选项排序绝对无关性与「先探索、后结晶」认知飞轮，支持纯本地部署（vLLM/Laya 322M）与企业商业 API 降本容灾。
     </p>
 
     <!-- CTAs -->
@@ -248,6 +248,29 @@
         <svg class="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         <span>打开决策模拟器</span>
       </button>
+    </div>
+
+    <!-- Immediate 5-line Code Quickstart Card -->
+    <div class="mt-8 max-w-2xl mx-auto rounded-xl bg-surface-100/90 border border-white/10 text-left overflow-hidden shadow-2xl backdrop-blur-xl">
+      <div class="px-4 py-2.5 bg-surface-50 border-b border-white/[0.06] flex items-center justify-between text-xs font-mono">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+          <span class="ml-2 text-neutral-400 font-medium">quickstart.py</span>
+        </div>
+        <span class="text-[11px] text-cyan-400 font-mono">pip install openjevpro</span>
+      </div>
+      <div class="p-4 font-mono text-[11px] sm:text-xs overflow-x-auto text-neutral-300 leading-relaxed">
+        <span class="text-violet-400">from</span> openjevpro <span class="text-violet-400">import</span> OpenJevProClient<br><br>
+        client = OpenJevProClient(base_url=<span class="text-emerald-300">"http://localhost:8000/v1"</span>)<br>
+        decision = client.decide_choice(<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;state={<span class="text-emerald-300">"ticket"</span>: <span class="text-emerald-300">"Unauthorized login attempt from unknown IP"</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;candidates=[<span class="text-emerald-300">"billing"</span>, <span class="text-emerald-300">"tech_support"</span>, <span class="text-emerald-300">"security_fraud"</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;order_invariant=<span class="text-amber-300">True</span>&nbsp;&nbsp;<span class="text-neutral-500"># 100% mathematical invariance across all N! orderings</span><br>
+        )<br>
+        <span class="text-cyan-400">print</span>(decision.value, decision.confidence)&nbsp;&nbsp;<span class="text-neutral-500"># 'security_fraud' 0.985 (&lt;35ms)</span>
+      </div>
     </div>
 
     <!-- Visual Architectural Flow Diagram -->
@@ -285,17 +308,17 @@
       </div>
     </div>
 
-    <!-- Tri-Mode Architectural Showcase -->
+    <!-- Unified Hierarchy: Two Delivery Strategies & Cognitive Evolutionary Flagship -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 max-w-4xl mx-auto text-left">
       <div class="panel p-5 rounded-xl border border-white/10 relative overflow-hidden group flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">MODE A · EDGE</span>
-            <span class="text-[10px] font-mono text-neutral-500">LLM + Laya 322M</span>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">STRATEGY 1 · LOCAL</span>
+            <span class="text-[10px] font-mono text-neutral-500">vLLM · Laya 322M</span>
           </div>
-          <h3 class="text-sm font-bold text-white mb-1.5 group-hover:text-emerald-300 transition" data-i18n="dual_mode_a_title">开源独立与边缘运行</h3>
+          <h3 class="text-sm font-bold text-white mb-1.5 group-hover:text-emerald-300 transition" data-i18n="dual_mode_a_title">纯本地 / 开源独立运行</h3>
           <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="dual_mode_a_desc">
-            支持 Qwen3/Gemma 4 等开源大模型（vLLM/SGLang 语法掩码）及 Laya (ModernBERT 322M) 专用编码器；首 Token 似然提取，sub-35ms 延迟，零云端 API 依赖。
+            100% 离线脱机部署。支持 Qwen3/Gemma 4 解码词表语法掩码及专用 Laya (ModernBERT 322M) 双向编码器；sub-35ms 延迟，零云端 API 依赖与成本。
           </p>
         </div>
       </div>
@@ -303,12 +326,12 @@
       <div class="panel p-5 rounded-xl border border-cyan-500/30 bg-gradient-to-br from-surface-100 to-cyan-950/20 relative overflow-hidden group flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="text-[10px] font-mono uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded">MODE B · HARNESS</span>
-            <span class="text-[10px] font-mono text-cyan-400">Guard · SLA</span>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded">STRATEGY 2 · GATEWAY</span>
+            <span class="text-[10px] font-mono text-cyan-400">Jev · Cloud API</span>
           </div>
-          <h3 class="text-sm font-bold text-white mb-1.5 group-hover:text-cyan-200 transition" data-i18n="dual_mode_b_title">商业 Jev 生产线束</h3>
+          <h3 class="text-sm font-bold text-white mb-1.5 group-hover:text-cyan-200 transition" data-i18n="dual_mode_b_title">企业混合网关与降本容灾</h3>
           <p class="text-xs text-neutral-300 leading-relaxed" data-i18n="dual_mode_b_desc">
-            直接封装官方 TypeSafe Jev 商业接口：通过 Guard 拦截边缘歧义样本（答题精度达 100%），由本地引擎承接高频流量削减 60%+ 成本，并在云端异常时自动降级。
+            与商业 TypeSafe Jev 或云端大模型共存：边缘承接 70% 高频流量削减 60%+ 账单；安全护栏拦截歧义样本杜绝误判，云端断网限流自动熔断兜底。
           </p>
         </div>
       </div>
@@ -316,12 +339,12 @@
       <div class="panel p-5 rounded-xl border border-violet-500/30 bg-gradient-to-br from-surface-100 to-violet-950/20 relative overflow-hidden group flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="text-[10px] font-mono uppercase tracking-wider text-violet-300 bg-violet-950/80 border border-violet-500/40 px-2 py-0.5 rounded">MODE C · FLYWHEEL</span>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-violet-300 bg-violet-950/80 border border-violet-500/40 px-2 py-0.5 rounded">FLAGSHIP · EVOLUTION</span>
             <span class="text-[10px] font-mono text-violet-400">System 2 → 1</span>
           </div>
-          <h3 class="text-sm font-bold text-white mb-1.5 group-hover:text-violet-200 transition" data-i18n="dual_mode_c_title">认知飞轮与结晶演化</h3>
+          <h3 class="text-sm font-bold text-white mb-1.5 group-hover:text-violet-200 transition" data-i18n="dual_mode_c_title">慎思结晶飞轮 & 排序无关</h3>
           <p class="text-xs text-neutral-300 leading-relaxed" data-i18n="dual_mode_c_desc">
-            先探索、后结晶：歧义样本升级至 System 2 思考并结晶为规则，后续请求永久降维至快路径。配备 100% 选项排序绝对不变性，彻底消除位置偏见。
+            先探索、后结晶：常规请求走快路径；歧义样本升级至 System 2 思考并结晶为规则，同类请求永久降维至快路径。配备 100% 选项排序绝对无偏性。
           </p>
         </div>
       </div>
@@ -1171,7 +1194,7 @@ print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
   <script>
     const translations = {
       zh: {
-        page_title: "OpenJevPro — 类型安全概率决策引擎与生产级 Jev 线束",
+        page_title: "OpenJevPro — 面向 AI 智能体的确定性类型安全决策引擎",
         nav_features: "核心原语",
         nav_playground: "在线模拟",
         nav_benchmarks: "基准实测",
@@ -1179,18 +1202,18 @@ print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
         nav_quickstart: "快速上手",
         nav_commercial: "授权协议",
         nav_faq: "常见疑问",
-        hero_pill_1: "开源 LLM · Laya 编码器",
-        hero_pill_2: "商业 Jev 增强线束",
-        hero_pill_3: "自进化认知飞轮 & 排序无关",
-        hero_title_prefix: "开源 LLM · 商业 Jev 线束 · 认知飞轮",
-        hero_title_suffix: "自进化类型安全概率决策引擎",
-        hero_desc: "首创「先探索、后结晶」双系统自进化决策架构：常规请求走子 35ms 的 System 1 极速直通；模糊与歧义样本自动触发 System 2 深思考推理，由结晶算子将因果证据链蒸馏为判别准则，使后续同类请求永久降维至快路径。同时具备 100% 严格数学级选项排序无关性，并提供开源 LLM/Laya 独立部署与商业 Jev 容灾增强线束。",
-        dual_mode_a_title: "开源独立与边缘运行 (LLM & Laya)",
-        dual_mode_a_desc: "支持 Qwen3/Gemma 4 等开源大模型（vLLM/SGLang 语法掩码）及 Laya (ModernBERT 322M) 专用编码器；首 Token 或微服务提取似然，sub-35ms 延迟，零云端 API 依赖。",
-        dual_mode_b_title: "商业 Jev 增强与容灾线束 (Mode B)",
-        dual_mode_b_desc: "直接封装官方 TypeSafe Jev 商业接口：通过 Guard 拦截边缘歧义样本（答题精度达 100%），由本地引擎承接高频流量以削减调用成本，云端超时或限流时自动切换本地兜底。",
-        dual_mode_c_title: "认知飞轮与结晶演化 (Mode C)",
-        dual_mode_c_desc: "先探索、后结晶：歧义样本升级至 System 2 思考并结晶为规则，后续请求永久降维至快路径。配备 100% 选项排序绝对不变性，彻底消除位置偏见。",
+        hero_pill_1: "AI 智能体确定性决策底座",
+        hero_pill_2: "Sub-35ms · 100% 排序无关",
+        hero_pill_3: "自进化认知飞轮",
+        hero_title_prefix: "面向 AI 智能体的确定性决策引擎",
+        hero_title_suffix: "Sub-35ms 离散路由 · 100% 排序无关 · 自进化结晶",
+        hero_desc: "抛弃昂贵不稳定的生成式路由。以单 Token 似然提取实现 &lt;35ms 极速判定，严格杜绝 JSON 解析破损；配备 100% 数学级选项排序绝对无关性与「先探索、后结晶」认知飞轮，支持纯本地部署（vLLM/Laya 322M）与企业商业 API 降本容灾。",
+        dual_mode_a_title: "纯本地 / 开源独立运行 (策略 1)",
+        dual_mode_a_desc: "100% 离线脱机部署。支持 Qwen3/Gemma 4 解码词表语法掩码及专用 Laya (ModernBERT 322M) 双向编码器；sub-35ms 延迟，零云端 API 依赖与成本。",
+        dual_mode_b_title: "企业混合网关与降本容灾 (策略 2)",
+        dual_mode_b_desc: "与商业 TypeSafe Jev 或云端大模型共存：边缘承接 70% 高频流量削减 60%+ 账单；安全护栏拦截歧义样本杜绝误判，云端断网限流自动熔断兜底。",
+        dual_mode_c_title: "慎思结晶飞轮 & 排序无关 (旗舰能力)",
+        dual_mode_c_desc: "先探索、后结晶：常规请求走快路径；歧义样本升级至 System 2 思考并结晶为规则，同类请求永久降维至快路径。配备 100% 选项排序绝对无偏性。",
         hero_btn_repo: "在 GitHub 查看源码 →",
         hero_btn_demo: "打开决策模拟器",
         stat_latency: "端到端延迟 (P50)",
@@ -1275,7 +1298,7 @@ print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
         footer_license: "源码可用性遵循 <a href=\"https://github.com/zhangcy122/OpenJev/blob/main/LICENSE\" class=\"text-neutral-400 hover:text-white underline\">PolyForm Noncommercial 1.0.0</a> 协议。企业商业生产需获得项目方授权。"
       },
       en: {
-        page_title: "OpenJevPro — Calibrated Type-Safe AI Decision Engine",
+        page_title: "OpenJevPro — High-Throughput Deterministic Decision Engine for AI Agents",
         nav_features: "Primitives",
         nav_playground: "Playground",
         nav_benchmarks: "Benchmarks",
@@ -1283,18 +1306,18 @@ print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
         nav_quickstart: "Quickstart",
         nav_commercial: "License",
         nav_faq: "FAQ",
-        hero_pill_1: "Open LLMs & Laya Encoder",
-        hero_pill_2: "Enterprise Jev Harness",
-        hero_pill_3: "Cognitive Flywheel & Order Invariant",
-        hero_title_prefix: "Open LLMs · TypeSafe Jev · Cognitive Flywheel",
-        hero_title_suffix: "Self-Evolving Calibrated Decision Engine.",
-        hero_desc: "Pioneering the 'Explore First, Crystallize Later' dual-system cognitive decision flywheel: standard queries resolve in sub-35ms via System 1; ambiguous queries escalate to System 2 thinking models, whose reasoning traces are distilled by the Crystallization Operator into boundary rules—permanently promoting subsequent queries to the fast path. Guarantees 100% mathematical option order invariance, with seamless support for Open LLMs, Laya, and commercial TypeSafe Jev.",
-        dual_mode_a_title: "Standalone & Edge Engines (Mode A)",
-        dual_mode_a_desc: "Open-weight LLMs (Qwen3 / Gemma 4 / DeepSeek) via vLLM/SGLang and Laya (ModernBERT 322M) System 1 microservice. Sub-35ms deterministic inference with zero vendor lock-in.",
-        dual_mode_b_title: "Enterprise Jev Harness & Gateway (Mode B)",
-        dual_mode_b_desc: "Direct wrapper around commercial TypeSafe Jev: Guard Harness eliminates borderline errors (100% precision), cuts bills by 60%+, and guarantees 99.99% fallback SLA.",
-        dual_mode_c_title: "Cognitive Flywheel & Crystallization (Mode C)",
-        dual_mode_c_desc: "Explore First, Crystallize Later: ambiguous queries escalate to System 2 and distill into boundary rules, permanently promoting subsequent calls to the fast path with 100% mathematical order invariance.",
+        hero_pill_1: "Deterministic AI Agent Decision Core",
+        hero_pill_2: "Sub-35ms · 100% Order Invariant",
+        hero_pill_3: "Self-Evolving Cognitive Flywheel",
+        hero_title_prefix: "The Deterministic Decision Engine",
+        hero_title_suffix: "Built for High-Throughput AI Agents.",
+        hero_desc: "Replace slow, expensive generative routing calls (>1.5s) with sub-35ms, strictly typed, calibrated, 100% order-invariant decision primitives. Features a self-evolving 'Explore First, Crystallize Later' cognitive flywheel, supporting pure local offline deployments (vLLM / Laya 322M) and enterprise hybrid gateway cost-reduction.",
+        dual_mode_a_title: "Pure Local / Standalone (Strategy 1)",
+        dual_mode_a_desc: "100% offline deployment. Supports Qwen3 / Gemma 4 lexical grammar masking and dedicated Laya (ModernBERT 322M) bidirectional encoder; sub-35ms latency with zero cloud API dependencies or cost.",
+        dual_mode_b_title: "Enterprise Hybrid Gateway (Strategy 2)",
+        dual_mode_b_desc: "Co-exist with commercial TypeSafe Jev or cloud LLM APIs: edge models intercept 70%+ queries cutting 60%+ costs; Guard Harness eliminates borderline errors with circuit breaker fallback SLA.",
+        dual_mode_c_title: "Deliberative Flywheel & Invariance (Flagship)",
+        dual_mode_c_desc: "Explore First, Crystallize Later: routine queries run on the sub-35ms fast path; ambiguous queries escalate to System 2 to distill boundary rules into permanent fast paths with 100% order invariance.",
         hero_btn_repo: "Get Started on GitHub →",
         hero_btn_demo: "Open Simulator",
         stat_latency: "Latency (P50)",
