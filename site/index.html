@@ -265,10 +265,17 @@
           <div class="text-white font-semibold">Isolated Candidate Scoring</div>
           <div class="text-neutral-400 text-[11px] mt-1">100% Order Invariance (1.00)</div>
         </div>
-        <div class="flex md:flex-col items-center justify-center text-neutral-500 py-1">
-          <svg class="w-5 h-5 text-cyan-400 md:rotate-90 hidden md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          <span class="text-[10px] text-violet-300 font-mono">Sub-35ms / System 2 Deliberate</span>
-          <svg class="w-4 h-4 text-cyan-400 md:rotate-0 block md:hidden ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <div class="flex flex-col items-center justify-center text-center py-2 md:py-0">
+          <span class="text-[10px] text-violet-300 font-mono mb-2 whitespace-nowrap">Sub-35ms / System 2 Deliberate</span>
+          <div class="flex items-center justify-center w-full">
+            <div class="hidden md:block h-[1px] flex-1 bg-gradient-to-r from-transparent to-cyan-500/30"></div>
+            <div class="w-8 h-8 rounded-full bg-cyan-950/60 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-sm mx-2 shrink-0">
+              <svg class="w-4 h-4 rotate-90 md:rotate-0 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+            <div class="hidden md:block h-[1px] flex-1 bg-gradient-to-l from-transparent to-cyan-500/30"></div>
+          </div>
         </div>
         <div class="p-3 rounded-xl bg-surface-100/80 border border-violet-500/30 text-left bg-gradient-to-r from-surface-100 to-violet-950/20">
           <div class="text-[10px] text-violet-400 uppercase tracking-wider mb-1">Step 2: Crystallization Loop</div>
@@ -510,15 +517,21 @@
         </div>
 
         <!-- Architectural Visual representation -->
-        <div class="bg-surface-50 border border-white/[0.06] rounded-xl p-4 font-mono text-xs text-neutral-400 flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center space-x-2">
-            <span class="text-neutral-500">Input State</span>
-            <span class="text-neutral-600">→</span>
-            <span class="px-2 py-1 rounded bg-white/[0.04] text-neutral-200 border border-white/10">Grammar Mask</span>
-            <span class="text-neutral-600">→</span>
-            <span class="px-2 py-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Choice [T]</span>
+        <div class="bg-surface-50 border border-white/[0.06] rounded-xl p-3.5 sm:p-4 font-mono text-xs text-neutral-400 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-y-2 text-[11px]">
+            <div class="inline-flex items-center gap-1.5 sm:gap-2">
+              <span class="text-neutral-500 whitespace-nowrap">Input State</span>
+              <span class="text-neutral-600 select-none">→</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 sm:gap-2">
+              <span class="px-2 py-0.5 rounded bg-white/[0.04] text-neutral-200 border border-white/10 whitespace-nowrap">Grammar Mask</span>
+              <span class="text-neutral-600 select-none">→</span>
+            </div>
+            <div class="inline-flex items-center">
+              <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20 whitespace-nowrap">Choice [T]</span>
+            </div>
           </div>
-          <span class="text-emerald-400 text-[11px]" data-i18n="feat_order_badge">100% Permutation Invariance (order_invariant=True)</span>
+          <span class="text-emerald-400 text-[11px] whitespace-nowrap" data-i18n="feat_order_badge">100% Permutation Invariance (order_invariant=True)</span>
         </div>
       </div>
 
@@ -568,8 +581,8 @@
         </div>
       </div>
 
-      <!-- 4. GuardHarness (Spans 2 cols on lg) -->
-      <div class="panel panel-highlight p-6 rounded-2xl lg:col-span-2 flex flex-col justify-between group">
+      <!-- 4. GuardHarness (Spans 2 cols on md and lg) -->
+      <div class="panel panel-highlight p-6 rounded-2xl md:col-span-2 lg:col-span-2 flex flex-col justify-between group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/30">SAFETY LAYER</span>
@@ -586,17 +599,17 @@
           </p>
         </div>
 
-        <div class="bg-surface-50 border border-cyan-500/20 rounded-xl p-4 font-mono text-xs text-neutral-300 flex flex-wrap items-center justify-between gap-3">
+        <div class="bg-surface-50 border border-cyan-500/20 rounded-xl p-3.5 sm:p-4 font-mono text-xs text-neutral-300 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center space-x-2 text-[11px]">
             <span class="text-neutral-400">Dual-Cutoff:</span>
-            <code class="text-cyan-300">τ = max(0.72, 1.25 / K)</code>
+            <code class="text-cyan-300 font-medium">τ = max(0.72, 1.25 / K)</code>
           </div>
-          <span class="text-emerald-400 text-[11px]">Zero Silent Errors in Benchmark</span>
+          <span class="text-emerald-400 text-[11px] whitespace-nowrap">Zero Silent Errors in Benchmark</span>
         </div>
       </div>
 
-      <!-- 5. HybridJevGateway & Fallback Circuit Breaker (Spans full 3 cols on lg) -->
-      <div class="panel p-6 rounded-2xl lg:col-span-3 flex flex-col justify-between border border-cyan-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-cyan-950/20 group">
+      <!-- 5. HybridJevGateway & Fallback Circuit Breaker (Spans full cols on md and lg) -->
+      <div class="panel p-6 rounded-2xl md:col-span-2 lg:col-span-3 flex flex-col justify-between border border-cyan-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-cyan-950/20 group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/30">RESILIENT GATEWAY</span>
@@ -613,22 +626,28 @@
           </p>
         </div>
 
-        <div class="bg-surface-50 border border-white/[0.08] rounded-xl p-4 font-mono text-xs text-neutral-300 flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center space-x-2 text-[11px]">
-            <span class="text-neutral-400">Traffic Routing:</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Tier 1 Edge (70% @ $0)</span>
-            <span class="text-neutral-500">→</span>
-            <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Tier 2 Cloud (Escalate)</span>
+        <div class="bg-surface-50 border border-white/[0.08] rounded-xl p-3.5 sm:p-4 font-mono text-xs text-neutral-300 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+          <div class="flex flex-wrap items-center gap-y-2 text-[11px]">
+            <span class="text-neutral-400 shrink-0 font-medium mr-1.5">Traffic Routing:</span>
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <div class="inline-flex items-center gap-1.5 sm:gap-2">
+                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 whitespace-nowrap">Tier 1 Edge (70% @ $0)</span>
+                <span class="text-neutral-500 select-none">→</span>
+              </div>
+              <div class="inline-flex items-center">
+                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20 whitespace-nowrap">Tier 2 Cloud (Escalate)</span>
+              </div>
+            </div>
           </div>
-          <div class="flex items-center space-x-2 text-[11px]">
+          <div class="flex items-center space-x-2 text-[11px] shrink-0 pt-1 md:pt-0 border-t border-white/[0.06] md:border-t-0">
             <span class="text-neutral-400">Resilience:</span>
-            <span class="text-cyan-300">CircuitBreaker [CLOSED ↔ OPEN ↔ HALF_OPEN]</span>
+            <span class="text-cyan-300 font-medium whitespace-nowrap">CircuitBreaker [CLOSED ↔ OPEN ↔ HALF_OPEN]</span>
           </div>
         </div>
       </div>
 
-      <!-- 6. Deliberative Decision Flywheel & Crystallization Operator (Spans full 3 cols on lg) -->
-      <div class="panel p-6 rounded-2xl lg:col-span-3 flex flex-col justify-between border border-violet-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-violet-950/20 group">
+      <!-- 6. Deliberative Decision Flywheel & Crystallization Operator (Spans full cols on md and lg) -->
+      <div class="panel p-6 rounded-2xl md:col-span-2 lg:col-span-3 flex flex-col justify-between border border-violet-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-violet-950/20 group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-violet-950/60 text-violet-300 border border-violet-500/30">COGNITIVE FLYWHEEL</span>
@@ -645,19 +664,30 @@
           </p>
         </div>
 
-        <div class="bg-surface-50 border border-white/[0.08] rounded-xl p-4 font-mono text-xs text-neutral-300 flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center space-x-2 text-[11px]">
-            <span class="text-neutral-400">Flywheel Pipeline:</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">System 1 Fast (&lt;35ms)</span>
-            <span class="text-neutral-500">→</span>
-            <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">System 2 Thinking LLM (Escalate)</span>
-            <span class="text-neutral-500">→</span>
-            <span class="px-2 py-0.5 rounded bg-violet-500/10 text-violet-300 border border-violet-500/20">Crystallization Operator</span>
-            <span class="text-neutral-500">→</span>
-            <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Promoted Fast Path (&lt;35ms)</span>
+        <div class="bg-surface-50 border border-white/[0.08] rounded-xl p-3.5 sm:p-4 font-mono text-xs text-neutral-300 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+          <div class="flex flex-wrap items-center gap-y-2 text-[11px]">
+            <span class="text-neutral-400 shrink-0 font-medium mr-1.5">Flywheel Pipeline:</span>
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <div class="inline-flex items-center gap-1.5 sm:gap-2">
+                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 whitespace-nowrap">System 1 Fast (&lt;35ms)</span>
+                <span class="text-neutral-500 select-none">→</span>
+              </div>
+              <div class="inline-flex items-center gap-1.5 sm:gap-2">
+                <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 whitespace-nowrap">System 2 Thinking (Escalate)</span>
+                <span class="text-neutral-500 select-none">→</span>
+              </div>
+              <div class="inline-flex items-center gap-1.5 sm:gap-2">
+                <span class="px-2 py-0.5 rounded bg-violet-500/10 text-violet-300 border border-violet-500/20 whitespace-nowrap">Crystallization Operator</span>
+                <span class="text-neutral-500 select-none">→</span>
+              </div>
+              <div class="inline-flex items-center">
+                <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 whitespace-nowrap">Promoted Fast Path (&lt;35ms)</span>
+              </div>
+            </div>
           </div>
-          <div class="flex items-center space-x-2 text-[11px]">
-            <span class="text-neutral-400">Zero Extra Latency on Repeat</span>
+          <div class="flex items-center space-x-2 text-[11px] shrink-0 pt-1 md:pt-0 border-t border-white/[0.06] md:border-t-0">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-neutral-400 whitespace-nowrap">Zero Extra Latency on Repeat</span>
           </div>
         </div>
       </div>
