@@ -640,5 +640,51 @@ class OpenJevProClient:
             circuit_breaker=cb,
         )
 
+    def create_decision_flywheel(
+        self,
+        reasoning_engine: Optional[Any] = None,
+        reasoning_model: str = "Qwen/Qwen3-14B-Thinking",
+        crystallization_store: Optional[Any] = None,
+        auto_crystallize: bool = True,
+        escalate_threshold: Optional[float] = None,
+    ) -> Any:
+        """Creates a DeliberativeDecisionFlywheel coupling this client with System 2 exploration."""
+        from openjevpro.flywheel import DeliberativeDecisionFlywheel
+        return DeliberativeDecisionFlywheel(
+            fast_engine=self,
+            reasoning_engine=reasoning_engine,
+            reasoning_model=reasoning_model,
+            crystallization_store=crystallization_store,
+            auto_crystallize=auto_crystallize,
+            escalate_threshold=escalate_threshold,
+        )
+
+    def decide_with_crystallization(
+        self,
+        state: Dict[str, Any],
+        candidates: Union[Type[Enum], List[str]],
+        criteria: Union[str, Dict[str, str]] = "",
+        allow_abstain: bool = True,
+        order_invariant: bool = False,
+        reasoning_engine: Optional[Any] = None,
+        reasoning_model: str = "Qwen/Qwen3-14B-Thinking",
+        store: Optional[Any] = None,
+    ) -> ChoiceDecision:
+        """Evaluates choice via cognitive flywheel: fast-path with System 2 exploration and crystallization."""
+        flywheel = self.create_decision_flywheel(
+            reasoning_engine=reasoning_engine,
+            reasoning_model=reasoning_model,
+            crystallization_store=store,
+            auto_crystallize=True,
+        )
+        return flywheel.evaluate_choice(
+            state=state,
+            candidates=candidates,
+            criteria=criteria,
+            allow_abstain=allow_abstain,
+            order_invariant=order_invariant,
+        )
+
 # Backward compatibility alias
 OpenJevClient = OpenJevProClient
+

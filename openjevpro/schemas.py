@@ -14,6 +14,8 @@ class ChoiceDecision(BaseModel):
     abstained: bool = Field(default=False, description="Whether the model abstained due to uncertainty")
     tentative_value: Optional[str] = Field(default=None, description="Tentative winning option prior to abstention")
     raw_logits: Optional[Dict[str, float]] = None
+    escalated: bool = Field(default=False, description="Whether System 2 deliberative reasoning was triggered")
+    crystallization_receipt: Optional[Dict[str, Any]] = Field(default=None, description="Receipt detailing exploration and criteria crystallization")
 
 class NoulDecision(BaseModel):
     """Result of a binary truth/assertion judgment."""

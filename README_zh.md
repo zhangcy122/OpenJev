@@ -331,6 +331,46 @@ print(f"是否降级: {decision.degraded}")   # False (云端故障时为 True)
 print(f"调用成本单位: {decision.cost_units}") # 0
 ```
 
+### 🧠 双系统认知飞轮：先 LLM 深度探索，再沉淀为快决策 (System 2 $\to$ System 1)
+
+静态概率决策引擎存在两难：System 1 小模型（Jev/Laya）具备亚 35ms 零成本优势，但在模糊边界样本上会陷入 **`UNKNOWN` 死锁**；而全量使用 System 2 深度思考大模型（如 DeepSeek-R1、Qwen-Thinking）则过于昂贵（$0.02+/次）且延迟过高（1.5s–5.0s）。
+
+**Deliberative Decision Flywheel (认知飞轮)** 将慢思考大模型作为**快决策系统的近线编译器**：
+1. **快径直通**：95%+ 的明确请求以 sub-35ms 在本地 System 1 极速裁决，零额外 Token 开销。
+2. **条件升阶**：当置信度低于阈值 $\tau$ 或出现 `UNKNOWN` 时，自动升阶至 System 2 慢思考进行反事实因果归因。
+3. **沉淀算子 (Crystallization)**：将因果证据链提炼为判别边界准则与示例记忆，**后续同类请求永久降维至 System 1 极速直通**。
+
+```python
+from openjevpro.client import OpenJevProClient
+
+client = OpenJevProClient(base_url="http://localhost:8000/v1")
+
+# 初始化自进化决策认知飞轮
+flywheel = client.create_decision_flywheel(
+    reasoning_model="Qwen/Qwen3-14B-Thinking",
+    auto_crystallize=True
+)
+
+# 1. 冷启动：边界模糊样本触发 System 2 深度探索并自动沉淀准则 (~1.8s)
+decision1 = flywheel.evaluate_choice(
+    state={"query": "卡片未收到，怀疑在信箱被他人截胡"},
+    candidates=["card_arrival", "lost_or_stolen_card"],
+    criteria={"card_arrival": "卡片派送进度", "lost_or_stolen_card": "卡片遗失或盗刷"}
+)
+print(f"裁决结果: {decision1.value}")  # 'lost_or_stolen_card'
+print(f"是否升阶: {decision1.escalated}")  # True
+print(f"因果推演依据: {decision1.crystallization_receipt['reasoning_trace']}")
+
+# 2. 直通跃迁：后续同类请求直接由 System 1 极速识别 (<35ms，零额外 Token 生成)！
+decision2 = flywheel.evaluate_choice(
+    state={"query": "卡片未收到，怀疑在信箱被他人截胡"},
+    candidates=["card_arrival", "lost_or_stolen_card"],
+    criteria={"card_arrival": "卡片派送进度", "lost_or_stolen_card": "卡片遗失或盗刷"}
+)
+print(f"裁决结果: {decision2.value}")  # 'lost_or_stolen_card'
+print(f"是否升阶: {decision2.escalated}")  # False (已成功沉淀并命中快径！)
+```
+
 ---
 
 ## 📊 性能与成本优势
