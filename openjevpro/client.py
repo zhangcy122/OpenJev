@@ -6,7 +6,7 @@ from enum import Enum
 from concurrent.futures import ThreadPoolExecutor
 import requests
 
-from openjevpro.schemas import ChoiceDecision, NoulDecision
+from openjevpro.schemas import ChoiceDecision, NoulDecision, ScoreDecision
 from openjevpro.calibrator import TemperatureCalibrator
 
 logger = logging.getLogger("openjevpro.client")
@@ -24,6 +24,7 @@ class OpenJevProClient:
         backend: str = "auto",
         use_chat: bool = True,
         chat_template_kwargs: Optional[Dict[str, Any]] = None,
+        mock: bool = False,
     ):
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
@@ -32,6 +33,18 @@ class OpenJevProClient:
         self.abstain_threshold = abstain_threshold
         self.use_chat = use_chat
         self.chat_template_kwargs = chat_template_kwargs or {}
+        self.mock = mock or (base_url and base_url.startswith("mock://"))
+
+        if self.mock:
+            from openjevpro.mock import MockClient
+            self._mock_client = MockClient(
+                base_url=self.base_url,
+                model=self.model,
+                temperature_scaling=temperature_scaling,
+                abstain_threshold=abstain_threshold,
+            )
+        else:
+            self._mock_client = None
 
         if backend == "auto":
             if "11434" in self.base_url:
@@ -60,6 +73,14 @@ class OpenJevProClient:
         order_invariant: bool = False,
     ) -> ChoiceDecision:
         """Evaluates a categorical choice decision across the given candidates with calibrated probabilities."""
+        if self.mock and self._mock_client is not None:
+            return self._mock_client.decide_choice(
+                state=state,
+                candidates=candidates,
+                criteria=criteria,
+                allow_abstain=allow_abstain,
+                order_invariant=order_invariant,
+            )
         if isinstance(candidates, type) and issubclass(candidates, Enum):
             options = [e.value for e in candidates]
         else:
@@ -617,6 +638,40 @@ class OpenJevProClient:
             probability_true=p_true,
             confidence=conf,
             abstained=decision.abstained
+        )
+
+    def decide_score(
+        self,
+        state: Dict[str, Any],
+        criteria: str = "",
+        levels: Optional[List[str]] = None,
+    ) -> ScoreDecision:
+        """Evaluates an ordinal severity/quality score."""
+        if self.mock and self._mock_client is not None:
+            return self._mock_client.decide_score(state=state, criteria=criteria, levels=levels)
+
+        if levels is None:
+            levels = ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+
+        decision = self.decide_choice(
+            state=state,
+            candidates=levels,
+            criteria=criteria,
+            allow_abstain=False,
+            order_invariant=True,
+        )
+
+        n = len(levels)
+        expected_score = sum(
+            (idx / max(n - 1, 1)) * decision.probabilities.get(lvl, 0.0)
+            for idx, lvl in enumerate(levels)
+        )
+
+        return ScoreDecision(
+            expected_score=round(expected_score, 4),
+            level_probabilities=decision.probabilities,
+            confidence=decision.confidence,
+            abstained=decision.abstained,
         )
 
     def create_hybrid_gateway(
