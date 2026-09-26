@@ -338,6 +338,46 @@ print(f"Degraded: {decision.degraded}")       # False (or True if cloud failed)
 print(f"Cost Units: {decision.cost_units}")   # 0
 ```
 
+### 🧠 Deliberative Decision Flywheel: Explore First, Crystallize Later (System 2 $\to$ System 1)
+
+Static decision engines face an impossible dilemma: System 1 models (Jev/Laya) are sub-35ms and zero-cost but suffer from **`UNKNOWN` deadlocks** on ambiguous edge cases; conversely, routing all traffic to System 2 reasoning LLMs (DeepSeek-R1, Qwen-Thinking) is too slow (1.5s–5.0s) and cost-prohibitive ($0.02+/call).
+
+The **Deliberative Decision Flywheel** treats reasoning LLMs as an **offline/near-line compiler for fast decisions**:
+1. **Fast-Path Pass-Through**: 95%+ of queries execute on sub-35ms System 1 at zero marginal cloud cost.
+2. **Conditional Escalation**: When confidence drops below threshold $\tau$ or produces `UNKNOWN`, the flywheel escalates to System 2 to deduce the winning label and extract counterfactual justification.
+3. **Crystallization Operator**: Distills the reasoning trace into refined criteria and precedent memory, **permanently promoting subsequent similar queries to the sub-35ms fast path**.
+
+```python
+from openjevpro.client import OpenJevProClient
+
+client = OpenJevProClient(base_url="http://localhost:8000/v1")
+
+# Create a self-evolving cognitive flywheel
+flywheel = client.create_decision_flywheel(
+    reasoning_model="Qwen/Qwen3-14B-Thinking",
+    auto_crystallize=True
+)
+
+# 1. Cold start: ambiguous query triggers System 2 exploration & criteria crystallization (~1.8s)
+decision1 = flywheel.evaluate_choice(
+    state={"query": "card not received, suspect intercepted by someone"},
+    candidates=["card_arrival", "lost_or_stolen_card"],
+    criteria={"card_arrival": "Delivery status", "lost_or_stolen_card": "Stolen cards"}
+)
+print(f"Decision: {decision1.value}")  # 'lost_or_stolen_card'
+print(f"Escalated: {decision1.escalated}")  # True
+print(f"Reasoning: {decision1.crystallization_receipt['reasoning_trace']}")
+
+# 2. Fast-Path Promotion: subsequent queries in this subspace resolve directly via System 1 (<35ms, 0 extra tokens)!
+decision2 = flywheel.evaluate_choice(
+    state={"query": "card not received, suspect intercepted by someone"},
+    candidates=["card_arrival", "lost_or_stolen_card"],
+    criteria={"card_arrival": "Delivery status", "lost_or_stolen_card": "Stolen cards"}
+)
+print(f"Decision: {decision2.value}")  # 'lost_or_stolen_card'
+print(f"Escalated: {decision2.escalated}")  # False (Hit System 1 fast-path directly!)
+```
+
 ---
 
 ## 📊 Economics & Performance
