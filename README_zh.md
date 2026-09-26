@@ -228,6 +228,27 @@ print(f"候选概率分布: {decision.probabilities}")
 print(f"是否拒识: {decision.abstained}")
 ```
 
+### 生产级确定性重现：排序无关选择模式 (`order_invariant=True`)
+
+在自回归单向 Causal Decoder 模型（如 Qwen, Gemma, Llama）中，单次提示词内一次性列举所有选项（如 `A. ... \n B. ...`）会引入**Prefill 上下文因果偏置**与位置注意力漂移。在边界模糊样本上，交换选项在提示词中的顺序可能引发答案翻转（~15–20% 的排列敏感度）。
+
+OpenJevPro 提供两套互相协同的工程解法：
+
+1. **枚举成员顺序冻结 (单 Pass 默认推荐)**：对于常规亚 50ms 高吞吐路由场景（`order_invariant=False`），确保业务 Enum 枚举成员或列表保持严格确定的固定顺序（如字母序或稳定代码顺序）。
+2. **候选隔离独立打分 (`order_invariant=True`)**：对于受审计约束的金融风控与强合规场景，开启 `order_invariant=True`。每个候选将在无竞品干扰的独立提示词中完成打分，并经由置换等变的 Softmax 归一化，提供**100% 严格数学级排序不变性（全排列置换下恒为 1.00 个确切胜者）**：
+
+```python
+# 通过 ThreadPoolExecutor 并发隔离执行候选打分 (~80-150ms)
+decision = client.decide_choice(
+    state={"ticket_text": "检测到来自未授权 IP 的异常登录尝试。"},
+    candidates=TicketRoute,
+    criteria="将输入的工单归类至正确的处理部门。",
+    order_invariant=True  # 启用选项排序绝对不变性
+)
+```
+
+> **Tier 0 双向替代路径**：若希望在单次前向传递中兼顾极低延迟 (<35ms) 与排序绝对免疫，推荐直接部署 **Tier 0 Laya (ModernBERT 322M)**。由于 ModernBERT 采用全注意力双向编码架构而非单向因果生成，先天具备对序列位置漂移的免疫力。
+
 ### 专用 System 1 决策模型：Laya 引擎 (ModernBERT 322M)
 
 ```python

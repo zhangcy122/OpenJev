@@ -426,7 +426,120 @@ class TestHarnessAndClient(unittest.TestCase):
         self.assertFalse(gw_decision.degraded)
         mock_cloud.evaluate_choice.assert_not_called()
 
+    def test_order_invariant_choice_permutations(self):
+        """Verify that order_invariant=True produces identical winner and calibrated probabilities across permutations."""
+        client = OpenJevProClient(
+            base_url="http://mock-llm:8000/v1",
+            backend="openai",
+            temperature_scaling=1.0,
+            abstain_threshold=0.30
+        )
+
+        def mock_post(url, headers=None, json=None, timeout=None):
+            messages = json.get("messages", [])
+            user_content = messages[1]["content"] if len(messages) > 1 else ""
+
+            # Assign candidate-specific likelihoods
+            if "Evaluate candidate option: 'card_arrival'" in user_content:
+                # Strong match: A (YES) high, B (NO) low
+                logprobs = {"content": [{"top_logprobs": [{"token": "A", "logprob": -0.05}, {"token": "B", "logprob": -3.5}]}]}
+            elif "Evaluate candidate option: 'change_pin'" in user_content:
+                logprobs = {"content": [{"top_logprobs": [{"token": "A", "logprob": -1.5}, {"token": "B", "logprob": -0.5}]}]}
+            elif "Evaluate candidate option: 'fee_inquiry'" in user_content:
+                logprobs = {"content": [{"top_logprobs": [{"token": "A", "logprob": -2.8}, {"token": "B", "logprob": -0.2}]}]}
+            else:
+                # UNKNOWN or fallback
+                logprobs = {"content": [{"top_logprobs": [{"token": "A", "logprob": -4.0}, {"token": "B", "logprob": -0.02}]}]}
+
+            mock_r = MagicMock()
+            mock_r.status_code = 200
+            mock_r.json.return_value = {
+                "choices": [{"message": {"content": "A"}, "logprobs": logprobs}]
+            }
+            mock_r.raise_for_status = MagicMock()
+            return mock_r
+
+        candidates_base = ["card_arrival", "change_pin", "fee_inquiry"]
+        candidates_rev = list(reversed(candidates_base))
+        candidates_shuffled = ["change_pin", "fee_inquiry", "card_arrival"]
+
+        with patch("requests.post", side_effect=mock_post):
+            d_base = client.decide_choice(
+                state={"query": "where is my debit card?"},
+                candidates=candidates_base,
+                order_invariant=True,
+                allow_abstain=True
+            )
+            d_rev = client.decide_choice(
+                state={"query": "where is my debit card?"},
+                candidates=candidates_rev,
+                order_invariant=True,
+                allow_abstain=True
+            )
+            d_shuffled = client.decide_choice(
+                state={"query": "where is my debit card?"},
+                candidates=candidates_shuffled,
+                order_invariant=True,
+                allow_abstain=True
+            )
+
+            # 1. Winner must be identical across all permutations
+            self.assertEqual(d_base.value, "card_arrival")
+            self.assertEqual(d_rev.value, "card_arrival")
+            self.assertEqual(d_shuffled.value, "card_arrival")
+
+            # 2. Confidence must be identical
+            self.assertAlmostEqual(d_base.confidence, d_rev.confidence, places=4)
+            self.assertAlmostEqual(d_base.confidence, d_shuffled.confidence, places=4)
+
+            # 3. Probability distributions must match identically across all candidates
+            for opt in candidates_base:
+                self.assertAlmostEqual(d_base.probabilities[opt], d_rev.probabilities[opt], places=4)
+                self.assertAlmostEqual(d_base.probabilities[opt], d_shuffled.probabilities[opt], places=4)
+
+    def test_order_invariant_choice_abstention(self):
+        """Verify that order_invariant=True safely abstains when confidence is below threshold or UNKNOWN dominates."""
+        client = OpenJevProClient(
+            base_url="http://mock-llm:8000/v1",
+            backend="openai",
+            abstain_threshold=0.80
+        )
+
+        def mock_post(url, headers=None, json=None, timeout=None):
+            messages = json.get("messages", [])
+            user_content = messages[1]["content"] if len(messages) > 1 else ""
+
+            # When ambiguous query, both candidates have borderline scores
+            if "Evaluate candidate option: 'card_arrival'" in user_content:
+                logprobs = {"content": [{"top_logprobs": [{"token": "A", "logprob": -0.8}, {"token": "B", "logprob": -0.8}]}]}
+            elif "Evaluate candidate option: 'change_pin'" in user_content:
+                logprobs = {"content": [{"top_logprobs": [{"token": "A", "logprob": -0.9}, {"token": "B", "logprob": -0.7}]}]}
+            else:
+                logprobs = {"content": [{"top_logprobs": [{"token": "A", "logprob": -1.2}, {"token": "B", "logprob": -0.5}]}]}
+
+            mock_r = MagicMock()
+            mock_r.status_code = 200
+            mock_r.json.return_value = {
+                "choices": [{"message": {"content": "A"}, "logprobs": logprobs}]
+            }
+            mock_r.raise_for_status = MagicMock()
+            return mock_r
+
+        with patch("requests.post", side_effect=mock_post):
+            decision = client.decide_choice(
+                state={"query": "vague ambiguous instruction"},
+                candidates=["card_arrival", "change_pin"],
+                order_invariant=True,
+                allow_abstain=True
+            )
+
+            # Calibrated confidence will be ~0.40, which is < abstain_threshold 0.80
+            self.assertTrue(decision.abstained)
+            self.assertEqual(decision.value, "UNKNOWN")
+            self.assertEqual(decision.tentative_value, "card_arrival")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
