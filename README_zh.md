@@ -20,13 +20,24 @@ pip install openjevpro
 
 *(或克隆源码开发环境：`git clone https://github.com/zhangcy122/OpenJev.git && cd OpenJev && pip install -r requirements.txt`)*
 
-### 2. 智能体分类路由（选项顺序无关）
+### 2. 0 GPU 终端极速演算（5 秒快速体验）
+
+无需配置显卡或启动本地推理服务，直接运行内置确定性演算演示（总耗时 <15ms）：
+
+```bash
+python3 -m openjevpro.demo
+```
+
+### 3. 智能体分类路由（选项顺序无关）
 
 ```python
 from openjevpro import OpenJevProClient
 
-# 连接至本地部署的 vLLM、SGLang、Ollama 或 Laya 服务端
+# 生产部署：连接至本地 vLLM、SGLang、Ollama 或 Laya 服务端
 client = OpenJevProClient(base_url="http://localhost:8000/v1")
+
+# 本地无 GPU 开发与 CI 自动化测试：
+# client = OpenJevProClient(mock=True)
 
 # 离散分类决策，保证在不同候选顺序下判定一致
 decision = client.decide_choice(
@@ -174,6 +185,7 @@ decision = gateway.decide_choice(state={"query": "请问你们跨境汇款的手
 | **`Score`** | 多档有序等级评分 | 跨档位概率质量分布 + 期望分值 |
 | **`TypeSafeJevGuardHarness`** | 运行期动态概率标定与安全护栏 | 伪对数反推、温度缩放与动态双阈值拦截 |
 | **`DeliberativeDecisionFlywheel`**| 双系统决策回路 (System 2 $\to$ System 1) | 疑难案例规则提炼并缓存，后续请求走快路径 |
+| **`MockClient`** (`mock=True`) | 零 GPU 确定性离线仿真客户端 | 零网络与零显卡依赖，用于本地开发、极速演示与 CI 单元测试 |
 
 ---
 

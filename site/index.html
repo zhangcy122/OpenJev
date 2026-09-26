@@ -259,11 +259,15 @@
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
           <span class="ml-2 text-neutral-400 font-medium">quickstart.py</span>
         </div>
-        <span class="text-[11px] text-cyan-400 font-mono">pip install openjevpro</span>
+        <div class="flex items-center space-x-2.5">
+          <span class="text-[11px] text-amber-300 font-mono hidden sm:inline">0-GPU Demo: <code class="text-neutral-200">python3 -m openjevpro.demo</code></span>
+          <span class="text-[11px] text-cyan-400 font-mono">pip install openjevpro</span>
+        </div>
       </div>
       <div class="p-4 font-mono text-[11px] sm:text-xs overflow-x-auto text-neutral-300 leading-relaxed">
         <span class="text-violet-400">from</span> openjevpro <span class="text-violet-400">import</span> OpenJevProClient<br><br>
-        client = OpenJevProClient(base_url=<span class="text-emerald-300">"http://localhost:8000/v1"</span>)<br>
+        <span class="text-neutral-500"># Point to local engine, or pass mock=True for zero-GPU offline testing</span><br>
+        client = OpenJevProClient(base_url=<span class="text-emerald-300">"http://localhost:8000/v1"</span>)&nbsp;&nbsp;<span class="text-neutral-500"># or mock=True</span><br>
         decision = client.decide_choice(<br>
         &nbsp;&nbsp;&nbsp;&nbsp;state={<span class="text-emerald-300">"ticket"</span>: <span class="text-emerald-300">"Unauthorized login attempt from unknown IP"</span>},<br>
         &nbsp;&nbsp;&nbsp;&nbsp;candidates=[<span class="text-emerald-300">"billing"</span>, <span class="text-emerald-300">"tech_support"</span>, <span class="text-emerald-300">"security_fraud"</span>],<br>
@@ -979,9 +983,9 @@
     SECURITY = <span class="text-cyan-300">"security"</span>
     ESCALATE = <span class="text-cyan-300">"human_review"</span>
 
-<span class="text-neutral-500"># Connect to local vLLM / SGLang or cloud endpoint</span>
+<span class="text-neutral-500"># Connect to local vLLM / SGLang, or pass mock=True for zero-GPU CI/CD</span>
 client = <span class="text-white font-semibold">OpenJevProClient</span>(
-    base_url=<span class="text-cyan-300">"http://localhost:8000/v1"</span>,
+    base_url=<span class="text-cyan-300">"http://localhost:8000/v1"</span>,  <span class="text-neutral-500"># or mock=True</span>
     model=<span class="text-cyan-300">"Qwen/Qwen3-4B-Instruct"</span>,
     temperature_scaling=<span class="text-neutral-300">1.30</span>,
     abstain_threshold=<span class="text-neutral-300">0.45</span>
@@ -1170,6 +1174,13 @@ print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
           In regulated financial and compliance environments, standard multiple-choice prompting suffers from positional bias. OpenJevPro introduces order_invariant=True, which scores each candidate option in an isolated forward pass without competitor options, then normalizes probabilities via commutative softmax. This mathematically guarantees 100% permutation invariance across all N! candidate orderings (delta P &lt; 1e-4). Furthermore, the Deliberative Decision Flywheel couples fast decisions with System 2 thinking models: ambiguous queries trigger deep reasoning traces, which are crystallized into discriminative boundary rules and cached, permanently promoting subsequent queries to the sub-35ms fast path.
         </p>
       </div>
+
+      <div class="panel p-5 rounded-xl border border-emerald-500/20 bg-gradient-to-r from-surface-100 to-emerald-950/10">
+        <h3 class="text-sm font-semibold text-white mb-1.5" data-i18n="faq_q6">Can I develop and test OpenJevPro without a dedicated GPU or active model server?</h3>
+        <p class="text-xs text-neutral-300 leading-relaxed font-normal" data-i18n="faq_a6">
+          Yes. OpenJevPro includes a lightweight deterministic mock simulator (MockClient or OpenJevProClient(mock=True)) for zero-GPU offline development and CI/CD pipelines. You can also run 'python3 -m openjevpro.demo' in any terminal to see complete decision receipts in under 15ms.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -1295,6 +1306,8 @@ print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
         faq_a4: "OpenJevPro 可作为商业 Jev 的前置分流与容灾层：第一，通过 TypeSafeJevGuardHarness 重新校准概率并拦截低置信度样本，减少歧义场景下的误判；第二，通过 HybridJevGateway 将约 70% 的高频请求留在本地处理，降低云端调用开销；第三，提供超时与限流自动熔断机制，在云端接口不可用时回退至本地模型，保障调用链稳定。",
         faq_q5: "大模型常受选项先后顺序影响，OpenJevPro 如何保证排序一致性？双系统机制又如何工作？",
         faq_a5: "在严苛合规与高可靠场景下，通用多选 Prompt 常因选项先后顺序产生位置偏差。OpenJevPro 提供 order_invariant=True 选项，对每个候选执行孤立打分（Isolated Candidate Scoring），再通过可交换的 Softmax 归一化。在任意 N! 种排列顺序下，输出判定均保持一致，从机制上消除排列影响。此外，系统支持在遇到边缘样本时交由推理大模型分析，并将规则存入本地，帮助快路径模型逐步扩展覆盖范围。",
+        faq_q6: "没有专用 GPU 或暂未启动本地大模型服务，能否进行开发与集成？",
+        faq_a6: "可以。OpenJevPro 内置了确定性离线仿真客户端（MockClient 或 OpenJevProClient(mock=True)），无需显卡或外部网络即可体验决策原语，并用于 CI/CD 单元测试。在终端执行 python3 -m openjevpro.demo 即可在 15 毫秒内运行全流程演算。",
         footer_license: "源码可用性遵循 <a href=\"https://github.com/zhangcy122/OpenJev/blob/main/LICENSE\" class=\"text-neutral-400 hover:text-white underline\">PolyForm Noncommercial 1.0.0</a> 协议。企业商业生产需获得项目方授权。"
       },
       en: {
@@ -1399,6 +1412,8 @@ print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
         faq_a4: "OpenJevPro functions not just as an open alternative, but as an indispensable production harness and guard for commercial TypeSafe Jev: 1) It provides TypeSafeJevGuardHarness to eliminate overconfident silent errors on borderline samples, lifting selective precision to 100%; 2) Its HybridJevGateway filters 70%+ of routine high-frequency queries locally, slashing your commercial cloud billing by 60%+; 3) Its circuit-breaker fallback SLA protects downstream agents against cloud timeouts, rate limits, and outages with zero crashes.",
         faq_q5: "How does OpenJevPro eliminate candidate order bias and enable cognitive crystallization?",
         faq_a5: "In regulated financial and compliance environments, standard multiple-choice prompting suffers from positional bias. OpenJevPro introduces order_invariant=True, which scores each candidate option in an isolated forward pass without competitor options, then normalizes probabilities via commutative softmax. This mathematically guarantees 100% permutation invariance across all N! candidate orderings (delta P &lt; 1e-4). Furthermore, the Deliberative Decision Flywheel couples fast decisions with System 2 thinking models: ambiguous queries trigger deep reasoning traces, which are crystallized into discriminative boundary rules and cached, permanently promoting subsequent queries to the sub-35ms fast path.",
+        faq_q6: "Can I develop and test OpenJevPro without a dedicated GPU or active model server?",
+        faq_a6: "Yes. OpenJevPro includes a lightweight deterministic mock simulator (MockClient or OpenJevProClient(mock=True)) for zero-GPU offline development and CI/CD pipelines. You can also run 'python3 -m openjevpro.demo' in any terminal to see complete decision receipts in under 15ms.",
         footer_license: "Source-available under <a href=\"https://github.com/zhangcy122/OpenJev/blob/main/LICENSE\" class=\"text-neutral-400 hover:text-white underline\">PolyForm Noncommercial 1.0.0</a>. Commercial use requires license."
       }
     };

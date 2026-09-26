@@ -20,13 +20,24 @@ pip install openjevpro
 
 *(Or clone for bleeding-edge source: `git clone https://github.com/zhangcy122/OpenJev.git && cd OpenJev && pip install -r requirements.txt`)*
 
-### 2. High-Throughput Agent Decision (Zero Order Bias)
+### 2. Zero-GPU Instant CLI Demo (5 Seconds)
+
+No GPU or backend inference server required. Run the interactive terminal demonstration with full receipts (<15ms):
+
+```bash
+python3 -m openjevpro.demo
+```
+
+### 3. High-Throughput Agent Decision (Zero Order Bias)
 
 ```python
 from openjevpro import OpenJevProClient
 
-# Point to your local vLLM, SGLang, Ollama, or Laya endpoint
+# Production: Point to your local vLLM, SGLang, Ollama, or Laya endpoint
 client = OpenJevProClient(base_url="http://localhost:8000/v1")
+
+# Offline development & CI/CD unit testing (zero GPU required):
+# client = OpenJevProClient(mock=True)
 
 # Sub-35ms categorical decision with 100% mathematical order invariance
 decision = client.decide_choice(
@@ -176,6 +187,7 @@ decision = gateway.decide_choice(state={"query": "What are your international fe
 | **`Score`** | Ordinal evaluation across predefined severity/rank tiers | Probability mass across tiers + expected score |
 | **`TypeSafeJevGuardHarness`** | Runtime calibration & adaptive safety guard | Pseudo-logit inversion, temperature scaling & dual-threshold cutoff |
 | **`DeliberativeDecisionFlywheel`**| Self-evolving cognitive flywheel (System 2 $\to$ System 1) | Sub-35ms promoted fast path + zero repeated deliberation cost |
+| **`MockClient`** (`mock=True`) | Zero-GPU offline deterministic simulation client | Zero network or GPU dependency; offline CI unit testing with exact receipts |
 
 All primitives incorporate first-class **Abstention & Fallback Options** (`UNKNOWN`, `OUT_OF_SCOPE`, `HUMAN_REVIEW`) to eliminate artificial probability spikes caused by closed candidate sets.
 
