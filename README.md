@@ -4,40 +4,40 @@
   <b>English</b> | <a href="README_zh.md">简体中文</a>
 </p>
 
-> **Dual-Mode AI Decision Framework: Open Alternative & Production Harness for TypeSafe Jev**  
-> Deploy as a standalone, non-autoregressive decision engine using modern open-weight LLMs (Qwen3, Gemma 4, DeepSeek), **OR** wrap official TypeSafe Jev commercial APIs with adaptive calibration, 60%+ cost arbitrage, and 99.99% circuit-breaker fallback SLA.  
+> **Unified Probabilistic Decision Framework: Open LLMs, Laya (ModernBERT), & TypeSafe Jev Harness**  
+> Deploy as a standalone, non-autoregressive decision engine using modern open-weight LLMs (Qwen3, Gemma 4, DeepSeek) or dedicated System 1 encoders (**Laya ModernBERT-large 322M**), **OR** wrap official TypeSafe Jev commercial APIs with adaptive calibration, 60%+ cost arbitrage, and 99.99% circuit-breaker fallback SLA.  
 > 🌐 **Official Website**: [https://openjev.pro](https://openjev.pro)
 
 ---
 
-## ⚡ Dual-Mode Operational Architecture
+## ⚡ Multi-Engine Operational Architecture
 
-OpenJevPro is designed with a versatile dual-mode operational architecture:
+OpenJevPro provides a unified, typed decision interface across three major paradigms: **Open LLMs**, **Laya (ModernBERT)**, and **TypeSafe Jev (Commercial API)**:
 
 ```
-                  ┌──────────────────────────────────────────────┐
-                  │                OpenJevPro                    │
-                  └──────────────────────┬───────────────────────┘
-                                         │
-                 ┌───────────────────────┴───────────────────────┐
-                 ▼                                               ▼
-   [ Mode A: Standalone Alternative ]              [ Mode B: Production Jev Harness ]
-   • 100% Open-Source Weights                      • Direct Wrap Around Commercial Jev API
-   • vLLM / SGLang Grammar Masking                 • Guard Harness: 100% Selective Precision
-   • Sub-50ms Collocated Latency                   • Hybrid Gateway: 60%+ Cloud Cost Cut
-   • Zero Vendor Lock-in & No API Bills            • Circuit Breaker: 99.99% Fallback SLA
+                  ┌───────────────────────────────────────────────────────────┐
+                  │                 OpenJevPro Unified Engine                 │
+                  └─────────────────────────────┬─────────────────────────────┘
+                                                │
+                 ┌──────────────────────────────┴──────────────────────────────┐
+                 ▼                                                             ▼
+   [ Mode A: Standalone & Edge Engines ]                         [ Mode B: Production Jev Harness ]
+   • Open LLMs: Qwen3, Gemma 4, DeepSeek (vLLM/SGLang)           • Native Wrapper around TypeSafe Jev API
+   • Laya: ModernBERT 322M System 1 Encoder (~33ms)              • Guard Harness: 100% Selective Precision
+   • Deterministic Single-Token / Microservice Latency           • Hybrid Gateway: 60%+ Cloud Cost Cut
+   • Zero Vendor Lock-in & No Cloud API Bills                    • Circuit Breaker: 99.99% Fallback SLA
 ```
 
-### 1. Mode A: Standalone Open Alternative
-* **Zero Commercial API Dependency**: Run locally on NVIDIA RTX 4090, L4, or A10G GPUs with open-weight models (e.g. Qwen3-4B, Qwen3-30B-A3B MoE, Gemma 4).
-* **Deterministic Single-Token Speed**: Uses lexical grammar masking at decode-time to extract normalized posterior probability vectors in sub-50ms without autoregressive text generation.
+### 1. Mode A: Standalone Open Alternative (LLMs & Laya)
+* **Open LLMs (Qwen3 / Gemma 4 / DeepSeek)**: Run locally or on private clusters via vLLM, SGLang, or Ollama. Lexical grammar masking at decode-time extracts normalized posterior probability vectors in sub-50ms without autoregressive text generation.
+* **Laya Engine (`LayaEngine`)**: Native support for Convai's open-weights ModernBERT-large 322M System 1 decision engine. Delivers ultra-fast (~33ms) bidirectional classification via local HTTP microservice or custom callable with automatic pseudo-logit reconstruction and temperature calibration.
 
 ### 2. Mode B: Production Jev Harness & Gateway
 If you already subscribe to commercial TypeSafe Jev, OpenJevPro acts as an indispensable production harness:
 * 🛡️ **Safety Guard Harness (`TypeSafeJevGuardHarness`)**: Fixes overconfident misclassifications on borderline samples (e.g. Sample 0 in Banking77) via pseudo-logit temperature scaling and dynamic dual-threshold cutoff $\tau = \max(\tau_{\min}, \alpha / K)$, lifting selective precision to **100.00%**.
-* 💰 **Two-Tier Cost Arbitrage Gateway (`HybridJevGateway`)**: Locally filters 70%+ of standard high-frequency intent queries (<20ms, $0 cloud cost), escalating only complex long-tail queries to commercial Jev APIs, slashing cloud bills by **60%+**.
+* 💰 **Two-Tier Cost Arbitrage Gateway (`HybridJevGateway`)**: Routes 70%+ of standard high-frequency intent queries to local Tier 1 engines (Laya or local LLM, <35ms, $0 cloud cost), escalating only complex long-tail queries to commercial Jev APIs, slashing cloud bills by **60%+**.
 * ⚡ **Fault Tolerance & Circuit Breaker SLA**: Intercepts cloud timeouts, HTTP 429 rate limits, and network severance with finite state machine (`CLOSED` $\leftrightarrow$ `OPEN` $\leftrightarrow$ `HALF_OPEN`), gracefully degrading to calibrated local decisions without throwing uncaught 500 exceptions.
-* 🧪 **Standardized Benchmarking Harness (`OpenJevProHarness`)**: Head-to-head empirical testing, Expected Calibration Error (ECE) calculation, and symmetric abstention contract verification.
+* 🧪 **Standardized Benchmarking Harness (`OpenJevProHarness`)**: Head-to-head empirical testing, Expected Calibration Error (ECE) calculation, and symmetric abstention contract verification across LLM, Laya, and Jev engines.
 
 ---
 
@@ -148,6 +148,7 @@ For constrained decision tasks (classification, intent detection, workflow routi
 
 | Tier | Model | Architecture & Active Params | Context | Recommended Use Case |
 | :--- | :--- | :--- | :--- | :--- |
+| **Tier 0: Dedicated System 1 Encoder (<35ms)** | **Laya (Convai)** | **ModernBERT-large (322M)** • Non-autoregressive | 8K | **Ultra-fast intent classifier**: ~33ms, zero cloud cost, local HTTP microservice (Apache 2.0) |
 | **Tier 1: Edge & Ultra-Fast Gate (<50ms)** | **Qwen3-1.7B / 4B** | Dense (1.7B / 4B) • `/no_think` switch | 32K | Default lightweight router, binary gates, high-QPS routing |
 | | **Gemma 4 E2B / E4B** | Dense (2.3B / 4.5B effective) | 128K | Edge & local multimodal (vision + text) classification |
 | | **FunctionGemma (270M)** | Compact Dedicated | 32K | Ultra-light tool and function selection |
@@ -232,6 +233,30 @@ print(f"Action: {decision.value}")
 print(f"Confidence: {decision.confidence:.2%}")
 print(f"Probabilities: {decision.probabilities}")
 print(f"Abstained: {decision.abstained}")
+```
+
+### Dedicated System 1: Laya Engine (ModernBERT-large 322M)
+
+```python
+from openjevpro.harness import LayaEngine
+from openjevpro.client import OpenJevProClient
+
+# 1. Direct LayaEngine targeting local microservice (sub-35ms, 0 cost)
+laya = LayaEngine(endpoint="http://localhost:8001/v1", model="convai/laya-modernbert-large")
+result = laya.evaluate_choice(
+    state={"query": "Cancel my order and issue a refund immediately"},
+    candidates=["cancel_order", "track_shipment", "update_address"],
+    allow_abstain=True
+)
+print(f"Laya Decision: {result['choice']} (Latency: {result['latency_ms']:.1f}ms, Conf: {result['confidence']:.2f})")
+
+# 2. Or query Laya via OpenJevProClient with auto-calibration (auto-detected via port 8001 or backend='laya')
+client = OpenJevProClient(base_url="http://localhost:8001/v1", backend="laya")
+decision = client.decide_choice(
+    state={"query": "Cancel my order and issue a refund immediately"},
+    candidates=["cancel_order", "track_shipment", "update_address"],
+)
+print(f"Calibrated Value: {decision.value}, Calibrated Probs: {decision.probabilities}")
 ```
 
 ### Adaptive Safety Guard: Safeguarding TypeSafe Jev & Neural Outputs

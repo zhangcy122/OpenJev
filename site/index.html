@@ -218,21 +218,21 @@
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
       </span>
-      <span data-i18n="hero_pill_1">双模架构：开源独立引擎</span>
+      <span data-i18n="hero_pill_1">统一架构：开源 LLM · Laya 编码器</span>
       <span class="text-neutral-600">/</span>
       <span data-i18n="hero_pill_2" class="text-neutral-400">商业 Jev 生产线束</span>
     </div>
 
     <!-- Editorial Main Headline -->
     <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-[-0.035em] text-white leading-[1.08] mb-6">
-      <span class="text-metallic" data-i18n="hero_title_prefix">开源替代 · 商业 Jev 线束</span>
+      <span class="text-metallic" data-i18n="hero_title_prefix">开源 LLM · Laya · 商业 Jev 线束</span>
       <br>
       <span class="text-neutral-100 text-glow-cyan" data-i18n="hero_title_suffix">类型安全概率决策引擎</span>
     </h1>
 
     <!-- Subtitle -->
     <p class="text-sm sm:text-base md:text-lg text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed font-normal" data-i18n-html="hero_desc">
-      可作为独立的非自回归决策引擎运行（sub-50ms，单 Token 概率提取），也可作为 TypeSafe Jev 商业 API 的生产包装层：利用动态阈值阻断低置信度误判（答题精度达 100%），通过本地分流减少 60%+ 商业调用成本，并在云端异常时自动降级。
+      支持通用开源大模型 (LLMs)、Laya (ModernBERT-large 322M) 专用决策编码器及 TypeSafe Jev 官方商业接口：结合单 Token 概率提取与后验温度标定，sub-35ms 极致低延迟；配合动态阈值守卫阻断边缘误判（答题精度达 100%），通过本地分流减少 60%+ 商业调用成本，并在云端异常时自动降级。
     </p>
 
     <!-- CTAs -->
@@ -255,7 +255,7 @@
           <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
           <span>PIPELINE FLOW: INFERENCE & HARNESS TOPOLOGY</span>
         </div>
-        <span class="hidden sm:inline text-neutral-400">vLLM / SGLang · Single-Token Posterior</span>
+        <span class="hidden sm:inline text-neutral-400">LLM / Laya / Jev · Calibrated Posterior</span>
       </div>
       <div class="py-4 grid grid-cols-1 md:grid-cols-3 gap-3 items-center text-xs font-mono">
         <div class="p-3 rounded-xl bg-surface-100/80 border border-white/[0.06] text-left">
@@ -265,7 +265,7 @@
         </div>
         <div class="flex md:flex-col items-center justify-center text-neutral-500 py-1">
           <svg class="w-5 h-5 text-cyan-400 md:rotate-90 hidden md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          <span class="text-[10px] text-cyan-300 font-mono">Single-Token Logprobs</span>
+          <span class="text-[10px] text-cyan-300 font-mono">Single-Token / Laya Logits</span>
           <svg class="w-4 h-4 text-cyan-400 md:rotate-0 block md:hidden ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
         <div class="p-3 rounded-xl bg-surface-100/80 border border-cyan-500/30 text-left bg-gradient-to-r from-surface-100 to-cyan-950/20">
@@ -280,12 +280,12 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-4xl mx-auto text-left">
       <div class="panel p-5 rounded-xl border border-white/10 relative overflow-hidden group">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-[11px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">MODE A · STANDALONE</span>
-          <span class="text-[11px] font-mono text-neutral-500">100% Open Weights</span>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">MODE A · STANDALONE & EDGE</span>
+          <span class="text-[11px] font-mono text-neutral-500">LLM + Laya 322M</span>
         </div>
-        <h3 class="text-base font-bold text-white mb-1.5 group-hover:text-emerald-300 transition" data-i18n="dual_mode_a_title">开源独立运行 (Mode A)</h3>
+        <h3 class="text-base font-bold text-white mb-1.5 group-hover:text-emerald-300 transition" data-i18n="dual_mode_a_title">开源独立与边缘运行 (LLM & Laya)</h3>
         <p class="text-xs text-neutral-400 leading-relaxed" data-i18n="dual_mode_a_desc">
-          配合 vLLM 或 SGLang 语法掩码解码，直接加载 Qwen3、Gemma 4 等开源模型；首 Token 提取候选对数似然，不走长文本自回归生成，端到端延迟控制在 50ms 以内。
+          支持 Qwen3/Gemma 4 等开源大模型（vLLM/SGLang 语法掩码）及 Laya (ModernBERT 322M) 专用编码器；首 Token 或微服务提取似然，sub-35ms 延迟，零云端 API 依赖。
         </p>
       </div>
 
@@ -768,6 +768,13 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-white/[0.04] text-neutral-300">
+            <tr class="hover:bg-white/[0.01] bg-cyan-950/20">
+              <td class="py-3 px-5 font-semibold text-cyan-300">Tier 0: Dedicated System 1</td>
+              <td class="py-3 px-5 text-white font-bold">Laya (ModernBERT-large)</td>
+              <td class="py-3 px-5 text-neutral-300">322M Bi-directional</td>
+              <td class="py-3 px-5 text-emerald-400">&lt; 35ms</td>
+              <td class="py-3 px-5 text-neutral-300 font-sans">Local microservice, zero-cloud-cost ultra-fast edge routing (Apache 2.0)</td>
+            </tr>
             <tr class="hover:bg-white/[0.01]">
               <td class="py-3 px-5 font-semibold text-neutral-200">Tier 1: Edge Router</td>
               <td class="py-3 px-5 text-neutral-300">Qwen3-1.7B / 4B (Dense)</td>
@@ -1050,13 +1057,13 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         nav_quickstart: "快速上手",
         nav_commercial: "授权协议",
         nav_faq: "常见疑问",
-        hero_pill_1: "开源独立决策引擎",
+        hero_pill_1: "统一架构：开源 LLM · Laya 编码器",
         hero_pill_2: "生产级商业 Jev 增强线束",
-        hero_title_prefix: "开源替代 · 商业 Jev 线束",
+        hero_title_prefix: "开源 LLM · Laya · 商业 Jev 线束",
         hero_title_suffix: "类型安全概率决策引擎",
-        hero_desc: "可作为独立的非自回归决策引擎运行（sub-50ms，单 Token 概率提取），也可作为 TypeSafe Jev 商业 API 的生产包装层：利用动态阈值阻断低置信度误判（答题精度达 100%），通过本地分流减少 60%+ 商业调用成本，并在云端异常时自动降级。",
-        dual_mode_a_title: "开源独立运行 (Mode A)",
-        dual_mode_a_desc: "配合 vLLM 或 SGLang 语法掩码解码，直接在本地 GPU 加载 Qwen3、Gemma 4 等开源模型；首 Token 提取候选对数似然，不走自回归文本生成，端到端延迟控制在 50ms 以内。",
+        hero_desc: "支持通用开源大模型 (LLMs)、Laya (ModernBERT 322M) 专用决策编码器及 TypeSafe Jev 官方商业接口：结合单 Token 概率提取与后验温度标定，sub-35ms 极致低延迟；配合动态阈值守卫阻断边缘误判（答题精度达 100%），通过本地分流减少 60%+ 商业调用成本，并在云端异常时自动降级。",
+        dual_mode_a_title: "开源独立与边缘运行 (LLM & Laya)",
+        dual_mode_a_desc: "支持 Qwen3/Gemma 4 等开源大模型（vLLM/SGLang 语法掩码）及 Laya (ModernBERT 322M) 专用编码器；首 Token 或微服务提取似然，sub-35ms 延迟，零云端 API 依赖。",
         dual_mode_b_title: "商业 Jev 增强与容灾线束 (Mode B)",
         dual_mode_b_desc: "直接封装官方 TypeSafe Jev 商业接口：通过 Guard 拦截边缘歧义样本（答题精度达 100%），由本地引擎承接高频流量以削减调用成本，云端超时或限流时自动切换本地兜底。",
         hero_btn_repo: "在 GitHub 查看源码 →",
@@ -1144,13 +1151,13 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         nav_quickstart: "Quickstart",
         nav_commercial: "License",
         nav_faq: "FAQ",
-        hero_pill_1: "Dual-Mode: Standalone Alternative",
+        hero_pill_1: "Unified: Open LLMs & Laya Encoder",
         hero_pill_2: "Production Jev Harness",
-        hero_title_prefix: "Open Alternative & Production",
+        hero_title_prefix: "Open LLMs · Laya · TypeSafe Jev",
         hero_title_suffix: "Jev Harness at Scale.",
-        hero_desc: "Deploy as a 100% standalone open-source decision engine, or wrap commercial TypeSafe Jev with production safety guard, 60%+ cost-arbitrage routing, and 99.99% circuit-breaker fallback SLA.",
-        dual_mode_a_title: "Standalone Open Alternative (Mode A)",
-        dual_mode_a_desc: "100% open-weight models (Qwen3 / Gemma 4 / DeepSeek) with vLLM / SGLang grammar decoding. Sub-50ms single-token inference with zero vendor lock-in.",
+        hero_desc: "Unified typed probabilistic decision framework supporting Open LLMs (Qwen3, Gemma 4), Laya (ModernBERT 322M System 1 encoder), and commercial TypeSafe Jev. Features sub-35ms deterministic inference, calibrated logprobs, adaptive safety guard (100% precision), and two-tier cost arbitrage.",
+        dual_mode_a_title: "Standalone & Edge Engines (LLM & Laya)",
+        dual_mode_a_desc: "Open-weight LLMs (Qwen3 / Gemma 4 / DeepSeek) via vLLM/SGLang and Laya (ModernBERT 322M) System 1 microservice. Sub-35ms deterministic inference with zero vendor lock-in.",
         dual_mode_b_title: "Production Jev Harness & Gateway (Mode B)",
         dual_mode_b_desc: "Direct wrapper around commercial TypeSafe Jev: Guard Harness eliminates borderline errors (100% precision), cuts bills by 60%+, and guarantees 99.99% fallback SLA.",
         hero_btn_repo: "Get Started on GitHub →",

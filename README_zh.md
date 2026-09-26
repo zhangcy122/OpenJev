@@ -4,40 +4,40 @@
   <a href="README.md">English</a> | <b>简体中文</b>
 </p>
 
-> **双模态 AI 决策框架：开源替代与 TypeSafe Jev 生产线束**  
-> 既可基于现代开源权重模型（Qwen3、Gemma 4、DeepSeek）作为独立的非自回归决策引擎运行，**也可**封装 TypeSafe Jev 官方商业 API，提供自适应概率校准、60% 以上成本套利与 99.99% 熔断降级可用性保障。  
+> **统一概率决策框架：全面支持通用开源大模型 (LLMs)、Laya (ModernBERT) 与 TypeSafe Jev 生产线束**  
+> 既可基于现代开源权重大模型（Qwen3、Gemma 4、DeepSeek）或专用 System 1 决策模型（**Laya ModernBERT-large 322M**）作为独立的非自回归决策引擎运行，**也可**封装 TypeSafe Jev 官方商业 API，提供自适应概率校准、60% 以上成本套利与 99.99% 熔断降级可用性保障。  
 > 🌐 **官方站点**：[https://openjev.pro](https://openjev.pro)
 
 ---
 
-## ⚡ 双模态运行架构
+## ⚡ 多引擎协同运行架构
 
-OpenJevPro 采用灵活的双模态运行架构设计：
+OpenJevPro 为三大主流决策范式提供统一的强类型接口：**开源大模型 (LLMs)**、**专用决策模型 (Laya)** 与 **商业 Jev 增强线束**：
 
 ```
-                  ┌──────────────────────────────────────────────┐
-                  │                OpenJevPro                    │
-                  └──────────────────────┬───────────────────────┘
-                                         │
-                 ┌───────────────────────┴───────────────────────┐
-                 ▼                                               ▼
-     [ 模式 A：独立开源替代方案 ]                     [ 模式 B：生产级 Jev 增强线束 ]
-   • 100% 开源权重推理                             • 原生封装 TypeSafe Jev 商业 API
-   • vLLM / SGLang 语法掩码解码                    • 安全护栏：100% 选择性精度（零误判）
-   • 同机部署亚 50ms 延迟                          • 混合网关：降低 60%+ 云端调用账单
-   • 无厂商锁定与额外 API 费用                     • 状态机熔断：99.99% 故障降级保障
+                  ┌───────────────────────────────────────────────────────────┐
+                  │                 OpenJevPro 统一决策引擎                  │
+                  └─────────────────────────────┬─────────────────────────────┘
+                                                │
+                 ┌──────────────────────────────┴──────────────────────────────┐
+                 ▼                                                             ▼
+     [ 模式 A：独立开源替代与边缘决策 ]                           [ 模式 B：生产级 Jev 增强线束 ]
+   • 开源大模型：Qwen3、Gemma 4、DeepSeek (vLLM/SGLang)          • 原生封装 TypeSafe Jev 商业 API
+   • Laya 引擎：ModernBERT 322M System 1 专用模型 (~33ms)        • 安全护栏：100% 选择性精度（零误判）
+   • 确定性单 Token / 微服务亚 35ms 延迟                         • 混合网关：降低 60%+ 云端调用账单
+   • 无厂商锁定与额外 API 费用                                   • 状态机熔断：99.99% 故障降级保障
 ```
 
-### 1. 模式 A：独立开源替代方案
-* **零商业 API 依赖**：直接在配备 NVIDIA RTX 4090、L4 或 A10G 的本地或私有算力节点上运行开源权重模型（如 Qwen3-4B、Qwen3-30B-A3B MoE、Gemma 4）。
-* **确定性单 Token 延迟**：在解码阶段施加词法语法约束，50ms 内直接提取归一化后验概率向量，无需自回归生成自然语言长文本。
+### 1. 模式 A：独立开源替代方案 (通用 LLMs & 专用 Laya)
+* **通用开源大模型 (Qwen3 / Gemma 4 / DeepSeek)**：直接在配备 NVIDIA RTX 4090、L4 或 A10G 的本地或私有算力节点上运行。在解码阶段施加词法语法约束，50ms 内直接提取归一化后验概率向量，无需自回归生成自然语言长文本。
+* **Laya 专用决策引擎 (`LayaEngine`)**：原生集成 Convai 开源 ModernBERT-large 322M System 1 决策模型。通过本地 HTTP 微服务或自定义 Callable，提供 ~33ms 极致低延迟的双向非自回归语义分类，支持伪对数转换与温度标定。
 
 ### 2. 模式 B：商业 Jev 增强与容灾线束
 对于已订阅 TypeSafe Jev 商业 API 的系统，OpenJevPro 可作为生产环境的接入与防护线束：
 * 🛡️ **自适应安全护栏 (`TypeSafeJevGuardHarness`)**：针对边界模糊样本（如 Banking77 数据集中的 Sample 0），通过伪对数变换与温度平滑，配合动态双阈值截断 $\tau = \max(\tau_{\min}, \alpha / K)$，纠正置信度虚高导致的误判，将已应答样本的选择性精度拉升至 **100.00%**。
-* 💰 **两级成本套利网关 (`HybridJevGateway`)**：在本地边缘前置过滤 70% 以上的高置信度常见意图（<20ms，零云端成本），仅将低置信或长尾复杂请求转交 Jev 商业 API，将整体 API 账单降低 **60% 以上**。
+* 💰 **两级成本套利网关 (`HybridJevGateway`)**：在本地边缘前置过滤 70% 以上的高置信度常见意图（采用 Laya 或本地 LLM，<35ms，零云端成本），仅将低置信或长尾复杂请求转交 Jev 商业 API，将整体 API 账单降低 **60% 以上**。
 * ⚡ **容灾熔断与 SLA 保障**：内置有限状态机（`CLOSED` $\leftrightarrow$ `OPEN` $\leftrightarrow$ `HALF_OPEN`），自动拦截超时、HTTP 429 限流及云端断网故障，无缝降级至本地校准模型决策，避免下游业务抛出未捕获的 500 异常。
-* 🧪 **标准化基准评测套件 (`OpenJevProHarness`)**：提供端到端实机复现工具、预期校准误差（ECE）评测以及对称拒识契约验证。
+* 🧪 **标准化基准评测套件 (`OpenJevProHarness`)**：提供端到端实机复现工具、预期校准误差（ECE）评测以及 LLM / Laya / Jev 跨引擎对称拒识契约验证。
 
 ---
 
@@ -141,6 +141,7 @@ OpenJevPro 放弃生成无法保证类型与概率分布的自由自然语言，
 
 | 档位 | 推荐模型 | 架构与活跃参数 | 上下文 | 适用场景 |
 | :--- | :--- | :--- | :--- | :--- |
+| **Tier 0：专用 System 1 编码器 (<35ms)** | **Laya (Convai)** | **ModernBERT-large (322M)** • 非自回归 | 8K | **极速意图分类与高频网关**：~33ms 延迟，零云端成本，本地微服务部署 (Apache 2.0) |
 | **Tier 1：边缘与极速网关 (<50ms)** | **Qwen3-1.7B / 4B** | Dense (1.7B / 4B) • `/no_think` 模式 | 32K | 默认轻量路由器、二值门控、高 QPS 业务接入 |
 | | **Gemma 4 E2B / E4B** | Dense (2.3B / 4.5B 有效参数) | 128K | 边缘与端侧多模态（视觉 + 文本）联合分类 |
 | | **FunctionGemma (270M)** | 专用小模型 | 32K | 极轻量工具调用与函数分支路由 |
@@ -225,6 +226,30 @@ print(f"决策结果: {decision.value}")
 print(f"置信度: {decision.confidence:.2%}")
 print(f"候选概率分布: {decision.probabilities}")
 print(f"是否拒识: {decision.abstained}")
+```
+
+### 专用 System 1 决策模型：Laya 引擎 (ModernBERT 322M)
+
+```python
+from openjevpro.harness import LayaEngine
+from openjevpro.client import OpenJevProClient
+
+# 1. 直接通过 LayaEngine 调用本地微服务（sub-35ms，零云端成本）
+laya = LayaEngine(endpoint="http://localhost:8001/v1", model="convai/laya-modernbert-large")
+result = laya.evaluate_choice(
+    state={"query": "请立刻取消订单并为我全额退款"},
+    candidates=["cancel_order", "track_shipment", "update_address"],
+    allow_abstain=True
+)
+print(f"Laya 决策结果: {result['choice']} (延迟: {result['latency_ms']:.1f}ms, 置信度: {result['confidence']:.2f})")
+
+# 2. 或通过 OpenJevProClient 统一客户端调度（自动根据 8001 端口或 backend='laya' 识别并校准）
+client = OpenJevProClient(base_url="http://localhost:8001/v1", backend="laya")
+decision = client.decide_choice(
+    state={"query": "请立刻取消订单并为我全额退款"},
+    candidates=["cancel_order", "track_shipment", "update_address"],
+)
+print(f"标定决策: {decision.value}, 标定后概率: {decision.probabilities}")
 ```
 
 ### 运行时安全护栏：防护商业 Jev 与模型输出
