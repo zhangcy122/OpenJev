@@ -1,7 +1,7 @@
 import json
 import math
 import logging
-from typing import Dict, Any, Type, Union, List, Optional
+from typing import Dict, Any, Type, Union, List, Optional, Tuple
 from enum import Enum
 from concurrent.futures import ThreadPoolExecutor
 import requests
@@ -25,6 +25,7 @@ class OpenJevProClient:
         use_chat: bool = True,
         chat_template_kwargs: Optional[Dict[str, Any]] = None,
         mock: bool = False,
+        order_invariant_max_workers: int = 8,
     ):
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
@@ -33,6 +34,11 @@ class OpenJevProClient:
         self.abstain_threshold = abstain_threshold
         self.use_chat = use_chat
         self.chat_template_kwargs = chat_template_kwargs or {}
+        # Concurrency for order_invariant=True. Batching servers (llama.cpp, vLLM, SGLang) are not
+        # batch-invariant: concurrent requests land in batches whose composition depends on thread
+        # timing, and near-tied candidates can then flip between identical calls. 1 = sequential
+        # and deterministic, at N x the latency; the default favours throughput.
+        self.order_invariant_max_workers = max(1, int(order_invariant_max_workers))
         self.mock = mock or (base_url and base_url.startswith("mock://"))
 
         if self.mock:
@@ -63,6 +69,31 @@ class OpenJevProClient:
         if isinstance(self.abstain_threshold, str) and self.abstain_threshold.lower() == "auto":
             return 1.25 / max(n_options, 1)
         return float(self.abstain_threshold)
+
+    @staticmethod
+    def _select_best(probs: Dict[str, float]) -> Tuple[str, float, bool]:
+        """Pick the winner of a calibrated distribution without depending on candidate order.
+
+        `max(probs, key=probs.get)` keeps the first of several equal maxima, i.e. whichever option
+        the caller happened to list first. Ties are broken on the sorted label instead. A fully
+        uniform distribution carries no signal at all (typically every candidate hit a fallback
+        score), so it is reported as degenerate and resolved to UNKNOWN rather than to an arbitrary
+        first option.
+
+        Returns (best_choice, confidence, degenerate).
+        """
+        if not probs:
+            return "UNKNOWN", 0.0, True
+        top = max(probs.values())
+        if top - min(probs.values()) <= 1e-12:
+            logger.warning(
+                "All %d candidates received the same score, so the decision has no signal; "
+                "returning UNKNOWN. Check that the server returns logprobs for the answer tokens.",
+                len(probs),
+            )
+            return "UNKNOWN", top, True
+        best = max(sorted(probs), key=probs.get)
+        return best, probs[best], False
 
     def decide_choice(
         self,
@@ -200,7 +231,10 @@ class OpenJevProClient:
                 "top_logprobs": 20,
             }
             if self.chat_template_kwargs:
-                chat_payload["extra_body"] = {"chat_template_kwargs": self.chat_template_kwargs}
+                # Top level, not under "extra_body": extra_body is an openai-python SDK convention
+                # that the SDK merges into the request body. Sent with requests it arrives as a
+                # literal key that llama.cpp and vLLM ignore, so enable_thinking=False never applied.
+                chat_payload["chat_template_kwargs"] = self.chat_template_kwargs
 
             endpoint_used = f"{self.base_url}/chat/completions"
             resp = requests.post(endpoint_used, headers=headers, json=chat_payload, timeout=30)
@@ -243,6 +277,12 @@ class OpenJevProClient:
         elif prob_b is not None:
             return -float(prob_b) - 5.0
         else:
+            logger.warning(
+                "Neither 'A' nor 'B' in top logprobs for candidate '%s' (top tokens: %s); "
+                "falling back to the generated text.",
+                candidate,
+                list(choice_logprobs.keys())[:10],
+            )
             # Fallback when logprobs are absent
             content_str = ""
             if "message" in choice_data and "content" in choice_data["message"]:
@@ -298,7 +338,9 @@ class OpenJevProClient:
                 len(options)
             )
 
-        max_workers = min(len(options), 8)
+        # See order_invariant_max_workers in __init__: >1 is faster but not deterministic on
+        # batching servers.
+        max_workers = min(len(options), self.order_invariant_max_workers)
         extracted_logits: Dict[str, float] = {}
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -316,11 +358,10 @@ class OpenJevProClient:
                     extracted_logits[opt] = -100.0
 
         calibrated_probs = self.calibrator.calibrate(extracted_logits)
-        best_choice = max(calibrated_probs, key=calibrated_probs.get)
-        confidence = calibrated_probs[best_choice]
+        best_choice, confidence, degenerate = self._select_best(calibrated_probs)
 
         effective_thresh = self._get_effective_threshold(len(options))
-        abstained = False
+        abstained = degenerate
         if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
             abstained = True
 
@@ -365,11 +406,10 @@ class OpenJevProClient:
             extracted_logits = {k: math.log(max(float(v), 1e-6)) for k, v in raw_probs.items()}
 
         calibrated_probs = self.calibrator.calibrate(extracted_logits)
-        best_choice = max(calibrated_probs, key=calibrated_probs.get)
-        confidence = calibrated_probs[best_choice]
+        best_choice, confidence, degenerate = self._select_best(calibrated_probs)
 
         effective_thresh = self._get_effective_threshold(len(options))
-        abstained = False
+        abstained = degenerate
         if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
             abstained = True
 
@@ -439,11 +479,10 @@ class OpenJevProClient:
             extracted_logits[opt] = float(raw_scores.get(opt, 0.0))
 
         calibrated_probs = self.calibrator.calibrate(extracted_logits)
-        best_choice = max(calibrated_probs, key=calibrated_probs.get)
-        confidence = calibrated_probs[best_choice]
+        best_choice, confidence, degenerate = self._select_best(calibrated_probs)
 
         effective_thresh = self._get_effective_threshold(len(options))
-        abstained = False
+        abstained = degenerate
         if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
             abstained = True
 
@@ -536,7 +575,10 @@ class OpenJevProClient:
                 "top_logprobs": 20,
             }
             if self.chat_template_kwargs:
-                chat_payload["extra_body"] = {"chat_template_kwargs": self.chat_template_kwargs}
+                # Top level, not under "extra_body": extra_body is an openai-python SDK convention
+                # that the SDK merges into the request body. Sent with requests it arrives as a
+                # literal key that llama.cpp and vLLM ignore, so enable_thinking=False never applied.
+                chat_payload["chat_template_kwargs"] = self.chat_template_kwargs
 
             endpoint_used = f"{self.base_url}/chat/completions"
             resp = requests.post(endpoint_used, headers=headers, json=chat_payload, timeout=30)
@@ -597,11 +639,10 @@ class OpenJevProClient:
             )
 
         calibrated_probs = self.calibrator.calibrate(extracted_logits)
-        best_choice = max(calibrated_probs, key=calibrated_probs.get)
-        confidence = calibrated_probs[best_choice]
+        best_choice, confidence, degenerate = self._select_best(calibrated_probs)
 
         effective_thresh = self._get_effective_threshold(len(options))
-        abstained = False
+        abstained = degenerate
         if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
             abstained = True
 
