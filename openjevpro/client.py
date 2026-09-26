@@ -3,6 +3,7 @@ import math
 import logging
 from typing import Dict, Any, Type, Union, List, Optional
 from enum import Enum
+from concurrent.futures import ThreadPoolExecutor
 import requests
 
 from openjevpro.schemas import ChoiceDecision, NoulDecision
@@ -55,7 +56,8 @@ class OpenJevProClient:
         state: Dict[str, Any],
         candidates: Union[Type[Enum], List[str]],
         criteria: Union[str, Dict[str, str]] = "",
-        allow_abstain: bool = True
+        allow_abstain: bool = True,
+        order_invariant: bool = False,
     ) -> ChoiceDecision:
         """Evaluates a categorical choice decision across the given candidates with calibrated probabilities."""
         if isinstance(candidates, type) and issubclass(candidates, Enum):
@@ -66,12 +68,252 @@ class OpenJevProClient:
         if allow_abstain and "UNKNOWN" not in options:
             options.append("UNKNOWN")
 
+        if order_invariant:
+            return self._decide_choice_order_invariant(state, options, criteria, allow_abstain)
+
         if self.backend == "ollama":
             return self._decide_choice_ollama(state, options, criteria, allow_abstain)
         elif self.backend == "laya":
             return self._decide_choice_laya(state, options, criteria, allow_abstain)
         else:
             return self._decide_choice_openai(state, options, criteria, allow_abstain)
+
+    def _score_single_candidate_ollama(
+        self,
+        state: Dict[str, Any],
+        candidate: str,
+        criteria: Union[str, Dict[str, str]]
+    ) -> float:
+        """Scores a single candidate option independently using Ollama JSON response."""
+        if isinstance(criteria, dict):
+            cand_crit = criteria.get(candidate)
+            if cand_crit:
+                crit_text = f"Criteria for '{candidate}': {cand_crit}"
+            else:
+                crit_text = "\n".join([f"- {k}: {v}" for k, v in sorted(criteria.items())])
+        else:
+            crit_text = str(criteria)
+
+        prompt = (
+            f"You are a probabilistic decision engine evaluating candidate suitability.\n\n"
+            f"State / Context:\n{json.dumps(state, ensure_ascii=False, indent=2)}\n\n"
+            f"Evaluation Criteria:\n{crit_text}\n\n"
+            f"Candidate Option: '{candidate}'\n\n"
+            f"Rate the relative likelihood score (0.0 to 10.0) that this candidate option is the correct decision.\n"
+            f"Output ONLY a valid JSON object matching this schema:\n"
+            f'{{"score": 0.0}}'
+        )
+
+        ollama_endpoint = f"{self.base_url}/api/chat" if not self.base_url.endswith("/api") else f"{self.base_url}/chat"
+        payload = {
+            "model": self.model,
+            "messages": [{"role": "user", "content": prompt}],
+            "format": "json",
+            "think": False,
+            "stream": False,
+        }
+
+        resp = requests.post(ollama_endpoint, json=payload, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+
+        content = data.get("message", {}).get("content", "").strip()
+        if "```" in content:
+            parts = content.split("```")
+            for p in parts:
+                p_clean = p.strip()
+                if p_clean.startswith("json"):
+                    p_clean = p_clean[4:].strip()
+                if p_clean.startswith("{") and p_clean.endswith("}"):
+                    content = p_clean
+                    break
+        try:
+            parsed = json.loads(content)
+            return float(parsed.get("score", 0.0))
+        except Exception:
+            return 0.0
+
+    def _score_single_candidate_openai(
+        self,
+        state: Dict[str, Any],
+        candidate: str,
+        criteria: Union[str, Dict[str, str]]
+    ) -> float:
+        """Scores a single candidate option independently using isolated binary logprobs."""
+        if isinstance(criteria, dict):
+            cand_crit = criteria.get(candidate)
+            if cand_crit:
+                crit_text = f"Criteria for '{candidate}': {cand_crit}"
+            else:
+                crit_text = "\n".join([f"- {k}: {v}" for k, v in sorted(criteria.items())])
+        else:
+            crit_text = str(criteria)
+
+        prompt = (
+            f"Given the following state:\n{json.dumps(state, ensure_ascii=False, indent=2)}\n\n"
+            f"Evaluation criteria:\n{crit_text}\n\n"
+            f"Evaluate candidate option: '{candidate}'\n"
+            f"Is this candidate the single best and correct category for this state?\n"
+            f"A. YES\n"
+            f"B. NO\n\n"
+            f"Reply with ONLY the option letter (A or B):"
+        )
+
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+
+        data: Optional[Dict[str, Any]] = None
+        if self.use_chat:
+            system_msg = "You are a precise binary classification evaluator. Reply with ONLY the option letter (A or B)."
+            chat_payload: Dict[str, Any] = {
+                "model": self.model,
+                "messages": [
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": prompt}
+                ],
+                "max_tokens": 1,
+                "temperature": 0.0,
+                "logprobs": True,
+                "top_logprobs": 20,
+            }
+            if self.chat_template_kwargs:
+                chat_payload["extra_body"] = {"chat_template_kwargs": self.chat_template_kwargs}
+
+            endpoint_used = f"{self.base_url}/chat/completions"
+            resp = requests.post(endpoint_used, headers=headers, json=chat_payload, timeout=30)
+            if resp.status_code in (404, 405):
+                endpoint_used = f"{self.base_url}/completions"
+                comp_payload = {
+                    "model": self.model,
+                    "prompt": prompt,
+                    "max_tokens": 1,
+                    "temperature": 0.0,
+                    "logprobs": 20
+                }
+                resp = requests.post(endpoint_used, headers=headers, json=comp_payload, timeout=30)
+            resp.raise_for_status()
+            data = resp.json()
+        else:
+            endpoint_used = f"{self.base_url}/completions"
+            comp_payload = {
+                "model": self.model,
+                "prompt": prompt,
+                "max_tokens": 1,
+                "temperature": 0.0,
+                "logprobs": 20
+            }
+            resp = requests.post(endpoint_used, headers=headers, json=comp_payload, timeout=30)
+            resp.raise_for_status()
+            data = resp.json()
+
+        choice_data = data["choices"][0]
+        logprobs_data = choice_data.get("logprobs")
+        choice_logprobs = self._extract_top_logprobs(logprobs_data)
+
+        prob_a = choice_logprobs.get("A", choice_logprobs.get(" A"))
+        prob_b = choice_logprobs.get("B", choice_logprobs.get(" B"))
+
+        if prob_a is not None and prob_b is not None:
+            return float(prob_a) - float(prob_b)
+        elif prob_a is not None:
+            return float(prob_a)
+        elif prob_b is not None:
+            return -float(prob_b) - 5.0
+        else:
+            # Fallback when logprobs are absent
+            content_str = ""
+            if "message" in choice_data and "content" in choice_data["message"]:
+                content_str = (choice_data["message"]["content"] or "").strip()
+            elif "text" in choice_data:
+                content_str = (choice_data["text"] or "").strip()
+            
+            if content_str.upper().startswith("A") or "YES" in content_str.upper():
+                return 2.0
+            elif content_str.upper().startswith("B") or "NO" in content_str.upper():
+                return -2.0
+            return 0.0
+
+    def _score_single_candidate(
+        self,
+        state: Dict[str, Any],
+        candidate: str,
+        criteria: Union[str, Dict[str, str]]
+    ) -> float:
+        """Evaluates a single candidate likelihood in an isolated prompt without competitor options."""
+        if self.backend == "ollama":
+            return self._score_single_candidate_ollama(state, candidate, criteria)
+        elif self.backend == "laya":
+            crit_dict = dict(criteria) if isinstance(criteria, dict) else {"criteria": str(criteria)}
+            resp = requests.post(
+                f"{self.base_url}/decision/choice",
+                json={
+                    "model": self.model,
+                    "state": state,
+                    "candidates": [candidate, "UNKNOWN"],
+                    "criteria": crit_dict,
+                },
+                timeout=10
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            raw_logits = data.get("raw_logits") or {}
+            return float(raw_logits.get(candidate, 0.0))
+        else:
+            return self._score_single_candidate_openai(state, candidate, criteria)
+
+    def _decide_choice_order_invariant(
+        self,
+        state: Dict[str, Any],
+        options: List[str],
+        criteria: Union[str, Dict[str, str]],
+        allow_abstain: bool
+    ) -> ChoiceDecision:
+        """Evaluates categorical choice with mathematical order invariance by scoring each candidate in isolation."""
+        if len(options) > 20:
+            logger.warning(
+                "Candidate option count %d exceeds recommended limit (20) for order_invariant evaluation.",
+                len(options)
+            )
+
+        max_workers = min(len(options), 8)
+        extracted_logits: Dict[str, float] = {}
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_opt = {
+                executor.submit(self._score_single_candidate, state, opt, criteria): opt
+                for opt in options
+            }
+            for future in future_to_opt:
+                opt = future_to_opt[future]
+                try:
+                    score = future.result()
+                    extracted_logits[opt] = float(score)
+                except Exception as e:
+                    logger.warning("Scoring failed for candidate '%s': %s", opt, e)
+                    extracted_logits[opt] = -100.0
+
+        calibrated_probs = self.calibrator.calibrate(extracted_logits)
+        best_choice = max(calibrated_probs, key=calibrated_probs.get)
+        confidence = calibrated_probs[best_choice]
+
+        effective_thresh = self._get_effective_threshold(len(options))
+        abstained = False
+        if (allow_abstain and best_choice == "UNKNOWN") or confidence < effective_thresh:
+            abstained = True
+
+        final_value = "UNKNOWN" if abstained else best_choice
+        tentative_val = best_choice if (abstained and best_choice != "UNKNOWN") else None
+
+        return ChoiceDecision(
+            value=final_value,
+            probabilities=calibrated_probs,
+            confidence=confidence,
+            abstained=abstained,
+            tentative_value=tentative_val,
+            raw_logits=extracted_logits,
+        )
 
     def _decide_choice_laya(
         self,
