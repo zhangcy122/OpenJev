@@ -4,28 +4,28 @@
   <b>English</b> | <a href="README_zh.md">简体中文</a>
 </p>
 
-> **Unified Probabilistic Decision Framework: Open LLMs, Laya (ModernBERT), & TypeSafe Jev Harness**  
-> Deploy as a standalone, non-autoregressive decision engine using modern open-weight LLMs (Qwen3, Gemma 4, DeepSeek) or dedicated System 1 encoders (**Laya ModernBERT-large 322M**), **OR** wrap official TypeSafe Jev commercial APIs with adaptive calibration, 60%+ cost arbitrage, and 99.99% circuit-breaker fallback SLA.  
+> **Self-Evolving Cognitive Decision Engine: Open LLMs, Laya (ModernBERT), & TypeSafe Jev Harness**  
+> Deploy as a standalone, non-autoregressive decision engine using modern open-weight LLMs (Qwen3, Gemma 4, DeepSeek) or dedicated System 1 encoders (**Laya ModernBERT-large 322M**); wrap commercial TypeSafe Jev APIs with adaptive calibration and 60%+ cost arbitrage; **OR** enable the **Deliberative Decision Flywheel** ("Explore First, Crystallize Later") to distill slow System 2 reasoning traces into permanent sub-35ms fast paths with **100% mathematical option-order invariance**.  
 > 🌐 **Official Website**: [https://openjev.pro](https://openjev.pro)
 
 ---
 
 ## ⚡ Multi-Engine Operational Architecture
 
-OpenJevPro provides a unified, typed decision interface across three major paradigms: **Open LLMs**, **Laya (ModernBERT)**, and **TypeSafe Jev (Commercial API)**:
+OpenJevPro provides a unified, typed decision interface across three synergistic operational paradigms:
 
 ```
                   ┌───────────────────────────────────────────────────────────┐
                   │                 OpenJevPro Unified Engine                 │
                   └─────────────────────────────┬─────────────────────────────┘
                                                 │
-                 ┌──────────────────────────────┴──────────────────────────────┐
-                 ▼                                                             ▼
-   [ Mode A: Standalone & Edge Engines ]                         [ Mode B: Production Jev Harness ]
-   • Open LLMs: Qwen3, Gemma 4, DeepSeek (vLLM/SGLang)           • Native Wrapper around TypeSafe Jev API
-   • Laya: ModernBERT 322M System 1 Encoder (~33ms)              • Guard Harness: 100% Selective Precision
-   • Deterministic Single-Token / Microservice Latency           • Hybrid Gateway: 60%+ Cloud Cost Cut
-   • Zero Vendor Lock-in & No Cloud API Bills                    • Circuit Breaker: 99.99% Fallback SLA
+         ┌──────────────────────────────┬───────┴──────────────────────┐
+         ▼                              ▼                              ▼
+  [ Mode A: Edge Decisions ]    [ Mode B: Jev Harness ]    [ Mode C: Cognitive Flywheel ]
+  • Open LLMs (vLLM/SGLang)     • Native TypeSafe Jev API  • Explore First, Crystallize Later
+  • Laya ModernBERT 322M (~33ms)• 100% Selective Precision • System 2 → System 1 Compiler
+  • Single-Token Determinism    • 60%+ Cloud Cost Cut      • 100% Order Invariance (1.00)
+  • Zero Cloud API Cost         • Circuit Breaker SLA      • Sub-35ms Promoted Fast Path
 ```
 
 ### 1. Mode A: Standalone Open Alternative (LLMs & Laya)
@@ -37,7 +37,11 @@ If you already subscribe to commercial TypeSafe Jev, OpenJevPro acts as an indis
 * 🛡️ **Safety Guard Harness (`TypeSafeJevGuardHarness`)**: Fixes overconfident misclassifications on borderline samples (e.g. Sample 0 in Banking77) via pseudo-logit temperature scaling and dynamic dual-threshold cutoff $\tau = \max(\tau_{\min}, \alpha / K)$, lifting selective precision to **100.00%**.
 * 💰 **Two-Tier Cost Arbitrage Gateway (`HybridJevGateway`)**: Routes 70%+ of standard high-frequency intent queries to local Tier 1 engines (Laya or local LLM, <35ms, $0 cloud cost), escalating only complex long-tail queries to commercial Jev APIs, slashing cloud bills by **60%+**.
 * ⚡ **Fault Tolerance & Circuit Breaker SLA**: Intercepts cloud timeouts, HTTP 429 rate limits, and network severance with finite state machine (`CLOSED` $\leftrightarrow$ `OPEN` $\leftrightarrow$ `HALF_OPEN`), gracefully degrading to calibrated local decisions without throwing uncaught 500 exceptions.
-* 🧪 **Standardized Benchmarking Harness (`OpenJevProHarness`)**: Head-to-head empirical testing, Expected Calibration Error (ECE) calculation, and symmetric abstention contract verification across LLM, Laya, and Jev engines.
+
+### 3. Mode C: Deliberative Decision Flywheel & Mathematical Invariance (🔥 Killer Capability)
+Solves the fundamental dilemma between expensive/slow reasoning LLMs (1.5–5s, $0.02+/call) and fast but rigid classifiers:
+* 🧠 **Explore First, Crystallize Later**: Standard queries resolve in sub-35ms via System 1. Borderline or abstained queries automatically escalate to System 2 (Thinking LLMs) for counterfactual deduction. The **Crystallization Operator** compiles the reasoning trace into discriminative boundary rules and precedent memory, **permanently promoting subsequent similar queries to the sub-35ms fast path with zero repeated LLM cost**.
+* 🛡️ **100% Mathematical Order Invariance (`order_invariant=True`)**: Completely eliminates candidate positioning bias in regulated financial audits. Scores each option in an isolated forward pass without competitor options, mathematically guaranteeing 1.00 permutation invariance across all $N!$ orderings ($\Delta P < 10^{-4}$).
 
 ---
 
@@ -69,9 +73,11 @@ Calibrated Typed Decision: { value, probabilities, confidence, abstained }
 | Primitive | Description | Output Guarantee |
 | :--- | :--- | :--- |
 | **`Choice<T>`** | Multi-class categorical decision over an enum set | Strict enum matching + normalized probability distribution |
+| **`order_invariant=True`** | Isolated candidate scoring with commutative softmax | 100% mathematical permutation invariance across all $N!$ orderings |
 | **`Noul`** | Binary truth judgment (`TRUE` / `FALSE`) | Calibrated $P(\text{true})$ + uncertainty interval |
 | **`Score`** | Ordinal evaluation across predefined severity/rank tiers | Probability mass across tiers + expected score |
 | **`TypeSafeJevGuardHarness`** | Runtime calibration & adaptive safety guard | Pseudo-logit inversion, temperature scaling & dual-threshold $\tau=\max(\tau_{\min}, \alpha/K)$ |
+| **`DeliberativeDecisionFlywheel`** | Self-evolving cognitive flywheel (System 2 $\to$ System 1) | Sub-35ms promoted fast path + zero repeated deliberation cost |
 
 
 All primitives incorporate first-class **Abstention & Fallback Options** (`UNKNOWN`, `OUT_OF_SCOPE`, `HUMAN_REVIEW`) to eliminate artificial probability spikes caused by closed candidate sets.

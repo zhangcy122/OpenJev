@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "openjevpro"
 version = "0.2.0"
-description = "High-Throughput Type-Safe AI Decision Engine (Source-Available Alternative to TypeSafe Jev)"
+description = "Self-Evolving Cognitive Decision Engine with System 2 Crystallization & Order Invariance (TypeSafe Jev Alternative)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "PolyForm Noncommercial 1.0.0" }
@@ -16,6 +16,10 @@ keywords = [
     "ai",
     "llm",
     "decision-engine",
+    "cognitive-flywheel",
+    "deliberative-decision",
+    "crystallization",
+    "order-invariance",
     "type-safe",
     "jev",
     "calibration",
