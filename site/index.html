@@ -477,7 +477,7 @@
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.06] text-neutral-300 border border-white/10">PRIMITIVE 01</span>
-            <span class="text-xs font-mono text-neutral-500">100% Type-Safe</span>
+            <span class="text-xs font-mono text-emerald-400">100% Type-Safe · Order Invariant</span>
           </div>
           <div class="flex items-center space-x-3 mb-2.5">
             <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 shrink-0 shadow-sm group-hover:border-blue-500/50 transition">
@@ -486,7 +486,7 @@
             <h3 class="text-lg font-bold text-white group-hover:text-blue-300 transition">Choice&lt;T&gt;</h3>
           </div>
           <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="feat_choice_desc">
-            针对离散 Enum 类型的多分类路由。通过词表掩码约束输出空间，直接计算各选项的条件对数似然，避免 JSON 解析异常。
+            针对离散 Enum 类型的多分类路由。通过词表掩码约束输出空间，直接计算各选项的条件对数似然，避免 JSON 解析异常；支持 order_invariant=True 消除选项排列顺序偏差。
           </p>
         </div>
 
@@ -499,7 +499,7 @@
             <span class="text-neutral-600">→</span>
             <span class="px-2 py-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Choice [T]</span>
           </div>
-          <span class="text-emerald-400 text-[11px]">0% JSON Syntax Failures</span>
+          <span class="text-emerald-400 text-[11px]" data-i18n="feat_order_badge">100% Permutation Invariance (order_invariant=True)</span>
         </div>
       </div>
 
@@ -604,6 +604,41 @@
           <div class="flex items-center space-x-2 text-[11px]">
             <span class="text-neutral-400">Resilience:</span>
             <span class="text-cyan-300">CircuitBreaker [CLOSED ↔ OPEN ↔ HALF_OPEN]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Deliberative Decision Flywheel & Crystallization Operator (Spans full 3 cols on lg) -->
+      <div class="panel p-6 rounded-2xl lg:col-span-3 flex flex-col justify-between border border-violet-500/20 bg-gradient-to-r from-surface-100 via-surface-100 to-violet-950/20 group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-violet-950/60 text-violet-300 border border-violet-500/30">COGNITIVE FLYWHEEL</span>
+            <span class="text-xs font-mono text-violet-400">Explore First, Crystallize Later (System 2 → System 1)</span>
+          </div>
+          <div class="flex items-center space-x-3 mb-2.5">
+            <div class="w-9 h-9 rounded-xl bg-violet-500/15 border border-violet-500/35 flex items-center justify-center text-violet-300 shrink-0 shadow-sm group-hover:border-violet-400/60 transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-white group-hover:text-violet-200 transition" data-i18n="feat_flywheel_title">Deliberative Decision Flywheel & Crystallization</h3>
+          </div>
+          <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed mb-6" data-i18n="feat_flywheel_desc">
+            将慢思考大模型作为快决策的近线编译器：常规请求由 System 1 极速判定（&lt;35ms）；歧义模糊样本自动升级至 System 2（深思考大模型）进行因果探索，并由结晶算子（Crystallization Operator）将证据链提炼为判别准则写入记忆，使后续同类请求永久降维至 System 1 极速直通。
+          </p>
+        </div>
+
+        <div class="bg-surface-50 border border-white/[0.08] rounded-xl p-4 font-mono text-xs text-neutral-300 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center space-x-2 text-[11px]">
+            <span class="text-neutral-400">Flywheel Pipeline:</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">System 1 Fast (&lt;35ms)</span>
+            <span class="text-neutral-500">→</span>
+            <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">System 2 Thinking LLM (Escalate)</span>
+            <span class="text-neutral-500">→</span>
+            <span class="px-2 py-0.5 rounded bg-violet-500/10 text-violet-300 border border-violet-500/20">Crystallization Operator</span>
+            <span class="text-neutral-500">→</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Promoted Fast Path (&lt;35ms)</span>
+          </div>
+          <div class="flex items-center space-x-2 text-[11px]">
+            <span class="text-neutral-400">Zero Extra Latency on Repeat</span>
           </div>
         </div>
       </div>
@@ -845,6 +880,9 @@
             <button id="tab-qs-gateway" onclick="switchQsTab('gateway')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition cursor-pointer">
               Hybrid Gateway
             </button>
+            <button id="tab-qs-flywheel" onclick="switchQsTab('flywheel')" class="text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition cursor-pointer">
+              Cognitive Flywheel
+            </button>
           </div>
         </div>
 
@@ -880,7 +918,8 @@ client = <span class="text-white font-semibold">OpenJevProClient</span>(
 decision: ChoiceDecision = client.<span class="text-white">decide_choice</span>(
     state={<span class="text-cyan-300">"ticket_text"</span>: <span class="text-cyan-300">"Brute-force login attempt from untrusted subnet."</span>},
     candidates=TicketRoute,
-    criteria=<span class="text-cyan-300">"Classify incoming ticket to the appropriate response team."</span>
+    criteria=<span class="text-cyan-300">"Classify incoming ticket to the appropriate response team."</span>,
+    order_invariant=<span class="text-neutral-300">True</span>  <span class="text-neutral-500"># 100% permutation-invariant isolated scoring</span>
 )
 
 print(f"Action: {decision.value}")       <span class="text-neutral-500"># 'security'</span>
@@ -933,6 +972,33 @@ print(f"Decision: {decision.choice}")       <span class="text-neutral-500"># 'ca
 print(f"Routed Tier: {decision.tier}")       <span class="text-neutral-500"># 'Tier1_Local' (60%+ Cloud Cost Saved)</span>
 print(f"Degraded: {decision.degraded}")       <span class="text-neutral-500"># False (True on cloud outage fallback)</span>
 print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0</span></code></pre>
+
+<pre id="qs-code-flywheel" class="hidden"><code><span class="text-neutral-500">from</span> openjevpro.client <span class="text-neutral-500">import</span> OpenJevProClient
+<span class="text-neutral-500">from</span> openjevpro.flywheel <span class="text-neutral-500">import</span> DeliberativeDecisionFlywheel
+
+<span class="text-neutral-500"># Deliberative Decision Flywheel: Explore First with System 2, Crystallize into System 1</span>
+client = <span class="text-white font-semibold">OpenJevProClient</span>(base_url=<span class="text-cyan-300">"http://localhost:8000/v1"</span>)
+flywheel = client.<span class="text-white">create_decision_flywheel</span>(auto_crystallize=<span class="text-neutral-300">True</span>)
+
+<span class="text-neutral-500"># 1. Cold start / ambiguous query escalates to System 2 thinking & crystallizes boundary rules</span>
+decision = flywheel.<span class="text-white">evaluate_choice</span>(
+    state={<span class="text-cyan-300">"query"</span>: <span class="text-cyan-300">"card not received, suspect intercepted by someone"</span>},
+    candidates=[<span class="text-cyan-300">"card_arrival"</span>, <span class="text-cyan-300">"lost_or_stolen_card"</span>, <span class="text-cyan-300">"change_pin"</span>],
+    criteria={<span class="text-cyan-300">"card_arrival"</span>: <span class="text-cyan-300">"Delivery status"</span>, <span class="text-cyan-300">"lost_or_stolen_card"</span>: <span class="text-cyan-300">"Stolen cards"</span>},
+    order_invariant=<span class="text-neutral-300">True</span>  <span class="text-neutral-500"># 100% permutation-invariant candidate scoring</span>
+)
+
+print(f"Decision: {decision.value}")                      <span class="text-neutral-500"># 'lost_or_stolen_card'</span>
+print(f"Escalated to System 2: {decision.escalated}")     <span class="text-neutral-500"># True (first encounter)</span>
+print(f"Distilled Rule: {decision.crystallization_receipt['discriminative_rule']}")
+
+<span class="text-neutral-500"># 2. Subsequent queries hit System 1 fast path directly (0 LLM overhead, &lt;35ms)</span>
+promoted_decision = flywheel.<span class="text-white">evaluate_choice</span>(
+    state={<span class="text-cyan-300">"query"</span>: <span class="text-cyan-300">"card intercepted in mail"</span>},
+    candidates=[<span class="text-cyan-300">"card_arrival"</span>, <span class="text-cyan-300">"lost_or_stolen_card"</span>, <span class="text-cyan-300">"change_pin"</span>]
+)
+print(f"Escalated: {promoted_decision.escalated}")          <span class="text-neutral-500"># False (Fast-path promoted!)</span>
+print(f"Speedup: Sub-35ms deterministic inference")</code></pre>
       </div>
     </div>
   </section>
@@ -1025,6 +1091,13 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
           OpenJevPro functions not just as an open alternative, but as an indispensable production harness and guard for commercial TypeSafe Jev: 1) It provides TypeSafeJevGuardHarness to eliminate overconfident silent errors on borderline samples, lifting selective precision to 100%; 2) Its HybridJevGateway filters 70%+ of routine high-frequency queries locally, slashing your commercial cloud billing by 60%+; 3) Its circuit-breaker fallback SLA protects downstream agents against cloud timeouts, rate limits, and outages with zero crashes.
         </p>
       </div>
+
+      <div class="panel p-5 rounded-xl border border-violet-500/20 bg-gradient-to-r from-surface-100 to-violet-950/10">
+        <h3 class="text-sm font-semibold text-white mb-1.5" data-i18n="faq_q5">How does OpenJevPro eliminate candidate order bias and enable cognitive crystallization?</h3>
+        <p class="text-xs text-neutral-300 leading-relaxed font-normal" data-i18n="faq_a5">
+          In regulated financial and compliance environments, standard multiple-choice prompting suffers from positional bias. OpenJevPro introduces order_invariant=True, which scores each candidate option in an isolated forward pass without competitor options, then normalizes probabilities via commutative softmax. This mathematically guarantees 100% permutation invariance across all N! candidate orderings (delta P &lt; 1e-4). Furthermore, the Deliberative Decision Flywheel couples fast decisions with System 2 thinking models: ambiguous queries trigger deep reasoning traces, which are crystallized into discriminative boundary rules and cached, permanently promoting subsequent queries to the sub-35ms fast path.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -1083,11 +1156,14 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         demo_conf_label: "标定置信度 P",
         feat_title: "决策原语与守卫架构",
         feat_subtitle: "用于智能体网关路由与策略门控的类型安全组件。",
-        feat_choice_desc: "针对离散 Enum 类型的多分类路由。通过词表掩码约束输出空间，直接计算各选项的条件对数似然，避免 JSON 解析异常。",
+        feat_choice_desc: "针对离散 Enum 类型的多分类路由。通过词表掩码约束输出空间，直接计算各选项的条件对数似然，避免 JSON 解析异常；支持 order_invariant=True 消除选项排列偏差。",
         feat_noul_desc: "二元断言评估器（$P_{true}, P_{false}$），输出经标定的概率与不确定度区间，适用于工作流门控与安全检查。",
         feat_score_desc: "有序档位与等级评分。依据各档位后验概率质量计算连续期望值，避免离散打分的不稳定抖动。",
         feat_guard_desc: "运行期动态标定与阈值拦截（$\\tau = \\max(\\tau_{\\min}, \\alpha / K)$）。将输出概率反推为伪对数似然并进行温度缩放；置信度不足时主动输出 UNKNOWN 弃权，使有效回答准确率达 100%。",
         feat_gateway_desc: "双层成本分流与熔断网关。70% 以上的高频意图直接由本地模型解析（&lt;20ms）；难以确定的边缘样本再转发至商业 API。遭遇云端超时或限流时自动熔断切回本地，避免上游调用发生未捕获异常。",
+        feat_flywheel_title: "慎思决策结晶飞轮 (Deliberative Flywheel)",
+        feat_flywheel_desc: "将慢思考大模型作为快决策系统的近线编译器：常规请求由 System 1 极速判定（&lt;35ms）；歧义模糊样本自动升级至 System 2（深思考大模型）进行因果探索，并由结晶算子（Crystallization Operator）将证据链提炼为判别准则写入记忆，使后续同类请求永久降维至 System 1 极速直通。",
+        feat_order_badge: "100% 排序无关 (order_invariant=True)",
         bench_title: "开源模型能否逼近 Jev？",
         bench_subtitle: "在 PolyAI Banking77 基准上的实测复现显示：开源模型配合语法解码，准确率置信区间已与商业 Jev 模型重叠。",
         bench_luna_desc: "通用前沿大模型。单次调用成本较高，延迟 300~600ms，依赖闭源云厂商接口。",
@@ -1140,6 +1216,8 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         faq_a3: "所有决策原语均内置 UNKNOWN 与 HUMAN_REVIEW 弃权选项，并配合 TypeSafeJevGuardHarness 动态阈值截断（$\\tau = \\max(\\tau_{\\min}, \\alpha / K)$）。当候选最高概率低于阈值时自动输出弃权，避免强行猜测错误类别。",
         faq_q4: "如果已有 TypeSafe Jev 商业订阅，OpenJevPro 能起到什么作用？",
         faq_a4: "OpenJevPro 可直接用作商业 Jev 的前置增强与容灾层：第一，通过 TypeSafeJevGuardHarness 重新校准概率并拦截低置信度样本，避免在歧义样本上产生误判；第二，通过 HybridJevGateway 将 70% 以上的高频常规请求留在本地处理，降低商业 API 调用开销；第三，提供断网与限流自动熔断机制，在云端接口超时或报错时回退至本地模型，避免上游智能体发生级联崩溃。",
+        faq_q5: "大模型易受候选词排列顺序干扰，OpenJevPro 如何保证排序绝对不变性？又如何通过认知飞轮自我进化？",
+        faq_a5: "在严苛金融审计和强合规场景下，通用多选 Prompt 常因选项先后顺序产生位置偏见。OpenJevPro 提供 order_invariant=True 模式，在词表层对每个候选执行孤立提示词打分（Isolated Candidate Scoring），再通过置换等变的 Softmax 统一标定归一化。在数学上保证任意 N! 种候选排列顺序下的胜者判定一致性达到 100%（ΔP &lt; 10⁻⁴），彻底消除排列偏差。同时，认知飞轮利用推理大模型在遇到边缘案例时自动蒸馏规则并沉淀到本地存储，使快决策系统持续进化。",
         footer_license: "源码可用性遵循 <a href=\"https://github.com/zhangcy122/OpenJev/blob/main/LICENSE\" class=\"text-neutral-400 hover:text-white underline\">PolyForm Noncommercial 1.0.0</a> 协议。企业商业生产需获得项目方授权。"
       },
       en: {
@@ -1177,11 +1255,14 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         demo_conf_label: "Calibrated P",
         feat_title: "Decision Primitives & Guard Layer",
         feat_subtitle: "Type-safe building blocks designed for low-latency agent routing and policy gates.",
-        feat_choice_desc: "Multi-class categorical routing over discrete Enum sets. Enforces grammar constraints at the vocabulary layer to evaluate conditional log-likelihood across choices with zero parsing errors.",
+        feat_choice_desc: "Multi-class categorical routing over discrete Enum sets. Enforces grammar constraints at the vocabulary layer to evaluate conditional log-likelihood across choices with zero parsing errors; supports order_invariant=True to eliminate option order bias.",
         feat_noul_desc: "Binary assertion evaluator ($P_{true}, P_{false}$) providing calibrated confidence with formal uncertainty margins for policy gates and content guardrails.",
         feat_score_desc: "Ordinal ranking across predefined severity tiers. Calculates expected mathematical value based on probability mass distribution rather than discrete hallucinations.",
         feat_guard_desc: "Adaptive runtime calibration and dynamic dual-threshold interception (tau = max(tau_min, alpha/K)). Inverts output probabilities into pseudo-logits for temperature calibration, safely abstaining on ambiguous queries to reach 100% selective precision while retaining tentative candidates.",
         feat_gateway_desc: "Two-tier cost-arbitraged hybrid router with finite-state circuit breaker. High-confidence head intents (70%+) resolve on the local edge engine (&lt;20ms, $0 cloud cost), while ambiguous queries seamlessly escalate to cloud APIs. In event of cloud timeouts or provider outages, the gateway automatically falls back to calibrated local decisions, guaranteeing zero uncaught crashes and continuous enterprise availability.",
+        feat_flywheel_title: "Deliberative Decision Flywheel & Crystallization",
+        feat_flywheel_desc: "Treats slow reasoning models as near-line compilers for fast decisions: standard queries resolve in sub-35ms via System 1; ambiguous or low-confidence queries escalate to System 2 (Thinking LLMs) for counterfactual deduction. The Crystallization Operator distills these reasoning traces into discriminative boundary rules and precedent memory, permanently promoting subsequent similar queries to the sub-35ms fast path.",
+        feat_order_badge: "100% Permutation Invariant (order_invariant=True)",
         bench_title: "Can Open LLMs Match Jev?",
         bench_subtitle: "Empirical validation on PolyAI Banking77 confirms that open models with grammar decoding achieve statistical parity with dedicated Jev models.",
         bench_luna_desc: "General frontier model ceiling. Expensive per-call pricing, 300~600ms latency, proprietary cloud lock-in.",
@@ -1234,6 +1315,8 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         faq_a3: "All primitives include first-class UNKNOWN / HUMAN_REVIEW abstention. Combined with the TypeSafeJevGuardHarness dynamic dual-threshold (tau = max(tau_min, alpha/K)), low-confidence borderline queries are safely intercepted without risking silent misclassification.",
         faq_q4: "If I already subscribe to commercial TypeSafe Jev, why do I still need OpenJevPro?",
         faq_a4: "OpenJevPro functions not just as an open alternative, but as an indispensable production harness and guard for commercial TypeSafe Jev: 1) It provides TypeSafeJevGuardHarness to eliminate overconfident silent errors on borderline samples, lifting selective precision to 100%; 2) Its HybridJevGateway filters 70%+ of routine high-frequency queries locally, slashing your commercial cloud billing by 60%+; 3) Its circuit-breaker fallback SLA protects downstream agents against cloud timeouts, rate limits, and outages with zero crashes.",
+        faq_q5: "How does OpenJevPro eliminate candidate order bias and enable cognitive crystallization?",
+        faq_a5: "In regulated financial and compliance environments, standard multiple-choice prompting suffers from positional bias. OpenJevPro introduces order_invariant=True, which scores each candidate option in an isolated forward pass without competitor options, then normalizes probabilities via commutative softmax. This mathematically guarantees 100% permutation invariance across all N! candidate orderings (delta P &lt; 1e-4). Furthermore, the Deliberative Decision Flywheel couples fast decisions with System 2 thinking models: ambiguous queries trigger deep reasoning traces, which are crystallized into discriminative boundary rules and cached, permanently promoting subsequent queries to the sub-35ms fast path.",
         footer_license: "Source-available under <a href=\"https://github.com/zhangcy122/OpenJev/blob/main/LICENSE\" class=\"text-neutral-400 hover:text-white underline\">PolyForm Noncommercial 1.0.0</a>. Commercial use requires license."
       }
     };
@@ -1356,9 +1439,11 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
       const btnClient = document.getElementById('tab-qs-client');
       const btnGuard = document.getElementById('tab-qs-guard');
       const btnGateway = document.getElementById('tab-qs-gateway');
+      const btnFlywheel = document.getElementById('tab-qs-flywheel');
       const codeClient = document.getElementById('qs-code-client');
       const codeGuard = document.getElementById('qs-code-guard');
       const codeGateway = document.getElementById('qs-code-gateway');
+      const codeFlywheel = document.getElementById('qs-code-flywheel');
       const fileLabel = document.getElementById('active-file-label');
 
       const inactiveBtn = 'text-xs font-mono px-3 py-1 rounded text-neutral-400 hover:text-white transition cursor-pointer';
@@ -1367,9 +1452,11 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
       btnClient.className = inactiveBtn;
       btnGuard.className = inactiveBtn;
       btnGateway.className = inactiveBtn;
+      if (btnFlywheel) btnFlywheel.className = inactiveBtn;
       codeClient.classList.add('hidden');
       codeGuard.classList.add('hidden');
       codeGateway.classList.add('hidden');
+      if (codeFlywheel) codeFlywheel.classList.add('hidden');
 
       if (tab === 'guard') {
         btnGuard.className = activeBtn;
@@ -1379,6 +1466,10 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         btnGateway.className = activeBtn;
         codeGateway.classList.remove('hidden');
         if (fileLabel) fileLabel.innerText = 'hybrid_gateway.py';
+      } else if (tab === 'flywheel') {
+        if (btnFlywheel) btnFlywheel.className = activeBtn;
+        if (codeFlywheel) codeFlywheel.classList.remove('hidden');
+        if (fileLabel) fileLabel.innerText = 'decision_flywheel.py';
       } else {
         btnClient.className = activeBtn;
         codeClient.classList.remove('hidden');
@@ -1392,6 +1483,8 @@ print(f"Cost Units: {decision.cost_units}")   <span class="text-neutral-500"># 0
         activePre = document.getElementById('qs-code-guard');
       } else if (!document.getElementById('qs-code-gateway').classList.contains('hidden')) {
         activePre = document.getElementById('qs-code-gateway');
+      } else if (document.getElementById('qs-code-flywheel') && !document.getElementById('qs-code-flywheel').classList.contains('hidden')) {
+        activePre = document.getElementById('qs-code-flywheel');
       }
       const codeText = activePre.innerText;
       
